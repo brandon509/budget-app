@@ -8,7 +8,7 @@ const CategorySchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        //required: true,
+        required: true,
     },
     budget: {
         type: Map,
@@ -27,7 +27,7 @@ const CategorySchema = new mongoose.Schema({
     },
     active: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     deletedTime: {
         type: Date

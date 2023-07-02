@@ -13,7 +13,7 @@ connectDB()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-//app.use("/", mainRoutes)
+app.use("/", mainRoutes)
 app.use("/category", categoryRoutes)
 //app.use("/amount", amountRoutes)
 
