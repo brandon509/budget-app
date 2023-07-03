@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 const connectDB = require("./config/database")
 const passport = require("passport")
 const session = require("express-session")
-const MongoStore = require("connect-mongo")(session)
+const MongoStore = require("connect-mongo")
 const mainRoutes = require("./routes/main")
 const categoryRoutes = require("./routes/category")
 const amountRoutes = require("./routes/amount")
@@ -23,7 +23,7 @@ app.use(
       secret: process.env.SECRET,
       resave: false,
       saveUninitialized: false,
-      store: new MongoStore({ mongooseConnection: mongoose.connection }),
+      store: MongoStore.create({ mongooseConnection: mongoose.connection }),
     })
   )
 
