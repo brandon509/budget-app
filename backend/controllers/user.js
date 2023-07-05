@@ -67,25 +67,24 @@ module.exports = {
       return next(error)
     }
   },
-  logout: async (req,res) => {
+  logout: async (req,res,next) => {
     try {
       req.logout(() => {
-        console.log('User has logged out')
+          console.log('User has logged out')
       })
       // res.cookie("connect.sid","", {
       //   httpOnly: true,
       //   expires: new Date(0)
       // })
-      req.session.destroy((err) => {
-        if (err)
-          console.log("Error : Failed to destroy the session during logout", err);
-        req.user = null;
-        return res.status(200).json('Logged out')
-      })
+      // req.session.destroy((err) => {
+      //   if (err)
+      //     console.log("Error : Failed to destroy the session during logout", err);
+      //   req.user = null;
+      //   return res.status(200).json('Logged out')
+      // })
     } 
     catch (error) {
       console.log(error)
     }
-    
   }
 }
