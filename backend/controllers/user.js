@@ -5,6 +5,7 @@ const User = require('../models/User')
 module.exports = {
   newUser: async (req, res, next) => {
     try {
+      console.log(req.body)
       if (!validator.isEmail(req.body.email))
         return res.status(400).json({ msg:"Please enter a valid email address" })
       if (!validator.isLength(req.body.password, { min: 8 }))
@@ -68,10 +69,11 @@ module.exports = {
     }
   },
   logout: async (req,res,next) => {
+    console.log('grrr')
     try {
-      req.logout(() => {
-          console.log('User has logged out')
-      })
+      // req.logout(() => {
+      //     console.log('User has logged out')
+      // })
       // res.cookie("connect.sid","", {
       //   httpOnly: true,
       //   expires: new Date(0)

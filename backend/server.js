@@ -8,7 +8,7 @@ const MongoStore = require("connect-mongo")
 const mainRoutes = require("./routes/main")
 const categoryRoutes = require("./routes/category")
 const amountRoutes = require("./routes/amount")
-const cors = require("cors")
+//const cors = require("cors")
 
 const dotenv = require('dotenv').config()
 
@@ -16,18 +16,18 @@ require("./config/passport")(passport)
 
 connectDB()
 
-app.use(cors({
-  origin: "http://localhost:3000",
-  methods: "GET,PUT,POST,DELETE",
-  credentials: true,
-}))
+// app.use(cors({
+//   origin: "http://localhost:3000",
+//   methods: "GET,PUT,POST,DELETE",
+//   credentials: true,
+// }))
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use(
     session({
-      secret: "keyboard cat",
+      secret: process.env.SECRET,
       resave: false,
       saveUninitialized: false,
       store: MongoStore.create({ mongoUrl: process.env.DB_STRING }),

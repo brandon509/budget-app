@@ -30,7 +30,8 @@ const CategorySchema = new mongoose.Schema({
         default: true,
     },
     deletedTime: {
-        type: Date
+        type: Date,
+        default: 0
     }
 }, { timestamps: true })
 
