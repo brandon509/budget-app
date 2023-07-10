@@ -39,7 +39,7 @@ app.use(passport.session())
 
 app.use("/", mainRoutes)
 app.use("/category", categoryRoutes)
-//app.use("/amount", amountRoutes)
+app.use("/amount", amountRoutes)
 
 
 app.listen(process.env.PORT, () => {

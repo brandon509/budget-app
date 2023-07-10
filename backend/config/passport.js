@@ -32,20 +32,19 @@ module.exports = function (passport) {
   )
 
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    console.log('Serializing user...')
+    return done(null, user.id);
   })
 
-  passport.deserializeUser((id, done) => {
-    User.findById(id)
-      .then((err, user) => done(err, user))
-    })
-  //   try {
-  //     const user = await User.findById(id)
-  //     if(user){
-  //       return done(user)
-  //     }
-  //   } 
-  //   catch (error) {
-  //     return done(error)
-  //   }
+  passport.deserializeUser( async (id, done) => {
+      console.log(`Desearializing user ${id}...`)
+      const user = await User.findById(id)
+      if(user){
+        return done(null, {id: user.id, email: user.email})
+      }
+      else{
+        return done(new Error('No user with this id found'))
+      }
+    
+  })
 }

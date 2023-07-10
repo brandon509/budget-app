@@ -3,7 +3,7 @@ const Amount = require("../models/Amount")
 module.exports = {
     getAmounts: async (req,res) => {
         try {
-            const amounts = Amount.find({ time: req.body.time })
+            const amounts = await Amount.find({ time: req.body.time, user: req.body.user })
             res.json({ amounts })
         } 
         catch (error) {
@@ -11,7 +11,20 @@ module.exports = {
         }
     },
     addAmount: async (req,res) => {
-        
+        try {
+            let amount = await Amount.create({
+                actual: req.body.actual,
+                estimate: req.body.estimate,
+                category: req.body.category,
+                time: req.body.time,
+                user: req.body.user
+            })
+
+            res.json(amount)
+        } 
+        catch (error) {
+            console.log(error)
+        }
     },
     editAmount: async (req,res) => {
 
