@@ -1,4 +1,5 @@
 const Category = require("../models/Category")
+const validator = require("validator")
 
 module.exports = {
     getUserCategories: async (req,res) => {
@@ -56,10 +57,14 @@ module.exports = {
     },
     updateBudget: async (req,res) => {
         try {
+            if(!validator.isDate(req.body.month)){
+                return res.status(400).json('time is not in the correct format')
+            }
+            
             const category = await Category.findOne({ _id: req.body.id })
-            console.log(category.budget)
-            category.budget.set('test', 12)
-            res.json('it worked')
+            category.budget.set(req.body.month, req.body.budget)
+            category.save()
+            res.status(200).json('budget updated')
         } 
         catch (error) {
             console.log(error)
