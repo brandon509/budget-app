@@ -1,11 +1,11 @@
 const passport = require("passport")
 const validator = require("validator")
-const User = require('../models/User')
+const User = require("../models/User")
+const sendEmail = require("../config/email")
 
 module.exports = {
   newUser: async (req, res, next) => {
     try {
-      console.log(req.body)
       if (!validator.isEmail(req.body.email))
         return res.status(400).json({ msg:"Please enter a valid email address" })
       if (!validator.isLength(req.body.password, { min: 8 }))
@@ -26,6 +26,8 @@ module.exports = {
         email: req.body.email,
         password: req.body.password,
       })
+      
+      //sendEmail(user.email, `Welcome to {untitled budget}, ${user.name.split(' ')[0]}!`, `<p>Hi ${user.name.split(' ')[0]} <br><br> Thank you for signing up we hope you enjoy the app! <br><br> Happy budgeting! <br><br> Thanks, <br> B</p>`)
 
       req.logIn(user, (error) => {
         if(error){
@@ -78,7 +80,7 @@ module.exports = {
         expires: new Date(0)
       })
 
-      //req.user = null
+      req.user = null
       res.status(200).json('user has logged out')
       // req.session.destroy((err) => {
       //   if (err)
