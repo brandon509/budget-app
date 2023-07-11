@@ -32,7 +32,7 @@ module.exports = function (passport) {
   )
 
   passport.serializeUser((user, done) => {
-    console.log('Serializing user...')
+    console.log(`Serializing user ${user.id}...`)
     return done(null, user.id);
   })
 
