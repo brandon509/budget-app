@@ -26,8 +26,8 @@ module.exports = {
         email: req.body.email,
         password: req.body.password,
       })
-      
-      //sendEmail(user.email, `Welcome to {untitled budget}, ${user.name.split(' ')[0]}!`, `<p>Hi ${user.name.split(' ')[0]} <br><br> Thank you for signing up we hope you enjoy the app! <br><br> Happy budgeting! <br><br> Thanks, <br> B</p>`)
+
+      sendEmail(user.email, `Welcome to {untitled budget}, ${user.name.split(' ')[0]}!`, `<p>Hi ${user.name.split(' ')[0]} <br><br> Thank you for signing up we hope you enjoy the app! <br><br> Happy budgeting! <br><br> Thanks, <br> B</p>`)
 
       req.logIn(user, (error) => {
         if(error){
@@ -48,6 +48,11 @@ module.exports = {
         return res.status(400).json({ msg: "Password cannot be blank" })
 
       req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false })
+
+      const user = await User.findOne({ email: req.body.email })
+      if(user.verified === false){
+        return res.json('Please verify your email before logging in')
+      }
 
       passport.authenticate("local", (err, user, info) => {
         if (err) {
@@ -88,9 +93,28 @@ module.exports = {
       //   req.user = null;
       //   return res.status(200).json('Logged out')
       // })
-    } 
+    }
     catch (error) {
       console.log(error)
     }
+  },
+  verifyEmail: async (req,res) => {
+
+  },
+  changePassword: async (req,res) => {
+    // passport.authenticate("local", (err, user, info) => {
+    //   if (err) {
+    //     return next(err);
+    //   }
+    //   if (!user) {
+    //     return res.status(400).json(info)
+    //   }
+    // })
+
+    const updatePassword = findOneAndUpdate({ _id: req.user.id }, { password: req.body.newPassword })
+
+  },
+  updateProfile: async (req,res) => {
+
   }
 }

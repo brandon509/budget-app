@@ -18,6 +18,11 @@ const UserSchema = new mongoose.Schema({
     partner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
+    },
+    verified: {
+      type: Boolean,
+      required: true,
+      default: false
     }
 })
 
