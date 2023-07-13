@@ -2,6 +2,7 @@ const passport = require("passport")
 const validator = require("validator")
 const User = require("../models/User")
 const sendEmail = require("../config/email")
+const bcrypt = require("bcrypt")
 
 module.exports = {
   newUser: async (req, res, next) => {
@@ -101,18 +102,27 @@ module.exports = {
   verifyEmail: async (req,res) => {
 
   },
-  changePassword: async (req,res) => {
-    // passport.authenticate("local", (err, user, info) => {
-    //   if (err) {
-    //     return next(err);
-    //   }
-    //   if (!user) {
-    //     return res.status(400).json(info)
-    //   }
-    // })
+  changePassword: async (req,res,next) => {
+    if (!validator.isLength(req.body.newPassword, { min: 8 }))
+      return res.status(400).json({ msg:"Your new password must be at least 8 characters" })
+    if (req.body.newPassword !== req.body.confirmNewPassword)
+      return res.status(400).json({ msg:"Passwords do not match" })
+    
+    const user = await User.findById(req.user.id)
 
-    const updatePassword = findOneAndUpdate({ _id: req.user.id }, { password: req.body.newPassword })
-
+    bcrypt.compare(req.body.password, user.password, (err, result) => {
+      if(result){
+        bcrypt.genSalt(10, async (err, salt) => {
+          bcrypt.hash(req.body.newPassword, salt, async (err, hash) => {
+            await User.findByIdAndUpdate(req.user.id, { password: hash })
+            res.status(200).json('Your password has been updated')
+          })
+        })
+      }
+      else{
+        return res.status(400).json('Your current password does not match what you have entered')
+      }
+    })
   },
   updateProfile: async (req,res) => {
 
