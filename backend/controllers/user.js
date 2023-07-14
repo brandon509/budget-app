@@ -28,14 +28,11 @@ module.exports = {
         password: req.body.password,
       })
 
-      sendEmail(user.email, `Welcome to {untitled budget}, ${user.name.split(' ')[0]}!`, `<p>Hi ${user.name.split(' ')[0]} <br><br> Thank you for signing up we hope you enjoy the app! <br><br> Happy budgeting! <br><br> Thanks, <br> B</p>`)
+      const url = `http://localhost:8000/verifyEmail/${user._id}`
 
-      req.logIn(user, (error) => {
-        if(error){
-          return next(error)
-        }
-        res.status(200).json({ id: user._id, name: user.name, email: user.email, msg:"User logged in successfully" })
-      })
+      sendEmail(user.email, `Welcome to {untitled budget}, ${user.name.split(' ')[0]}!`, `<p>Hi ${user.name.split(' ')[0]}, <br><br> Thank you for signing up we hope you enjoy the app! <br><br> Please verify you email here ${url} <br><br> Thanks, <br> B</p>`)
+
+      res.status(200).json({ id: user._id, name: user.name, email: user.email })
     } 
     catch (error) {
       return next(error)
@@ -100,7 +97,7 @@ module.exports = {
     }
   },
   verifyEmail: async (req,res) => {
-
+    
   },
   changePassword: async (req,res,next) => {
     if (!validator.isLength(req.body.newPassword, { min: 8 }))
@@ -115,6 +112,9 @@ module.exports = {
         bcrypt.genSalt(10, async (err, salt) => {
           bcrypt.hash(req.body.newPassword, salt, async (err, hash) => {
             await User.findByIdAndUpdate(req.user.id, { password: hash })
+
+            sendEmail(user.email, 'Your password has been updated', `<p>Hi ${user.name.split(' ')[0]}, <br><br> Your password was just updated. If this was not you please reach out otherwise you may ignore this message. <br><br> Happy budgeting! <br><br> Thanks, <br> B</p>`)
+
             res.status(200).json('Your password has been updated')
           })
         })
@@ -125,6 +125,7 @@ module.exports = {
     })
   },
   updateProfile: async (req,res) => {
-
+    const user = await User.findByIdAndUpdate(req.user.id, { name: req.body.name, email: req.body.email })
+    res.status(200).json('Profile updated')
   }
 }

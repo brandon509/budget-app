@@ -8,6 +8,6 @@ router.put('/verify/:id', userController.verifyEmail)
 router.post('/login', userController.login)
 router.get('/logout', userController.logout)
 router.put('/changePassword', ensureAuth, userController.changePassword)
-router.put('updateProfile', ensureAuth, userController.updateProfile)
+router.put('/updateProfile', ensureAuth, userController.updateProfile)
 
 module.exports = router
