@@ -3,7 +3,7 @@ const Amount = require("../models/Amount")
 module.exports = {
     getAmounts: async (req,res) => {
         try {
-            const amounts = await Amount.find({ time: req.body.time, user: req.body.user })
+            const amounts = await Amount.find({ time: req.body.time, user: req.user.id }).populate('category')
             res.json({ amounts })
         } 
         catch (error) {
@@ -17,7 +17,7 @@ module.exports = {
                 estimate: req.body.estimate,
                 category: req.body.category,
                 time: req.body.time,
-                user: req.body.user
+                user: req.user.id
             })
 
             res.json(amount)
@@ -27,7 +27,13 @@ module.exports = {
         }
     },
     editAmount: async (req,res) => {
-
+        try {
+            const amount = await Amount.findByIdAndUpdate(req.body.id, { actual: req.body.actual, estimate: req.body.estimate })
+            res.json('amount updated')
+        } 
+        catch (error) {
+            
+        }
     },
     deleteAmount: async (req,res) => {
 

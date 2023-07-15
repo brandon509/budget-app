@@ -28,11 +28,11 @@ module.exports = {
         password: req.body.password,
       })
 
-      const url = `http://localhost:8000/verifyEmail/${user._id}`
+      const url = `http://localhost:8000/verify/${user._id}`
 
       sendEmail(user.email, `Welcome to {untitled budget}, ${user.name.split(' ')[0]}!`, `<p>Hi ${user.name.split(' ')[0]}, <br><br> Thank you for signing up we hope you enjoy the app! <br><br> Please verify you email here ${url} <br><br> Thanks, <br> B</p>`)
 
-      res.status(200).json({ id: user._id, name: user.name, email: user.email })
+      res.status(200).json({ name: user.name, email: user.email })
     } 
     catch (error) {
       return next(error)
@@ -97,7 +97,13 @@ module.exports = {
     }
   },
   verifyEmail: async (req,res) => {
-    
+    try {
+      const user = await User.findByIdAndUpdate(req.params.id, {verified: true})
+      res.status(200).json('Email verified')
+    } 
+    catch (error) {
+      console.log(error)
+    }
   },
   changePassword: async (req,res,next) => {
     if (!validator.isLength(req.body.newPassword, { min: 8 }))
