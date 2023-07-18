@@ -10,9 +10,7 @@ export default function Home(){
     
     return(
         <div>
-            <button onClick={handleClick}>Click Me</button>
-            {/* {display && <Login />} */}
-            <Login dis={display}/>
+        <p></p>
         </div>
     )
 }
