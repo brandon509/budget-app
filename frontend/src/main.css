@@ -1,27 +1,66 @@
 .login{
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    width: 80%;
+    font-size: 20px;
+}
+
+.login button{
+    background: white;
+    border-radius: 4px;
+}
+
+.login input{
+    border-radius: 4px;
+    padding: 3%;
+}
+
+button{
+    border: none;
 }
 
 .login-window{
     background: rgb(38, 37, 41);
     color: white;
     border-radius: 2%;
-    padding: 5%
+    padding: 5%;
+    height: 400px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .google-icon{
-    color:rgb(66, 133, 244)
+    color:rgb(66, 133, 244);
+    font-size: 20px;
 }
 
 .google-sign-in p{
     color: black;
-    padding: 2%;
-
 }
 
 .google-sign-in{
     background: white;
-    border-radius: 2%;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 12%;
+    width: 80%;
+    gap: 10px;
+}
+
+.or{
+    width: 80%; 
+    text-align: center; 
+    border-bottom: 1px solid white; 
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+}
+
+p span{
+    background: rgb(38, 37, 41); 
+    padding:0 10px;
 }

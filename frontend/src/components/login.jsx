@@ -4,16 +4,18 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 export default function Login(){
     return(
         <div className="login-window">
-            <h3>Login</h3>
+            <h3>Login to Budgy</h3>
             <form className='login'>
                 <input type="email" placeholder="email"></input>
                 <input type="password" placeholder="password"></input>
+                <button>Log in</button>
             </form>
-            <button>Login</button>
-            <p>OR</p>
-            <div className="google-sign-in">
-                <p><FontAwesomeIcon className="google-icon" icon={faGoogle} /> Sign in with Google</p> 
-            </div>
+            <p className="or"><span>or</span></p>
+            <button className="google-sign-in">
+                <FontAwesomeIcon className="google-icon" icon={faGoogle} /> 
+                <p>Sign in with Google</p> 
+            </button>
+            <p>Forgot password?</p>
             <p>Don't have an account? Signup</p>
         </div>
     )
