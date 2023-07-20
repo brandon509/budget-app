@@ -8,12 +8,18 @@
 
 .login button{
     background: white;
-    border-radius: 4px;
+    border-radius: 10px;
+    padding: 2%;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
 .login input{
+    border: grey 1px solid;
     border-radius: 4px;
     padding: 3%;
+    background: rgb(38, 37, 41);
+    color: white;
 }
 
 button{
@@ -25,7 +31,7 @@ button{
     color: white;
     border-radius: 2%;
     padding: 5%;
-    height: 400px;
+    height: 500px;
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -43,11 +49,11 @@ button{
 
 .google-sign-in{
     background: white;
-    border-radius: 4px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 12%;
+    height: 7%;
     width: 80%;
     gap: 10px;
 }
@@ -57,7 +63,7 @@ button{
     text-align: center; 
     border-bottom: 1px solid white; 
     line-height: 0.1em;
-    margin: 10px 0 20px;
+    margin: 30px 0 30px;
 }
 
 p span{
