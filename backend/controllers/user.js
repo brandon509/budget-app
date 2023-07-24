@@ -64,7 +64,7 @@ module.exports = {
           if (err) {
             return next(err);
           }
-          return res.status(200).json({id: req.user.id, name: req.user.name})
+          return res.status(200).json({id: req.user.id, name: req.user.name, email: req.user.email})
         })
       })
       (req, res, next)
