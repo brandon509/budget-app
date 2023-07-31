@@ -1,6 +1,4 @@
-import Popup from 'reactjs-popup'
-import Login from '../components/login'
-import Signup from '../components/signup'
+import PopupWindow from './popupWindow'
 
 export default function Header(){
     const user = localStorage.user
@@ -8,29 +6,8 @@ export default function Header(){
     return(
         <div>
             <h3>Budgey</h3>
-            <Popup trigger={<button>Sign up</button>} modal>
-                    {close => (
-                        <div>
-                            <button className="close" onClick={close}>
-                                &times;
-                            </button>
-                            <Signup />
-                        </div>
-                    )} 
-                </Popup>
-
-            {user ? <button>Logout</button> : 
-                <Popup trigger={<button>Log in</button>} modal>
-                    {close => (
-                        <div>
-                            <button className="close" onClick={close}>
-                                &times;
-                            </button>
-                            <Login />
-                        </div>
-                    )}
-                    
-                </Popup>}
+            <PopupWindow item="Sign up"/>
+            {user ? <button>Logout</button> : <PopupWindow item="Sign in"/>}
         </div>
     )
 }

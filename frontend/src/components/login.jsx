@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset, login } from '../features/auth/authSlice'
-import Popup from 'reactjs-popup'
-import Signup from '../components/signup'
+import PopupWindow from "./popupWindow"
 
 export default function Login(){
     const [formData, setFormData] = useState({
@@ -61,16 +60,7 @@ export default function Login(){
                 <p>Sign in with Google</p> 
             </button>
             <p>Forgot password?</p>
-            <p>Don't have an account? <Popup trigger={<button>Sign up</button>} modal>
-                    {close => (
-                        <div>
-                            <button className="close" onClick={close}>
-                                &times;
-                            </button>
-                            <Signup />
-                        </div>
-                    )} 
-                </Popup></p>
+            <p>Don't have an account? <PopupWindow item="Sign up"/></p>
         </div>
     )
     
