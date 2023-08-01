@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-//Log in
 const login = async (user) => {
     const response = await axios.post('http://localhost:8000/login', user, {withCredentials: true})
 
@@ -11,6 +10,12 @@ const login = async (user) => {
     return response.data
 }
 
-const authService = { login }
+const signup = async (user) => {
+    const response = await axios.post('http://localhost:8000/newUser', user, {withCredentials: true})
+
+    return response.data
+}
+
+const authService = { login, signup }
 
 export default authService

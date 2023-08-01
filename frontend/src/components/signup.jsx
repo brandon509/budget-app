@@ -52,11 +52,11 @@ export default function Signup(){
     return(
         <div className="login-window">
             <h3>Join Budgey</h3>
-            <form className="login">
-                <input type="text" placeholder="name" name="name"></input>
-                <input type="email" placeholder="email" name="email"></input>
-                <input type="password" placeholder="password" name="password"></input>
-                <input type="password" placeholder="password" name="confirmPassword"></input>
+            <form className="login" onSubmit={onSubmit}>
+                <input type="text" placeholder="name" name="name" onChange={onChange}></input>
+                <input type="email" placeholder="email" name="email" onChange={onChange}></input>
+                <input type="password" placeholder="password" name="password" onChange={onChange}></input>
+                <input type="password" placeholder="password" name="confirmPassword" onChange={onChange}></input>
                 <button type="submit">Sign up</button>
             </form>
             <p className="or"><span>or</span></p>

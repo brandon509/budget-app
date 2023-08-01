@@ -28,7 +28,7 @@ module.exports = {
         password: req.body.password,
       })
 
-      const url = `http://localhost:8000/verify/${user._id}`
+      const url = `http://localhost:5173/verify/${user._id}`
 
       sendEmail(user.email, `Welcome to {untitled budget}, ${user.name.split(' ')[0]}!`, `<p>Hi ${user.name.split(' ')[0]}, <br><br> Thank you for signing up we hope you enjoy the app! <br><br> Please verify you email here ${url} <br><br> Thanks, <br> B</p>`)
 
