@@ -7,6 +7,8 @@ const initialState = {
     user: user ? user: null,
     isError: false,
     isSuccess: false,
+    isLogin: false,
+    isSignup: false,
     isLoading: false,
     message: ''
 }
@@ -54,6 +56,8 @@ export const authSlice = createSlice({
         reset: (state) => {
             state.isLoading = false
             state.isSuccess = false
+            state.isLogin = false
+            state.isSignup = false
             state.isError = false
             state.message = ''
         }
@@ -66,6 +70,7 @@ export const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
+                state.isLogin = true
                 state.user = action.payload
             })
             .addCase(login.rejected, (state,action) => {
@@ -80,6 +85,7 @@ export const authSlice = createSlice({
             .addCase(signup.fulfilled, (state) => {
                 state.isLoading = false
                 state.isSuccess = true
+                state.isSignup = true
             })
             .addCase(signup.rejected, (state, action) => {
                 state.isLoading = false

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset, login } from '../features/auth/authSlice'
-import PopupWindow from "./popupWindow"
 
 export default function Login(){
     const [formData, setFormData] = useState({
@@ -60,7 +59,6 @@ export default function Login(){
                 <p>Sign in with Google</p> 
             </button>
             <p>Forgot password?</p>
-            <p>Don't have an account? <PopupWindow item="Sign up"/></p>
         </div>
     )
     

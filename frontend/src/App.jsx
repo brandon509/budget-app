@@ -13,10 +13,7 @@ function App(){
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/:id' element={<Profile />} />
-            <Route path='/verify/:id' element={<EmailVerify />} />
-            {/* <Route path='/profile/:id' element={<Profile />} />
-            <Route path='/feed' element={<Feed />} />
-            <Route path='/post/:id' element={<Post />} /> */}
+            <Route path='/verify' element={<EmailVerify />} />
           </Routes>
         </div>
       </Router>

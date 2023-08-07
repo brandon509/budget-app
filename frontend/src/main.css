@@ -30,7 +30,7 @@ button{
     background: rgb(38, 37, 41);
     color: white;
     border-radius: 2%;
-    padding: 5%;
+    /* padding: 3%; */
     height: 500px;
     width: 400px;
     display: flex;
@@ -87,4 +87,21 @@ p span{
 
   .close:hover{
     background: rgb(50, 51, 53);
+  }
+
+  .switch{
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 2px 5px;
+    line-height: 20px;
+    font-size: 16px;
+    bottom: 25px;
+    background: rgb(38, 37, 41);
+    color: white;
+  }
+
+  .modalContent{
+    display: flex;
+    justify-content: center;
   }
