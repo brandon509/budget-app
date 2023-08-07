@@ -54,7 +54,6 @@ export default function Signup(){
                 <input type="password" placeholder="password" name="password" onChange={onChange}></input>
                 <input type="password" placeholder="password" name="confirmPassword" onChange={onChange}></input>
                 <button type="submit">Sign up</button>
-                {/* <button type="submit"><PopupWindow item="success" /></button> */}
             </form>
             <p className="or"><span>or</span></p>
             <button className="google-sign-in">

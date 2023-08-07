@@ -24,6 +24,7 @@
 
 button{
     border: none;
+    cursor: pointer;
 }
 
 .login-window{
@@ -31,8 +32,8 @@ button{
     color: white;
     border-radius: 2%;
     /* padding: 3%; */
-    height: 500px;
-    width: 400px;
+    height: 600px;
+    width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -72,7 +73,6 @@ p span{
 }
 
 .close {
-    cursor: pointer;
     position: absolute;
     display: block;
     padding: 2px 5px;
@@ -90,7 +90,6 @@ p span{
   }
 
   .switch{
-    cursor: pointer;
     position: absolute;
     display: block;
     padding: 2px 5px;
@@ -105,3 +104,7 @@ p span{
     display: flex;
     justify-content: center;
   }
+
+ p.switch{
+    bottom: 30px;
+ }

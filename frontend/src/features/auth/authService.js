@@ -12,7 +12,7 @@ const login = async (user) => {
 
 const signup = async (user) => {
     const response = await axios.post('http://localhost:8000/newUser', user, {withCredentials: true})
-
+    
     return response.data
 }
 

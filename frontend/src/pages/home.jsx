@@ -88,7 +88,7 @@ export default function Home(){
                 <button className='close' onClick={closeModal}>&times;</button>
                 <div className='modalContent'>
                     {modalContent.modal}
-                    <p className='switch'>{modalContent.verbiage}</p>
+                    <p className='switch'>{modalContent.verbiage}</p> 
                     <button onClick={openModal} name={modalContent.buttonName} className='switch'>{modalContent.buttonDisplay}</button>
                 </div>
             </Modal>
