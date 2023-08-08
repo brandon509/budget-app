@@ -48,7 +48,7 @@ export default function Signup(){
     return(
         <div className="login-window">
             <h3>Join Budgey</h3>
-            <form className="login" onSubmit={onSubmit}>
+            <form className="login" onSubmit={onSubmit} noValidate="true">
                 <input type="text" placeholder="name" name="name" onChange={onChange}></input>
                 <input type="email" placeholder="email" name="email" onChange={onChange}></input>
                 <input type="password" placeholder="password" name="password" onChange={onChange}></input>

@@ -48,7 +48,7 @@ export default function Login(){
     return(
         <div className="login-window">
             <h3>Log in to Budgey</h3>
-            <form className='login' onSubmit={onSubmit}>
+            <form className='login' onSubmit={onSubmit} noValidate="true">
                 <input type="email" placeholder="email" name="email" onChange={onChange}></input>
                 <input type="password" placeholder="password" name="password" onChange={onChange}></input>
                 <button type="submit">Log in</button>

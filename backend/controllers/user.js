@@ -49,7 +49,7 @@ module.exports = {
 
       const user = await User.findOne({ email: req.body.email })
       if(user.verified === false){
-        return res.json('Please verify your email before logging in')
+        return res.status(400).json('Please verify your email before logging in')
       }
 
       passport.authenticate("local", (err, user, info) => {
