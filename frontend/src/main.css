@@ -32,7 +32,7 @@ button{
     color: white;
     border-radius: 2%;
     /* padding: 3%; */
-    height: 600px;
+    height: 700px;
     width: 500px;
     display: flex;
     flex-direction: column;
@@ -107,4 +107,40 @@ p span{
 
  p.switch{
     bottom: 30px;
+ }
+
+ .hidden{
+    display: none;
+ }
+
+ .test{
+    position: absolute;
+    height: 200px;
+    background: white;
+    top: 235px;
+    width: 300px;
+    left: 100px;
+    color: black;
+ }
+
+ .pswd-require{
+    list-style: none;
+    font-size: 15px;
+ }
+
+ .icon{
+    background: rgb(251, 235, 230);
+    padding-right: 6px;
+ }
+
+ .validation-error{
+    border: rgb(248, 207, 201) 2px solid;
+    border-left: rgb(202, 64, 57) solid 6px;
+    border-radius: 5px;
+    background: rgb(251, 235, 230);
+    color: rgb(202, 65, 57);
+    padding: 5px;
+    width: 380px;
+    font-size: 15px;
+    margin-top: 0px;
  }
