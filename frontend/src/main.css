@@ -113,19 +113,15 @@ p span{
     display: none;
  }
 
- .test{
-    position: absolute;
-    height: 200px;
-    background: white;
-    top: 235px;
-    width: 300px;
-    left: 100px;
-    color: black;
- }
-
  .pswd-require{
     list-style: none;
     font-size: 15px;
+    padding: 5px;
+    margin: 0px;
+ }
+
+ .pswd-require li{
+    padding-bottom: 2px;
  }
 
  .icon{
@@ -143,4 +139,14 @@ p span{
     width: 380px;
     font-size: 15px;
     margin-top: 0px;
+ }
+
+ .pswd-icon-x{
+    color: rgb(202, 65, 57);
+    padding-right: 4px;
+ }
+
+ .pswd-icon-check{
+    color: green;
+    padding-right: 4px;
  }

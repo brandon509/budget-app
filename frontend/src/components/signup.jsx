@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { faCircleXmark, faCircleCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset, signup } from '../features/auth/authSlice'
+import PasswordRequirements from './passwordRequirements'
 
 export default function Signup(){
     const [formData, setFormData] = useState({
@@ -76,11 +77,11 @@ export default function Signup(){
     }
 
     function openPassword(){
-        document.querySelector('.test').classList.remove('hidden')
+        document.querySelector('.pswd-require').classList.remove('hidden')
     }
 
     function closePassword(){
-        document.querySelector('.test').classList.add('hidden')
+        document.querySelector('.pswd-require').classList.add('hidden')
     }
 
     return(
@@ -88,18 +89,10 @@ export default function Signup(){
             <h3>Join Budgey</h3>
             <form className="login" onSubmit={onSubmit} noValidate={true}>
                 <input type="text" placeholder="name" name="name" onChange={onChange}></input>
-                {passwordVal && <p className='validation-error'><FontAwesomeIcon icon={faTriangleExclamation} className="icon" />The passwords you entered do not match</p>}
                 <input type="email" placeholder="email" name="email" onChange={onChange} onBlur={emailValidation}></input>
                 {emailVal && <p className='validation-error'><FontAwesomeIcon icon={faTriangleExclamation} className="icon" />Invalid email address</p>}
                 <input type="password" placeholder="password" name="password" onChange={onChange} onFocus={openPassword} onBlur={closePassword}></input>
-                <div className="hidden test">
-                    <ul className='pswd-require'>
-                        <li><FontAwesomeIcon icon={password.length > 8 ? faCircleCheck : faCircleXmark} />Be at least 8 characters</li>
-                        <li><FontAwesomeIcon icon={password.match(/[0-9]/) ? faCircleCheck : faCircleXmark} />Contain at least one number</li>
-                        <li><FontAwesomeIcon icon={password.match(/[A-Z]/) ? faCircleCheck : faCircleXmark} />Contain at least one uppercase</li>
-                        <li><FontAwesomeIcon icon={password.match(/[^A-Z0-9]/i) ? faCircleCheck : faCircleXmark} />Contain at least one special character</li>
-                    </ul>
-                </div>
+                <PasswordRequirements password={password} />
                 <input type="password" placeholder="confirm password" name="confirmPassword" onChange={onChange} onBlur={passwordMatch}></input>
                 {passwordVal && <p className='validation-error'><FontAwesomeIcon icon={faTriangleExclamation} className="icon" />The passwords you entered do not match</p>}
                 <button type="submit">Sign up</button>
