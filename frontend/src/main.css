@@ -109,10 +109,6 @@ p span{
     bottom: 30px;
  }
 
- .hidden{
-    display: none;
- }
-
  .pswd-require{
     list-style: none;
     font-size: 15px;
@@ -124,21 +120,32 @@ p span{
     padding-bottom: 2px;
  }
 
- .icon{
+ /* .icon{
     background: rgb(251, 235, 230);
     padding-right: 6px;
- }
+ } */
 
  .validation-error{
-    border: rgb(248, 207, 201) 2px solid;
-    border-left: rgb(202, 64, 57) solid 6px;
-    border-radius: 5px;
-    background: rgb(251, 235, 230);
     color: rgb(202, 65, 57);
-    padding: 5px;
-    width: 380px;
-    font-size: 15px;
-    margin-top: 0px;
+    font-size: 25px;
+    position: absolute;
+    right: 60px;
+ }
+
+ .name-val{
+    top: 70px;
+ }
+
+ .email-val{
+    top: 130px;
+ }
+
+ .password-match-val{
+    top: 245px
+ }
+
+ .password-match-val-moved{
+    top: 345px;
  }
 
  .pswd-icon-x{
@@ -149,4 +156,8 @@ p span{
  .pswd-icon-check{
     color: green;
     padding-right: 4px;
+ }
+
+ .login .val-error{
+    border: rgb(202, 65, 57) solid 1px;
  }

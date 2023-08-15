@@ -15,8 +15,12 @@ export default function Signup(){
         confirmPassword: ''
     })
     const [val, setVal] = useState(true)
+    const [passwordRequirements, setPasswordRequirements] = useState(false)
+    const [isHovering, setIsHovering] = useState(false)
+    const [nameVal, setNameVal] = useState(false)
     const [emailVal, setEmailVal] = useState(false)
     const [passwordVal, setPasswordVal] = useState(false)
+    
 
     const { name, email, password, confirmPassword } = formData
 
@@ -50,51 +54,67 @@ export default function Signup(){
             password,
             confirmPassword
         }
-        if(!val){
+        if(!nameVal && !emailVal && !passwordVal){
             dispatch(signup(userData))
         }
         else{
             console.log("failed validations")
         }
-    }   
+    }  
+    
+    const openPassword = () => {
+        setPasswordRequirements(true)
+    }
+
+    const closePassword = () => {
+        setPasswordRequirements(false)
+    }
     
     const validation = () => {
-        if(name.length === 0) setVal(false)
-        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) setVal(false)
-        if(password.length < 8) setVal(false)
-        if(!password.match(/[0-9]/)) setVal(false)
-        if(!password.match(/[A-Z]/)) setVal(false)
-        if(!password.match(/[^A-Z0-9]/i)) setVal(false)
-        if((password != confirmPassword)) setVal(false)
+        name.length === 0 ? setNameVal(true) : setNameVal(false)
+        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) && email.length > 0 ? setEmailVal(true) : setEmailVal(false)
+
+        if(password.length < 8 || !password.match(/[0-9]/) || !password.match(/[A-Z]/) || !password.match(/[^A-Z0-9]/i) || password != confirmPassword) {
+            setPasswordVal(true)
+        }
+        else{
+            setPasswordVal(false)
+        }
     }
 
-    const emailValidation = () => {
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) ? setEmailVal(true) : setEmailVal(false)
+    function handleMouseOver(){
+        setIsHovering(true)
     }
 
-    const passwordMatch = () => {
-        password != confirmPassword ? setPasswordVal(true) : setPasswordVal(false)
-    }
-
-    function openPassword(){
-        document.querySelector('.pswd-require').classList.remove('hidden')
-    }
-
-    function closePassword(){
-        document.querySelector('.pswd-require').classList.add('hidden')
+    function handleMouseOut(){
+        setIsHovering(false)
     }
 
     return(
         <div className="login-window">
             <h3>Join Budgey</h3>
             <form className="login" onSubmit={onSubmit} noValidate={true}>
-                <input type="text" placeholder="name" name="name" onChange={onChange}></input>
-                <input type="email" placeholder="email" name="email" onChange={onChange} onBlur={emailValidation}></input>
-                {emailVal && <p className='validation-error'><FontAwesomeIcon icon={faTriangleExclamation} className="icon" />Invalid email address</p>}
+                <input 
+                    type="text" 
+                    placeholder="name" 
+                    name="name" 
+                    onChange={onChange} 
+                    onBlur={validation} 
+                    className={nameVal ? 'val-error' : undefined}>
+                </input>
+                {nameVal && 
+                <div 
+                    className='validation-error name-val'
+                    onMouseOver={handleMouseOver} 
+                    onMouseOut={handleMouseOut}>
+                <FontAwesomeIcon icon={faTriangleExclamation} className="icon" />
+                </div>}
+                <input type="email" placeholder="email" name="email" onChange={onChange} onBlur={validation} className={emailVal ? 'val-error' : undefined}></input>
+                {emailVal && <div className='validation-error email-val' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}><FontAwesomeIcon icon={faTriangleExclamation} className="icon" /></div>}
+                {isHovering && <p className='test'>Invalid email address</p>}
                 <input type="password" placeholder="password" name="password" onChange={onChange} onFocus={openPassword} onBlur={closePassword}></input>
-                <PasswordRequirements password={password} />
-                <input type="password" placeholder="confirm password" name="confirmPassword" onChange={onChange} onBlur={passwordMatch}></input>
-                {passwordVal && <p className='validation-error'><FontAwesomeIcon icon={faTriangleExclamation} className="icon" />The passwords you entered do not match</p>}
+                <input type="password" placeholder="confirm password" name="confirmPassword" onChange={onChange} onFocus={openPassword} onBlur={closePassword}></input>
+                {passwordRequirements && <PasswordRequirements password={password} confirmPassword={confirmPassword} />}
                 <button type="submit">Sign up</button>
             </form>
             <p className="or"><span>or</span></p>
