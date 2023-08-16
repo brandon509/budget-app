@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Signup from '../components/signup'
 import Login from '../components/login'
 import SignupSuccess from './signupSuccess'
-import { useNavigate, useSearchParams } from 'react-router-dom'
 
 export default function PopupWindow({ item }){
     const customStyles = {
@@ -39,15 +38,5 @@ export default function PopupWindow({ item }){
                 {item === "Sign up" ? <Signup /> : item === "Sign in" ? <Login /> : <SignupSuccess />}
             </Modal>
         </div>
-        // <Popup trigger={<button>{item}</button>} modal>
-        //             {close => (
-        //                 <div>
-        //                     <button className="close" onClick={close}>
-        //                         &times;
-        //                     </button>
-        //                     {item === "Sign up" ? <Signup /> : <Login /> }
-        //                 </div>
-        //             )} 
-        //         </Popup>
     )
 }

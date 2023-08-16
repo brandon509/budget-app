@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset, signup } from '../features/auth/authSlice'
 import PasswordRequirements from './passwordRequirements'
+import ErrorMessage from './errorMessage'
 
 export default function Signup(){
     const [formData, setFormData] = useState({
@@ -16,9 +17,11 @@ export default function Signup(){
     })
     const [passwordRequirements, setPasswordRequirements] = useState(false)
     const [isHovering, setIsHovering] = useState(false)
+    const [isVal, setIsVal] = useState(false)
     const [nameVal, setNameVal] = useState(false)
     const [emailVal, setEmailVal] = useState(false)
     const [passwordVal, setPasswordVal] = useState(false)
+    const [error, setError] = useState(null)
     
 
     const { name, email, password, confirmPassword } = formData
@@ -30,7 +33,7 @@ export default function Signup(){
 
     useEffect(() => {
         if(isError){
-            console.log(message)
+            setError(message)
         }
         dispatch(reset())
     }, [user, isError, message, navigate, dispatch])
@@ -55,16 +58,13 @@ export default function Signup(){
             dispatch(signup(userData))
         }
         else{
-            console.log("failed validations")
+            setIsVal(true)
+            setError("Please complete the form correctly")
         }
     }  
     
     const openPassword = () => {
         setPasswordRequirements(true)
-    }
-
-    const closePassword = () => {
-        setPasswordRequirements(false)
     }
 
     function handleMouseOver(){
@@ -84,17 +84,7 @@ export default function Signup(){
     }
 
     const passwordValidaiton = () => {
-        if(password.length < 8 || !password.match(/[0-9]/) || !password.match(/[A-Z]/) || !password.match(/[^A-Z0-9]/i) || password != confirmPassword) {
-            setPasswordVal(true)
-        }
-        else{
-            setPasswordVal(false)
-        }
-    }
-    
-    const validation = () => {
-        name.length === 0 ? setNameVal(true) : setNameVal(false)
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)? setEmailVal(true) : setEmailVal(false)
+        setPasswordRequirements(false)
 
         if(password.length < 8 || !password.match(/[0-9]/) || !password.match(/[A-Z]/) || !password.match(/[^A-Z0-9]/i) || password != confirmPassword) {
             setPasswordVal(true)
@@ -126,9 +116,10 @@ export default function Signup(){
                 <input type="email" placeholder="email" name="email" onChange={onChange} onBlur={emailValidation} className={emailVal ? 'val-error' : undefined}></input>
                 {emailVal && <div className='validation-error email-val' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}><FontAwesomeIcon icon={faTriangleExclamation} className="icon" /></div>}
                 {isHovering && <p className='test'>Invalid email address</p>}
-                <input type="password" placeholder="password" name="password" onChange={onChange} onFocus={openPassword} onBlur={closePassword}></input>
-                <input type="password" placeholder="confirm password" name="confirmPassword" onChange={onChange} onFocus={openPassword} onBlur={closePassword}></input>
+                <input type="password" placeholder="password" name="password" onChange={onChange} onFocus={openPassword} onBlur={passwordValidaiton}></input>
+                <input type="password" placeholder="confirm password" name="confirmPassword" onChange={onChange} onFocus={openPassword} onBlur={passwordValidaiton}></input>
                 {passwordRequirements && <PasswordRequirements password={password} confirmPassword={confirmPassword} />}
+                {isVal && <ErrorMessage errorMsg={error}/>}
                 <button type="submit">Sign up</button>
             </form>
             <p className="or"><span>or</span></p>

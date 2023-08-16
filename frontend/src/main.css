@@ -120,11 +120,6 @@ p span{
     padding-bottom: 2px;
  }
 
- /* .icon{
-    background: rgb(251, 235, 230);
-    padding-right: 6px;
- } */
-
  .validation-error{
     color: rgb(202, 65, 57);
     font-size: 25px;
