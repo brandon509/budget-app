@@ -14,7 +14,6 @@ export default function Signup(){
         password: '',
         confirmPassword: ''
     })
-    const [val, setVal] = useState(true)
     const [passwordRequirements, setPasswordRequirements] = useState(false)
     const [isHovering, setIsHovering] = useState(false)
     const [nameVal, setNameVal] = useState(false)
@@ -43,10 +42,8 @@ export default function Signup(){
         }))
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
-
-        validation()
 
         const userData = {
             name,
@@ -54,7 +51,7 @@ export default function Signup(){
             password,
             confirmPassword
         }
-        if(!nameVal && !emailVal && !passwordVal){
+        if(!nameVal && !emailVal && !passwordVal && name && email && password && confirmPassword){
             dispatch(signup(userData))
         }
         else{
@@ -69,18 +66,6 @@ export default function Signup(){
     const closePassword = () => {
         setPasswordRequirements(false)
     }
-    
-    const validation = () => {
-        name.length === 0 ? setNameVal(true) : setNameVal(false)
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) && email.length > 0 ? setEmailVal(true) : setEmailVal(false)
-
-        if(password.length < 8 || !password.match(/[0-9]/) || !password.match(/[A-Z]/) || !password.match(/[^A-Z0-9]/i) || password != confirmPassword) {
-            setPasswordVal(true)
-        }
-        else{
-            setPasswordVal(false)
-        }
-    }
 
     function handleMouseOver(){
         setIsHovering(true)
@@ -88,6 +73,35 @@ export default function Signup(){
 
     function handleMouseOut(){
         setIsHovering(false)
+    }
+
+    const nameValidation = () => {
+        name.length === 0 ? setNameVal(true) : setNameVal(false)
+    }
+
+    const emailValidation = () => {
+        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)? setEmailVal(true) : setEmailVal(false)
+    }
+
+    const passwordValidaiton = () => {
+        if(password.length < 8 || !password.match(/[0-9]/) || !password.match(/[A-Z]/) || !password.match(/[^A-Z0-9]/i) || password != confirmPassword) {
+            setPasswordVal(true)
+        }
+        else{
+            setPasswordVal(false)
+        }
+    }
+    
+    const validation = () => {
+        name.length === 0 ? setNameVal(true) : setNameVal(false)
+        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)? setEmailVal(true) : setEmailVal(false)
+
+        if(password.length < 8 || !password.match(/[0-9]/) || !password.match(/[A-Z]/) || !password.match(/[^A-Z0-9]/i) || password != confirmPassword) {
+            setPasswordVal(true)
+        }
+        else{
+            setPasswordVal(false)
+        }
     }
 
     return(
@@ -99,7 +113,7 @@ export default function Signup(){
                     placeholder="name" 
                     name="name" 
                     onChange={onChange} 
-                    onBlur={validation} 
+                    onBlur={nameValidation} 
                     className={nameVal ? 'val-error' : undefined}>
                 </input>
                 {nameVal && 
@@ -109,7 +123,7 @@ export default function Signup(){
                     onMouseOut={handleMouseOut}>
                 <FontAwesomeIcon icon={faTriangleExclamation} className="icon" />
                 </div>}
-                <input type="email" placeholder="email" name="email" onChange={onChange} onBlur={validation} className={emailVal ? 'val-error' : undefined}></input>
+                <input type="email" placeholder="email" name="email" onChange={onChange} onBlur={emailValidation} className={emailVal ? 'val-error' : undefined}></input>
                 {emailVal && <div className='validation-error email-val' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}><FontAwesomeIcon icon={faTriangleExclamation} className="icon" /></div>}
                 {isHovering && <p className='test'>Invalid email address</p>}
                 <input type="password" placeholder="password" name="password" onChange={onChange} onFocus={openPassword} onBlur={closePassword}></input>
