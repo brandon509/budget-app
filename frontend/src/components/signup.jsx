@@ -15,15 +15,22 @@ export default function Signup(){
         password: '',
         confirmPassword: ''
     })
+    const [nameVal, setNameVal] = useState({
+        pass: false,
+        initial: true
+    })
+    const [emailVal, setEmailVal] = useState({
+        pass: false,
+        initial: true
+    })
+    const [passwordVal, setPasswordVal] = useState({
+        pass: false,
+        initial: true
+    })
     const [passwordRequirements, setPasswordRequirements] = useState(false)
     const [isHovering, setIsHovering] = useState(false)
-    const [isVal, setIsVal] = useState(false)
-    const [nameVal, setNameVal] = useState(false)
-    const [emailVal, setEmailVal] = useState(false)
-    const [passwordVal, setPasswordVal] = useState(false)
     const [error, setError] = useState(null)
     
-
     const { name, email, password, confirmPassword } = formData
 
     const navigate = useNavigate()
@@ -33,7 +40,7 @@ export default function Signup(){
 
     useEffect(() => {
         if(isError){
-            setError(message)
+            setError("Error, please try again later")
         }
         dispatch(reset())
     }, [user, isError, message, navigate, dispatch])
@@ -54,13 +61,8 @@ export default function Signup(){
             password,
             confirmPassword
         }
-        if(!nameVal && !emailVal && !passwordVal && name && email && password && confirmPassword){
-            dispatch(signup(userData))
-        }
-        else{
-            setIsVal(true)
-            setError("Please complete the form correctly")
-        }
+        
+        dispatch(signup(userData))
     }  
     
     const openPassword = () => {
@@ -76,51 +78,98 @@ export default function Signup(){
     }
 
     const nameValidation = () => {
-        name.length === 0 ? setNameVal(true) : setNameVal(false)
+        let pass = true
+        if(name.length === 0){
+            pass = false
+        }
+        
+        setNameVal((prevState) => ({
+            ...prevState,
+            pass: pass,
+            initial: false
+        }))
+        // if(name.length === 0){
+        //     setNameVal((prevState) => ({
+        //         ...prevState,
+        //         pass: false,
+        //         initial: false
+        //     }))
+        // }
+        // else{
+        //     setNameVal((prevState) => ({
+        //         ...prevState,
+        //         pass: true,
+        //         initial: false
+        //     }))
+        // }
+        // name.length === 0 ? setNameVal((prevState) => ({
+        //     ...prevState,
+        //     pass: false,
+        //     initial: false
+        // })) : setNameVal((prevState) => ({
+        //     ...prevState,
+        //     pass: true,
+        //     initial: false
+        // }))
     }
 
     const emailValidation = () => {
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)? setEmailVal(true) : setEmailVal(false)
+        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)? setEmailVal((prevState) => ({
+            ...prevState,
+            pass: false,
+            initial: false
+        })) : setEmailVal((prevState) => ({
+            ...prevState,
+            pass: true,
+            initial: false
+        }))
     }
 
-    const passwordValidaiton = () => {
+    const passwordValidation = () => {
         setPasswordRequirements(false)
-
-        if(password.length < 8 || !password.match(/[0-9]/) || !password.match(/[A-Z]/) || !password.match(/[^A-Z0-9]/i) || password != confirmPassword) {
-            setPasswordVal(true)
+        if(password.length > 8 && password.match(/[0-9]/) && password.match(/[A-Z]/) && password.match(/[^A-Z0-9]/i) && password === confirmPassword) {
+            setPasswordVal((prevState) => ({
+                ...prevState,
+                pass: true,
+                initial: false
+            }))
         }
         else{
-            setPasswordVal(false)
+            setPasswordVal((prevState) => ({
+                ...prevState,
+                pass: false,
+                initial: false
+            }))
         }
     }
 
     return(
         <div className="login-window">
             <h3>Join Budgey</h3>
-            <form className="login" onSubmit={onSubmit} noValidate={true}>
+            <form className="login" onSubmit={onSubmit}>
                 <input 
                     type="text" 
                     placeholder="name" 
                     name="name" 
                     onChange={onChange} 
                     onBlur={nameValidation} 
-                    className={nameVal ? 'val-error' : undefined}>
+                    className={!nameVal.pass && !nameVal.initial ? 'val-error' : undefined}>
                 </input>
-                {nameVal && 
+                {!nameVal.pass && !nameVal.initial && 
                 <div 
                     className='validation-error name-val'
                     onMouseOver={handleMouseOver} 
                     onMouseOut={handleMouseOut}>
                 <FontAwesomeIcon icon={faTriangleExclamation} className="icon" />
                 </div>}
-                <input type="email" placeholder="email" name="email" onChange={onChange} onBlur={emailValidation} className={emailVal ? 'val-error' : undefined}></input>
-                {emailVal && <div className='validation-error email-val' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}><FontAwesomeIcon icon={faTriangleExclamation} className="icon" /></div>}
+                <input type="email" placeholder="email" name="email" onChange={onChange} onBlur={emailValidation} className={!emailVal.pass && !emailVal.initial ? 'val-error' : undefined}></input>
+                {!emailVal.pass && !emailVal.initial && <div className='validation-error email-val' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}><FontAwesomeIcon icon={faTriangleExclamation} className="icon" /></div>}
                 {isHovering && <p className='test'>Invalid email address</p>}
-                <input type="password" placeholder="password" name="password" onChange={onChange} onFocus={openPassword} onBlur={passwordValidaiton}></input>
-                <input type="password" placeholder="confirm password" name="confirmPassword" onChange={onChange} onFocus={openPassword} onBlur={passwordValidaiton}></input>
+                <input type="password" placeholder="password" name="password" onChange={onChange} onFocus={openPassword} onBlur={passwordValidation}></input>
+                <input type="password" placeholder="confirm password" name="confirmPassword" onChange={onChange} onFocus={openPassword} onBlur={passwordValidation}></input>
                 {passwordRequirements && <PasswordRequirements password={password} confirmPassword={confirmPassword} />}
-                {isVal && <ErrorMessage errorMsg={error}/>}
-                <button type="submit">Sign up</button>
+                {/* {isVal && <ErrorMessage errorMsg={error}/>} */}
+                <button type="submit" disabled={!nameVal.pass || !emailVal.pass || !passwordVal.pass ? true : false}>Sign up</button>
             </form>
             <p className="or"><span>or</span></p>
             <button className="google-sign-in">

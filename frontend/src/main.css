@@ -156,3 +156,19 @@ p span{
  .login .val-error{
     border: rgb(202, 65, 57) solid 1px;
  }
+
+ .error-message-box{
+    border: rgb(248, 207, 201) 2px solid;
+    border-left: rgb(202, 64, 57) solid 6px;
+    border-radius: 5px;
+    background: rgb(251, 235, 230);
+    color: rgb(202, 65, 57);
+    padding: 5px;
+    /* text-align: center;
+    overflow-wrap: break-word;  */
+    width: 350x;
+ }
+
+ .test{
+    margin: -15px 0px;
+ }
