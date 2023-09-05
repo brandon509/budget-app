@@ -28,7 +28,8 @@ export default function Signup(){
         initial: true
     })
     const [passwordRequirements, setPasswordRequirements] = useState(false)
-    const [isHovering, setIsHovering] = useState(false)
+    const [isHoveringName, setIsHoveringName] = useState(false)
+    const [isHoveringEmail, setIsHoveringEmail] = useState(false)
     const [error, setError] = useState(null)
     
     const { name, email, password, confirmPassword } = formData
@@ -40,7 +41,7 @@ export default function Signup(){
 
     useEffect(() => {
         if(isError){
-            setError("Error, please try again later")
+            setError("Account associated with the given email already exists")
         }
         dispatch(reset())
     }, [user, isError, message, navigate, dispatch])
@@ -69,12 +70,20 @@ export default function Signup(){
         setPasswordRequirements(true)
     }
 
-    function handleMouseOver(){
-        setIsHovering(true)
+    function handleMouseOverName(){
+        setIsHoveringName(true)
     }
 
-    function handleMouseOut(){
-        setIsHovering(false)
+    function handleMouseOutName(){
+        setIsHoveringName(false)
+    }
+
+    function handleMouseOverEmail(){
+        setIsHoveringEmail(true)
+    }
+
+    function handleMouseOutEmail(){
+        setIsHoveringEmail(false)
     }
 
     const nameValidation = () => {
@@ -88,59 +97,34 @@ export default function Signup(){
             pass: pass,
             initial: false
         }))
-        // if(name.length === 0){
-        //     setNameVal((prevState) => ({
-        //         ...prevState,
-        //         pass: false,
-        //         initial: false
-        //     }))
-        // }
-        // else{
-        //     setNameVal((prevState) => ({
-        //         ...prevState,
-        //         pass: true,
-        //         initial: false
-        //     }))
-        // }
-        // name.length === 0 ? setNameVal((prevState) => ({
-        //     ...prevState,
-        //     pass: false,
-        //     initial: false
-        // })) : setNameVal((prevState) => ({
-        //     ...prevState,
-        //     pass: true,
-        //     initial: false
-        // }))
     }
 
     const emailValidation = () => {
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)? setEmailVal((prevState) => ({
+        let pass = true
+        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+            pass = false
+        }
+        
+        setEmailVal((prevState) => ({
             ...prevState,
-            pass: false,
-            initial: false
-        })) : setEmailVal((prevState) => ({
-            ...prevState,
-            pass: true,
+            pass: pass,
             initial: false
         }))
     }
 
     const passwordValidation = () => {
         setPasswordRequirements(false)
-        if(password.length > 8 && password.match(/[0-9]/) && password.match(/[A-Z]/) && password.match(/[^A-Z0-9]/i) && password === confirmPassword) {
-            setPasswordVal((prevState) => ({
-                ...prevState,
-                pass: true,
-                initial: false
-            }))
+        let pass = true
+
+        if(password.length < 8 || !password.match(/[0-9]/) || !password.match(/[A-Z]/) || !password.match(/[^A-Z0-9]/i) || password !== confirmPassword) {
+            pass = false
         }
-        else{
-            setPasswordVal((prevState) => ({
-                ...prevState,
-                pass: false,
-                initial: false
-            }))
-        }
+        
+        setPasswordVal((prevState) => ({
+            ...prevState,
+            pass: pass,
+            initial: false
+        }))
     }
 
     return(
@@ -158,18 +142,49 @@ export default function Signup(){
                 {!nameVal.pass && !nameVal.initial && 
                 <div 
                     className='validation-error name-val'
-                    onMouseOver={handleMouseOver} 
-                    onMouseOut={handleMouseOut}>
+                    onMouseOver={handleMouseOverName} 
+                    onMouseOut={handleMouseOutName}>
                 <FontAwesomeIcon icon={faTriangleExclamation} className="icon" />
                 </div>}
-                <input type="email" placeholder="email" name="email" onChange={onChange} onBlur={emailValidation} className={!emailVal.pass && !emailVal.initial ? 'val-error' : undefined}></input>
-                {!emailVal.pass && !emailVal.initial && <div className='validation-error email-val' onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}><FontAwesomeIcon icon={faTriangleExclamation} className="icon" /></div>}
-                {isHovering && <p className='test'>Invalid email address</p>}
-                <input type="password" placeholder="password" name="password" onChange={onChange} onFocus={openPassword} onBlur={passwordValidation}></input>
-                <input type="password" placeholder="confirm password" name="confirmPassword" onChange={onChange} onFocus={openPassword} onBlur={passwordValidation}></input>
+                {isHoveringName && <p className='error-hover-box error-name'>Name must be at least 1 character</p>}
+                <input 
+                    type="email" 
+                    placeholder="email" 
+                    name="email" 
+                    onChange={onChange} 
+                    onBlur={emailValidation} 
+                    className={!emailVal.pass && !emailVal.initial ? 'val-error' : undefined}>
+                </input>
+                {!emailVal.pass && !emailVal.initial && 
+                <div 
+                    className='validation-error email-val' 
+                    onMouseOver={handleMouseOverEmail} 
+                    onMouseOut={handleMouseOutEmail}>
+                <FontAwesomeIcon icon={faTriangleExclamation} className="icon" />
+                </div>}
+                {isHoveringEmail && <p className='error-hover-box error-email'>Invalid email address</p>}
+                <input 
+                    type="password" 
+                    placeholder="password" 
+                    name="password" 
+                    onChange={onChange} 
+                    onFocus={openPassword} 
+                    onBlur={passwordValidation}>
+                </input>
+                <input 
+                    type="password" 
+                    placeholder="confirm password" 
+                    name="confirmPassword" 
+                    onChange={onChange} 
+                    onFocus={openPassword} 
+                    onBlur={passwordValidation}>
+                </input>
                 {passwordRequirements && <PasswordRequirements password={password} confirmPassword={confirmPassword} />}
-                {/* {isVal && <ErrorMessage errorMsg={error}/>} */}
-                <button type="submit" disabled={!nameVal.pass || !emailVal.pass || !passwordVal.pass ? true : false}>Sign up</button>
+                <button 
+                    type="submit" 
+                    disabled={!nameVal.pass || !emailVal.pass || !passwordVal.pass ? true : false}>
+                Sign up</button>
+                {error && <ErrorMessage errorMsg={error}/>}
             </form>
             <p className="or"><span>or</span></p>
             <button className="google-sign-in">

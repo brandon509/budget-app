@@ -3,7 +3,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset, login } from '../features/auth/authSlice'
+import { reset, login, loginGoogle } from '../features/auth/authSlice'
 
 export default function Login(){
     const [formData, setFormData] = useState({
@@ -45,6 +45,10 @@ export default function Login(){
         dispatch(login(userData))
     }
 
+    const onClick = () => {
+        dispatch(loginGoogle())
+    }
+
     return(
         <div className="login-window">
             <h3>Log in to Budgey</h3>
@@ -54,7 +58,7 @@ export default function Login(){
                 <button type="submit">Log in</button>
             </form>
             <p className="or"><span>or</span></p>
-            <button className="google-sign-in">
+            <button className="google-sign-in" onClick={onClick}>
                 <FontAwesomeIcon className="google-icon" icon={faGoogle} /> 
                 <p>Sign in with Google</p> 
             </button>

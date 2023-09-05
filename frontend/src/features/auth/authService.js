@@ -16,6 +16,15 @@ const signup = async (user) => {
     return response.data
 }
 
-const authService = { login, signup }
+const loginGoogle = async () => {
+    const response = await axios.get('http://localhost:8000/auth/google')
+
+    if(response.data){
+        localStorage.setItem('user', JSON.stringify(response.data))
+    }
+    return response.data
+}
+
+const authService = { login, signup, loginGoogle }
 
 export default authService
