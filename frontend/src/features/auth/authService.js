@@ -25,6 +25,12 @@ const loginGoogle = async () => {
     return response.data
 }
 
-const authService = { login, signup, loginGoogle }
+const verifyEmail = async (id) => {
+    const response = await axios.put(`http://localhost:8000/verify/${id}`)
+
+    return response.data
+}
+
+const authService = { login, signup, loginGoogle, verifyEmail }
 
 export default authService

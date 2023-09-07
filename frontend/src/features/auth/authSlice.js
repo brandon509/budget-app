@@ -49,6 +49,24 @@ export const signup = createAsyncThunk(
     }
 )
 
+export const verifyEmail = createAsyncThunk(
+    'auth/verifyEmail',
+    async (id, thunkAPI) => {
+        try {
+            return await authService.verifyEmail(id)
+        } 
+        catch (error) {
+            const message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString()
+          return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 export const loginGoogle = createAsyncThunk(
     'auth/loginGoogle',
     async (user, thunkAPI) => {
@@ -124,6 +142,17 @@ export const authSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
+            })
+            .addCase(verifyEmail.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(verifyEmail.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+            })
+            .addCase(verifyEmail.rejected, (state,action) => {
+                state.isLoading = false
+                state.isError = true
             })
     }
 })

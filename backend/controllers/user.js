@@ -112,6 +112,7 @@ module.exports = {
     } 
     catch (error) {
       console.log(error)
+      res.status(400)
     }
   },
   changePassword: async (req,res,next) => {
