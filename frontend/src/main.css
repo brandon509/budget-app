@@ -175,7 +175,7 @@ p span{
     background: white;
     position: absolute;
     border-radius: 4px;
-    margin-left: 230px;
+    margin-left: 190px;
     border: rgb(202, 65, 57) solid 1px;
     color: black;
     padding-top: 10px;
@@ -187,10 +187,10 @@ p span{
  .error-hover-box:before{
     content: "";
     position: absolute;
-    bottom: calc(100% - 10px);
-    left: 20px;
-    height: 20px;
-    width: 20px;
+    bottom: calc(100% - 6px);
+    left: 180px;
+    height: 12px;
+    width: 12px;
     background: white;
     transform: rotate(45deg);
     border-top: inherit;

@@ -107,12 +107,12 @@ module.exports = {
   }},
   verifyEmail: async (req,res) => {
     try {
-      const user = await User.findByIdAndUpdate(req.params.id, {verified: true})
-      res.status(200).json('Email verified')
-    } 
+        const user = await User.findByIdAndUpdate(req.params.id, {verified: true})
+        return res.status(200).json('Verified')
+      }
     catch (error) {
       console.log(error)
-      res.status(400)
+      res.status(400).json('Not a valid verification url')
     }
   },
   changePassword: async (req,res,next) => {
