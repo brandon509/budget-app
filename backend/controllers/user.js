@@ -100,11 +100,8 @@ module.exports = {
     passport.authenticate('google', { scope: ['profile'] })
   },
   authGoogleCallback: async (req,res) => {
-    passport.authenticate('google', { failureRedirect: '/login' }),
-    function(req, res) {
-    // Successful authentication, redirect home.
-      res.status(200);
-  }},
+    passport.authenticate('google', { failureRedirect: '/', successRedirect: '/' })
+    },
   verifyEmail: async (req,res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, {verified: true})

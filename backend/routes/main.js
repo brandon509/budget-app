@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const userController = require("../controllers/user")
+const passport = require("passport")
 const { ensureAuth } = require("../middleware/auth")
 
 router.post('/newUser', userController.newUser)
