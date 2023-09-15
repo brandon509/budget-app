@@ -41,23 +41,24 @@ module.exports = {
   login: async (req, res, next) => {
     try {
       if (!validator.isEmail(req.body.email))
-        return res.status(400).json({ msg: "Please enter a valid email address" })
+        return res.status(401).json({ msg: "Please enter a valid email address" })
       if (validator.isEmpty(req.body.password))
-        return res.status(400).json({ msg: "Password cannot be blank" })
+        return res.status(401).json({ msg: "Password cannot be blank" })
 
       req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false })
 
       const user = await User.findOne({ email: req.body.email })
-      if(user.verified === false){
-        return res.status(400).json('Please verify your email before logging in')
-      }
 
       passport.authenticate("local", (err, user, info) => {
         if (err) {
           return next(err);
         }
         if (!user) {
-          return res.status(400).json(info)
+          return res.status(401).json(info)
+        }
+
+        if(user.verified === false){
+          return res.status(400).json('Please verify your email before attempting to log in')
         }
 
         req.logIn(user, (err) => {

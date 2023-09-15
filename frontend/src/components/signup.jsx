@@ -184,13 +184,13 @@ export default function Signup(){
                     type="submit" 
                     disabled={!nameVal.pass || !emailVal.pass || !passwordVal.pass ? true : false}>
                 Sign up</button>
-                {error && <ErrorMessage errorMsg={error}/>}
             </form>
             <p className="or"><span>or</span></p>
             <button className="google-sign-in">
                 <FontAwesomeIcon className="google-icon" icon={faGoogle} /> 
                 <p>Sign up with Google</p> 
             </button>
+            {error && <ErrorMessage errorMsg={error}/>}
         </div>
     )
 }

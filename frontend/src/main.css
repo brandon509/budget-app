@@ -164,9 +164,9 @@ p span{
     background: rgb(251, 235, 230);
     color: rgb(202, 65, 57);
     padding: 5px;
-    /* text-align: center;
-    overflow-wrap: break-word;  */
-    width: 350x;
+    display: flex;
+    gap: 8px;
+    font-size: 16px;
  }
 
  .error-hover-box{
@@ -242,4 +242,8 @@ p span{
    padding: 0.5%;
    font-weight: bold;
    font-size: 20px;
+ }
+
+ .error-message-box-container{
+   width: 400px;
  }

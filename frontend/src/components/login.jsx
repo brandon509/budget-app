@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset, login, loginGoogle } from '../features/auth/authSlice'
+import ErrorMessage from './errorMessage'
 
 export default function Login(){
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     })
+    const [error, setError] = useState(null)
 
     const { email, password } = formData
     
@@ -20,7 +22,13 @@ export default function Login(){
     
     useEffect(() => {
         if(isError){
-            console.log(message)
+            if(message.includes('400')){
+                setError('Please verify you email before attempting to log in.')
+            }
+            else{
+                setError('Email or password are incorrect. Please try again.')
+            }
+            
         }
         if(isSuccess){
             navigate(`/${user.id}`)
@@ -63,6 +71,7 @@ export default function Login(){
                 <p>Sign in with Google</p> 
             </button>
             <p>Forgot password?</p>
+            {error && <ErrorMessage errorMsg={error}/>}
         </div>
     )
     

@@ -1,15 +1,18 @@
 import Modal from 'react-modal'
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Signup from '../components/signup'
 import Login from '../components/login'
 import SignupSuccess from '../components/signupSuccess'
+import { reset } from '../features/auth/authSlice'
 
 export default function Home(){
 
     const { isSuccess } = useSelector((state) => state.auth)
     const [modalIsOpen, setIsOpen] = useState(false)
     const [modalType, setModalType] = useState(null)
+
+    const dispatch = useDispatch()
 
     const customStyles = {
         content: {
@@ -37,6 +40,7 @@ export default function Home(){
 
     const closeModal = () => {
         setIsOpen(false)
+        dispatch(reset())
     }
 
     let modalContent = {
