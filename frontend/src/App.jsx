@@ -9,7 +9,7 @@ function App(){
     <>
       <Router>
         <div>
-          <Header />
+          {window.location.pathname !== '/' ? <Header />: null}
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/:id' element={<Profile />} />

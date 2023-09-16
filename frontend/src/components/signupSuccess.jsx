@@ -5,5 +5,5 @@ export default function SignupSuccess(){
 }
 
 
-//when go to main page if you are logged in already should by pass
 //add functioning log out button
+//remove header on main screen only
