@@ -31,6 +31,16 @@ const verifyEmail = async (id) => {
     return response.data
 }
 
-const authService = { login, signup, loginGoogle, verifyEmail }
+const logout = async () => {
+    const response = await axios.get('http://localhost:8000/logout', {withCredentials: true})
+
+    if(response.data){
+        localStorage.removeItem('user')
+    }
+
+    return response.data
+}
+
+const authService = { login, signup, loginGoogle, verifyEmail, logout }
 
 export default authService

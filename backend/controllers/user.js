@@ -84,14 +84,8 @@ module.exports = {
         expires: new Date(0)
       })
 
-      req.user = null
+      req.session.user = null
       res.status(200).json('user has logged out')
-      // req.session.destroy((err) => {
-      //   if (err)
-      //     console.log("Error : Failed to destroy the session during logout", err);
-      //   req.user = null;
-      //   return res.status(200).json('Logged out')
-      // })
     }
     catch (error) {
       console.log(error)
@@ -106,7 +100,7 @@ module.exports = {
   verifyEmail: async (req,res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, {verified: true})
-        return res.status(200).json('Verified')
+        return res.status(200).json({ id: user._id})
       }
     catch (error) {
       console.log(error)
