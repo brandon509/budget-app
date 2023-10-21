@@ -182,7 +182,8 @@ export default function Signup(){
                 {passwordRequirements && <PasswordRequirements password={password} confirmPassword={confirmPassword} />}
                 <button 
                     type="submit" 
-                    disabled={!nameVal.pass || !emailVal.pass || !passwordVal.pass ? true : false}>
+                    disabled={!nameVal.pass || !emailVal.pass || !passwordVal.pass ? true : false}
+                    className='submitBtn'>
                 Sign up</button>
             </form>
             <p className="or"><span>or</span></p>

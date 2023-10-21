@@ -1,107 +1,89 @@
-import Modal from 'react-modal'
+import TextInput from '../components/textInput'
 import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import Signup from '../components/signup'
-import Login from '../components/login'
-import SignupSuccess from '../components/signupSuccess'
-import { reset } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { reset } from '../features/auth/authSlice'
 
 export default function Home(){
 
-    const { isSuccess, user } = useSelector((state) => state.auth)
-    const [modalIsOpen, setIsOpen] = useState(false)
-    const [modalType, setModalType] = useState(null)
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    })
 
-    const dispatch = useDispatch()
+    const { email, password } = formData
+    
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const customStyles = {
-        content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-          border: 'none',
-          padding: '0%'
-        }
-    }
-
+    const { user, isError, isSuccess, message } = useSelector((state) => state.auth)
+    
     useEffect(() => {
-        if(isSuccess){
-            setModalType("success")
+        if(isError){
+            if(message.includes("400")){
+                setError("Please verify you email before attempting to log in.")
+            }
+            else{
+                setError("Email or password are incorrect. Please try again.")
+            }
+            
         }
-
-        if(user){
+        if(isSuccess){
             navigate(`/${user.id}`)
         }
-    }, [isSuccess])
-
-    const openModal = e => {
-        setIsOpen(true)
-        setModalType(e.target.name)
-    }
-
-    const closeModal = () => {
-        setIsOpen(false)
         dispatch(reset())
+    }, [user, isError, isSuccess, message, navigate, dispatch])
+
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }))
+
+        return e.target.value
     }
 
-    let modalContent = {
-        modal: null,
-        verbiage: null,
-        buttonName: null,
-        buttonDisplay: null
+    const emailValidation = () => {
+        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+            return false
+        }
+        
+        return true
     }
 
-    switch(modalType){
-        case 'sign-up':
-            modalContent = {
-                modal: <Signup />,
-                verbiage: "Already have an account?",
-                buttonName: "log-in",
-                buttonDisplay: "Log in"
-            }
-            break
-        case 'log-in':
-            modalContent = {
-                modal: <Login />,
-                verbiage: "Don't have an account?",
-                buttonName: "sign-up",
-                buttonDisplay: "Sign up"
-            }
-            break
-        case 'success':
-            modalContent = {
-                modal: <SignupSuccess />,
-                verbiage: null,
-                buttonName: null,
-                buttonDisplay: null
-            }
-            break
-        default:
-            modalContent = {
-                modal: null,
-                verbiage: null,
-                buttonName: null,
-                buttonDisplay: null
-            }
+    const passwordValidation = () => {
+        if(password.length === 0){
+            return false
+        }
+        
+        return true
     }
 
-    return(
-        <div>
-            <button onClick={openModal} name="sign-up">Sign up</button>
-            <button onClick={openModal} name="log-in">Log in</button>
-            <Modal isOpen={modalIsOpen} style={customStyles}>
-                <button className='close' onClick={closeModal}>&times;</button>
-                <div className='modalContent'>
-                    {modalContent.modal}
-                    <p className='switch'>{modalContent.verbiage}</p> 
-                    <button onClick={openModal} name={modalContent.buttonName} className='switch'>{modalContent.buttonDisplay}</button>
-                </div>
-            </Modal>
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+
+        const userData = {
+            email,
+            password
+        }
+        console.log(userData)
+        // dispatch(login(userData))
+    }
+    
+    return (
+        <div className="homePageLayout">
+            <div>
+                <h1 className="title">CENT</h1>
+                <form onSubmit={onSubmit} noValidate={true} className="logInForm">
+                    <TextInput label="Email" type="email" handleChange={onChange} inputValue={email} validation={emailValidation} errorMessage="Input is not valid"/>
+                    <TextInput label="Password" type="password" handleChange={onChange} inputValue={password} validation={passwordValidation} errorMessage="Input is not valid" />
+                    <button type="submit" className="btn">Log in</button>
+                </form>
+            </div>
+            <div className="line"></div>
+            <div class="triangle"></div>
         </div>
+        
     )
 }
