@@ -291,6 +291,7 @@ p span{
    padding: 0px 16px;
    font-size: 12px;
    line-height: 16px;
+   position: absolute;
  }
 
  .inputLabel{
@@ -352,7 +353,7 @@ input:-webkit-autofill:active{
    margin-left: 120px;
    display: flex;
    flex-direction: column;
-   gap: 20px;
+   gap: 40px;
 }
 
 .line{

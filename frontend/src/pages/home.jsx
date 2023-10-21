@@ -2,7 +2,7 @@ import TextInput from '../components/textInput'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset } from '../features/auth/authSlice'
+import { reset, login } from '../features/auth/authSlice'
 
 export default function Home(){
 
@@ -19,15 +19,15 @@ export default function Home(){
     const { user, isError, isSuccess, message } = useSelector((state) => state.auth)
     
     useEffect(() => {
-        if(isError){
-            if(message.includes("400")){
-                setError("Please verify you email before attempting to log in.")
-            }
-            else{
-                setError("Email or password are incorrect. Please try again.")
-            }
+        // if(isError){
+        //     if(message.includes("400")){
+        //         setError("Please verify you email before attempting to log in.")
+        //     }
+        //     else{
+        //         setError("Email or password are incorrect. Please try again.")
+        //     }
             
-        }
+        // }
         if(isSuccess){
             navigate(`/${user.id}`)
         }
@@ -67,8 +67,7 @@ export default function Home(){
             email,
             password
         }
-        console.log(userData)
-        // dispatch(login(userData))
+        dispatch(login(userData))
     }
     
     return (
@@ -82,7 +81,7 @@ export default function Home(){
                 </form>
             </div>
             <div className="line"></div>
-            <div class="triangle"></div>
+            <div className="triangle"></div>
         </div>
         
     )
