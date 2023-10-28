@@ -73,10 +73,10 @@ button{
     margin: 30px 0 30px;
 }
 
-p span{
+/* p span{
     background: rgb(38, 37, 41); 
     padding:0 10px;
-}
+} */
 
 .close {
     position: absolute;
@@ -349,11 +349,14 @@ input:-webkit-autofill:active{
    margin-top: 175px;
 }
 
-.logInForm{
-   margin-left: 120px;
+.form{
    display: flex;
    flex-direction: column;
    gap: 40px;
+}
+
+.logInForm{
+   margin-left: 120px;
 }
 
 .line{
@@ -384,4 +387,37 @@ color: white;
    width: 1000px;
    height: 100vh;
    background: linear-gradient(to bottom right, #fff 0%, #fff 50%, #B6F398 50%, #B6F398 100%);
+}
+
+.formBottom{
+   margin-top: -10px;
+}
+
+.btn:disabled{
+   background: #1D1B201F;
+   color: #1A1C18;
+   cursor: not-allowed;
+}
+
+.link{
+   cursor: pointer;
+   color: #366A21;
+   font-weight: 600;
+}
+
+.signUpPageLayout{
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+
+.totalForm{
+   border: black solid 1px;
+   padding: 25px 50px;
+   margin-top: 20px;
+}
+
+.signUpTitle{
+   text-align: center;
+   font-size: 30px;
 }

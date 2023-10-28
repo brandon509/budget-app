@@ -21,7 +21,7 @@ export default function Header(){
     }
     return(
         <div>
-            {location.pathname != '/' && <h1>Budgey</h1>}
+            {/* {location.pathname != '/' && <h1>Budgey</h1>} */}
             {user && <button onClick={onClick}>Logout</button>}
         </div>
     )
