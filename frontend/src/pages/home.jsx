@@ -16,6 +16,8 @@ export default function Home(){
         password: false
     })
 
+    const [error, setError] = useState(null)
+
     const { email, password } = formData
     
     const navigate = useNavigate()
@@ -23,17 +25,16 @@ export default function Home(){
 
     const { user, isError, isSuccess, message } = useSelector((state) => state.auth)
     
-    useEffect(() => {
-        
-        // if(isError){
-        //     if(message.includes("400")){
-        //         setError("Please verify you email before attempting to log in.")
-        //     }
-        //     else{
-        //         setError("Email or password are incorrect. Please try again.")
-        //     }
+    useEffect(() => {        
+        if(isError){
+            if(message.includes("400")){
+                setError("Email not verified.")
+            }
+            else{
+                setError("Invalid email or password.")
+            }
             
-        // }
+        }
         if(isSuccess){
             navigate(`/${user.id}`)
         }
@@ -97,6 +98,7 @@ export default function Home(){
         <div className="homePageLayout">
             <div>
                 <h1 className="title">CENT</h1>
+                {error && <p className='error'>{error}</p>}
                 <form onSubmit={onSubmit} noValidate={true} className="form logInForm">
                     <TextInput label="Email" type="email" name={"email"} handleChange={onChange} inputValue={email} validation={emailValidation} errorMessage="Input is not valid"/>
                     <TextInput label="Password" type="password" name="password" handleChange={onChange} inputValue={password} validation={passwordValidation} errorMessage="Input is not valid" />

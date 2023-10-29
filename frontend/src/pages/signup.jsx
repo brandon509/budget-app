@@ -30,8 +30,7 @@ export default function Signup(){
 
     useEffect(() => {
         if(isError){
-            setError("Account associated with the given email already exists")
-            console.log('Account already exists')
+            setError("Account already exists.")
         }
         dispatch(reset())
     }, [user, isError, message, navigate, dispatch])
@@ -124,7 +123,8 @@ export default function Signup(){
         <div className='signUpPageLayout'>
             <div className='totalForm'>
                 <h2 className='signUpTitle'>Sign up for Cent</h2>
-                <form onSubmit={onSubmit} noValidate={true} className="form signUpForm">
+                {error && <p className='error signupError'>{error}</p>}
+                <form onSubmit={onSubmit} noValidate={true} className="form">
                     <TextInput label="Name" type="text" name="name" handleChange={onChange} inputValue={name} validation={nameValidation} errorMessage="Input is not valid"/>
                     <TextInput label="Email" type="email" name="email" handleChange={onChange} inputValue={email} validation={emailValidation} errorMessage="Input is not valid"/>
                     <TextInput label="Password" type="password" name="password" handleChange={onChange} inputValue={password} validation={passwordValidation} errorMessage="Input is not valid" />

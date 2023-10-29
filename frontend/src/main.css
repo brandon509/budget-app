@@ -352,7 +352,7 @@ input:-webkit-autofill:active{
 .form{
    display: flex;
    flex-direction: column;
-   gap: 40px;
+   gap: 28px;
 }
 
 .logInForm{
@@ -420,4 +420,19 @@ color: white;
 .signUpTitle{
    text-align: center;
    font-size: 30px;
+}
+
+.error{
+   text-align: center;
+   margin-left: 120px;
+   background: #BA1A1A;
+   color: white;
+   border-radius: 4px;
+   padding: 8px;
+   font-size: 16px;
+   line-height: 24px;
+}
+
+.signupError{
+   margin-left: 0px;
 }
