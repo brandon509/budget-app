@@ -91,12 +91,6 @@ module.exports = {
       console.log(error)
     }
   },
-  authGoogle: async (req,res) => {
-    passport.authenticate('google', { scope: ['profile'] })
-  },
-  authGoogleCallback: async (req,res) => {
-    passport.authenticate('google', { failureRedirect: '/', successRedirect: '/' })
-    },
   verifyEmail: async (req,res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, {verified: true})
@@ -131,6 +125,22 @@ module.exports = {
         return res.status(400).json('Your current password does not match what you have entered')
       }
     })
+  },
+  resetPasswordEmail: async (req,res) => {
+    const user = await User.findOne({ email: req.body.email })
+    if(user){
+      sendEmail(user.email, 'Password reset request', `<p>Hi ${user.name.split(' ')[0]}, <br><br> We have recieved a request to reset your password. If this was you, please follow the below instructions, otherwise please igrnore this. <br><br> <br><br> Thanks, <br> B</p>`)
+      res.json('It worked')
+    }
+  },
+  resetPassword: async (req,res,next) => {
+    try{
+      const user = await User.findOneAndUpdate({ _id:req.params.id }, {password: req.body.password})
+      return res.json('It was changed')
+    }
+    catch(error){
+      return next(error)
+    }
   },
   updateProfile: async (req,res) => {
     const user = await User.findByIdAndUpdate(req.user.id, { name: req.body.name, email: req.body.email })

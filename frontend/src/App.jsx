@@ -5,6 +5,7 @@ import Profile from './pages/profile'
 import EmailVerify from './pages/emailVerify'
 import Signup from './pages/signup'
 import Login from './pages/login'
+import ForgotPassword from './pages/forgotPassword'
 import Test from './pages/test'
 
 function App(){
@@ -17,6 +18,7 @@ function App(){
             <Route path='/' element={<Home />} />
             <Route path='/account/signup' element={<Signup />} />
             <Route path='/account/login' element={<Login />} />
+            <Route path='/account/password/reset' element={<ForgotPassword />} />
             <Route path='/:id' element={<Profile />} />
             <Route path='/verify/:id' element={<EmailVerify />} />
             <Route path='/test' element={<Test />} />
