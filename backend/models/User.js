@@ -15,21 +15,22 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    partner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
     verified: {
       type: Boolean,
       required: true,
       default: false
+    },
+    lastLoginDate: {
+      type: Date
+    },
+    lastLogoutDate: {
+      type: Date
     }
 })
 
 // New user password hash middleware
 UserSchema.pre("save", function save(next) {
     const user = this
-    console.log(user)
     if (!user.isModified("password")) {
       return next()
     }

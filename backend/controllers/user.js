@@ -61,10 +61,11 @@ module.exports = {
           return res.status(400).json('Please verify your email before attempting to log in')
         }
 
-        req.logIn(user, (err) => {
+        req.logIn(user, async (err) => {
           if (err) {
             return next(err);
           }
+          await User.findByIdAndUpdate(user._id, {lastLoginDate: Date.now()})
           return res.status(200).json({id: req.user.id, name: req.user.name, email: req.user.email})
         })
       })
@@ -75,6 +76,7 @@ module.exports = {
     }
   },
   logout: async (req,res,next) => {
+    const user = req.user
     try {
       req.logout(() => {
           console.log('User has logged out')
@@ -85,6 +87,7 @@ module.exports = {
       })
 
       req.session.user = null
+      await User.findByIdAndUpdate(user.id, {lastLogoutDate: Date.now()})
       res.status(200).json('user has logged out')
     }
     catch (error) {
@@ -126,17 +129,72 @@ module.exports = {
       }
     })
   },
-  resetPasswordEmail: async (req,res) => {
-    const user = await User.findOne({ email: req.body.email })
-    if(user){
-      sendEmail(user.email, 'Password reset request', `<p>Hi ${user.name.split(' ')[0]}, <br><br> We have recieved a request to reset your password. If this was you, please follow the below instructions, otherwise please igrnore this. <br><br> <br><br> Thanks, <br> B</p>`)
-      res.json('It worked')
+  resetPasswordRequest: async (req,res) => {
+    try{
+      const user = await User.findOne({ email: req.body.email })
+      
+      if(!user){
+        return res.status(400).json("User not found")
+      }
+
+      const { id, lastLoginDate, password, email } = user
+      const timeStamp = btoa(Date.now())
+      const ident = btoa(id)
+      const toHash = timeStamp + id + lastLoginDate + password + email
+
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) {
+          return err
+        }
+        bcrypt.hash(toHash, salt, (err, hash) => {
+          if (err) {
+            return err
+          }
+          const url = `http://localhost:8000/resetPassword/${ident}/${timeStamp}-${hash.replaceAll('/','slash')}`
+          res.json(url)
+
+          // sendEmail(email, 'Password reset request', `<p>Hi, <br><br> We have recieved a request to reset your password. If this was you, please follow the below instructions, otherwise please igrnore this. ${url} <br><br> <br><br> Thanks, <br> B</p>`)
+        })
+      })
+
+      // res.status(200).json('Instructions sent')
+    }
+    catch(error){
+      console.log(error)
     }
   },
   resetPassword: async (req,res,next) => {
     try{
-      const user = await User.findOneAndUpdate({ _id:req.params.id }, {password: req.body.password})
-      return res.json('It was changed')
+      const urlTime = atob(req.params.time)
+      const currentTime = Date.now()
+     
+      if(currentTime - urlTime > 600000){
+        return res.status(400).json("Link has expired")
+      }
+
+      const userId = atob(req.params.ident)
+      const user = await User.findById(userId)
+
+      if(!user){
+        return res.status(400).json("Invalid user")
+      }
+      
+      const { id, lastLoginDate, password, email } = user
+      const toHash = req.params.time + userId + lastLoginDate + password + email
+
+      
+      bcrypt.compare(toHash, req.params.hash.replaceAll('slash','/'), async (err, isMatch) => {
+        if(err){
+          console.log(err)
+        }
+
+        if(!isMatch){
+          return res.status(400).json('Reset link is invalid')
+        }
+
+        const user = await User.findOneAndUpdate({ _id: id }, {password: req.body.password})
+        return res.status(200).json('Password changed successfully')
+      })
     }
     catch(error){
       return next(error)
