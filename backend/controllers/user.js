@@ -137,10 +137,10 @@ module.exports = {
         return res.status(400).json("User not found")
       }
 
-      const { id, lastLoginDate, password, email } = user
+      const { id, lastLoginDate, email } = user
       const timeStamp = btoa(Date.now())
       const ident = btoa(id)
-      const toHash = timeStamp + id + lastLoginDate + password + email
+      const toHash = id + email + lastLoginDate.toISOString()
 
       bcrypt.genSalt(10, (err, salt) => {
         if (err) {
@@ -179,9 +179,8 @@ module.exports = {
         return res.status(400).json("Invalid user")
       }
       
-      const { id, lastLoginDate, password, email } = user
-      const toHash = req.params.time + userId + lastLoginDate + password + email
-
+      const { id, lastLoginDate, email } = user
+      const toHash = userId + email + lastLoginDate.toISOString()
       
       bcrypt.compare(toHash, req.params.hash.replaceAll('slash','/'), async (err, isMatch) => {
         if(err){
