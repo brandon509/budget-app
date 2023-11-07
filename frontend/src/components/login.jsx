@@ -3,7 +3,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset, login, loginGoogle } from '../features/auth/authSlice'
+import { reset, login } from '../features/auth/authSlice'
 import ErrorMessage from './errorMessage'
 
 export default function Login(){
@@ -54,7 +54,7 @@ export default function Login(){
     }
 
     const onClick = () => {
-        dispatch(loginGoogle())
+        
     }
 
     return(

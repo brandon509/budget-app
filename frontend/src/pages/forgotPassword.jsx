@@ -1,13 +1,29 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset, login } from '../features/auth/authSlice'
+import { reset, resetPasswordRequest } from '../features/auth/authSlice'
 import TextInput from '../components/textInput'
 
 export default function ForgotPassword(){
 
     const [email,setEmail] = useState('')
     const [emailVal, setEmailVal] = useState(false)
+    const [successMessage, setSuccessMessage] = useState('')
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const { isError, isSuccess, message } = useSelector((state) => state.auth)
+
+    useEffect(() => {        
+        if(isError){
+            console.log(message)
+        }
+        if(isSuccess){
+            setSuccessMessage(message)
+        }
+        dispatch(reset())
+    }, [isError, isSuccess, message, dispatch])
 
     const onChange = (e) => {
        setEmail(e.target.value)
@@ -15,6 +31,8 @@ export default function ForgotPassword(){
 
     const onSubmit = (e) => {
         e.preventDefault()
+
+        dispatch(resetPasswordRequest({ email: email }))
     }
 
     const emailValidation = () => {
@@ -26,15 +44,23 @@ export default function ForgotPassword(){
         return true
     }
 
+    const onClick = () => {
+        navigate('/')
+    }
+
     return(
         <div className='signUpPageLayout'>
             <div className='totalForm'>
                 <h2 className='signUpTitle'>Reset password</h2>
-                <p className='resetPasswordInstructions'>To reset your password, enter your email below. If an account associated with that email exists an email will be sent with instruction to reset your password.</p>
-                <form onSubmit={onSubmit} noValidate={true} className="form">
+                {!successMessage && <p className='resetPasswordInstructions'>To reset your password, enter your email below. If an account associated with that email exists an email will be sent with instructions to reset your password.</p>}
+                {successMessage && <div>
+                    <p className='messageWrap'>{successMessage}</p>
+                    <button className='btn' onClick={onClick}>Home</button>
+                </div>}
+                {!successMessage && <form onSubmit={onSubmit} noValidate={true} className="form">
                     <TextInput label="Email" type="email" name="email" handleChange={onChange} inputValue={email} validation={emailValidation} errorMessage="Input is not valid"/>
                     <button type="submit" className="btn" disabled={!email}>Reset</button>
-                </form>
+                </form>}
             </div>
         </div>
     )

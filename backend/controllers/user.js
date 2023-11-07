@@ -137,7 +137,7 @@ module.exports = {
         return res.status(400).json("User not found")
       }
 
-      const { id, lastLoginDate, email } = user
+      const { id, name, lastLoginDate, email } = user
       const timeStamp = btoa(Date.now())
       const ident = btoa(id)
       const toHash = id + email + lastLoginDate.toISOString()
@@ -150,14 +150,13 @@ module.exports = {
           if (err) {
             return err
           }
-          const url = `http://localhost:8000/resetPassword/${ident}/${timeStamp}-${hash.replaceAll('/','slash')}`
-          res.json(url)
+          const url = `http://localhost:5173/account/password/reset/${ident}/${timeStamp}/${hash.replaceAll('/','slash').replaceAll('.','period')}`
 
-          // sendEmail(email, 'Password reset request', `<p>Hi, <br><br> We have recieved a request to reset your password. If this was you, please follow the below instructions, otherwise please igrnore this. ${url} <br><br> <br><br> Thanks, <br> B</p>`)
+          sendEmail(email, 'Reset password instructions', `<p>Hi ${name.split(' ')[0]} , <br><br> Someone has requested a link to change your passowrd. If this was you, it can be changed using the link below. <br><br> ${url} <br><br> If you didn't request it, please ignore this email.</p>`)
         })
       })
 
-      // res.status(200).json('Instructions sent')
+      res.status(200).json('Please check your email for password reset instructions')
     }
     catch(error){
       console.log(error)
@@ -182,7 +181,7 @@ module.exports = {
       const { id, lastLoginDate, email } = user
       const toHash = userId + email + lastLoginDate.toISOString()
       
-      bcrypt.compare(toHash, req.params.hash.replaceAll('slash','/'), async (err, isMatch) => {
+      bcrypt.compare(toHash, req.params.hash.replaceAll('slash','/').replaceAll('period','.'), async (err, isMatch) => {
         if(err){
           console.log(err)
         }

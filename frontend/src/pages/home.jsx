@@ -90,8 +90,12 @@ export default function Home(){
         dispatch(login(userData))
     }
 
-    const onClick = () => {
+    const onClickSignup = () => {
         navigate('/account/signup')
+    }
+
+    const onClickForgot = () => {
+        navigate('/account/password/resetRequest')
     }
     
     return (
@@ -103,8 +107,8 @@ export default function Home(){
                     <TextInput label="Email" type="email" name={"email"} handleChange={onChange} inputValue={email} validation={emailValidation} errorMessage="Input is not valid"/>
                     <TextInput label="Password" type="password" name="password" handleChange={onChange} inputValue={password} validation={passwordValidation} errorMessage="Input is not valid" />
                     <button type="submit" className="btn" disabled={!validation.email || !validation.password ? true : false}>Log in</button>
-                    <p className='formBottom'>Forgot password?</p>
-                    <p className='formBottom'>Don't have an account? <span className='link' onClick={onClick}>Sign up</span></p>
+                    <p className='formBottom link' onClick={onClickForgot}>Forgot password?</p>
+                    <p className='formBottom'>Don't have an account? <span className='link' onClick={onClickSignup}>Sign up</span></p>
                 </form>
             </div>
             <div className="line"></div>

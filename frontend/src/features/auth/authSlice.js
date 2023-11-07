@@ -49,6 +49,24 @@ export const signup = createAsyncThunk(
     }
 )
 
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async (thunkAPI) => {
+        try {
+            return await authService.logout()
+        } 
+        catch (error) {
+            const message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString()
+          return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 export const verifyEmail = createAsyncThunk(
     'auth/verifyEmail',
     async (id, thunkAPI) => {
@@ -67,11 +85,11 @@ export const verifyEmail = createAsyncThunk(
     }
 )
 
-export const loginGoogle = createAsyncThunk(
-    'auth/loginGoogle',
-    async (user, thunkAPI) => {
+export const resetPasswordRequest = createAsyncThunk(
+    'auth/resetPasswordRequest',
+    async (email, thunkAPI) => {
         try {
-            return await authService.loginGoogle()
+            return await authService.resetPasswordRequest(email)
         } 
         catch (error) {
             const message =
@@ -85,11 +103,11 @@ export const loginGoogle = createAsyncThunk(
     }
 )
 
-export const logout = createAsyncThunk(
-    'auth/logout',
-    async (thunkAPI) => {
+export const resetPassword = createAsyncThunk(
+    'auth/resetPassword',
+    async (data, thunkAPI) => {
         try {
-            return await authService.logout()
+            return await authService.resetPassword(data)
         } 
         catch (error) {
             const message =
@@ -133,21 +151,6 @@ export const authSlice = createSlice({
                 state.message = action.payload
                 state.user = null
             })
-            .addCase(loginGoogle.pending, (state) => {
-                state.isLoading = true
-            })
-            .addCase(loginGoogle.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.isSuccess = true
-                state.isLogin = true
-                state.user = action.payload
-            })
-            .addCase(loginGoogle.rejected, (state,action) => {
-                state.isLoading = false
-                state.isError = true
-                state.message = action.payload
-                state.user = null
-            })
             .addCase(signup.pending, (state) => {
                 state.isLoading = true
             })
@@ -161,18 +164,6 @@ export const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
-            .addCase(verifyEmail.pending, (state) => {
-                state.isLoading = true
-            })
-            .addCase(verifyEmail.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.isSuccess = true
-                state.message = action.payload
-            })
-            .addCase(verifyEmail.rejected, (state) => {
-                state.isLoading = false
-                state.isError = true
-            })
             .addCase(logout.pending, (state) => {
                 state.isLoading = true
             })
@@ -185,6 +176,43 @@ export const authSlice = createSlice({
             .addCase(logout.rejected, (state) => {
                 state.isLoading = false
                 state.isError = true
+            })
+            .addCase(verifyEmail.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(verifyEmail.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload
+            })
+            .addCase(verifyEmail.rejected, (state) => {
+                state.isLoading = false
+                state.isError = true
+            })
+            .addCase(resetPasswordRequest.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(resetPasswordRequest.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload
+            })
+            .addCase(resetPasswordRequest.rejected, (state) => {
+                state.isLoading = false
+                state.isError = true
+            })
+            .addCase(resetPassword.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(resetPassword.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.message = action.payload
+            })
+            .addCase(resetPassword.rejected, (state) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
             })
     }
 })
