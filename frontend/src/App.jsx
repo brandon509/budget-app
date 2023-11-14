@@ -22,7 +22,7 @@ function App(){
             <Route path='/account/password/resetRequest' element={<ForgotPassword />} />
             <Route path='/account/password/reset/:ident/:timeStamp/:hash' element={<PasswordReset />} />
             <Route path='/:id' element={<Profile />} />
-            <Route path='/verify/:id' element={<EmailVerify />} />
+            <Route path='/account/verify/:id' element={<EmailVerify />} />
             <Route path='/test' element={<Test />} />
           </Routes>
         </div>

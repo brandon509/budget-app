@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset, resetPasswordRequest } from '../features/auth/authSlice'
 import TextInput from '../components/textInput'
+import { emailVal } from '../scripts/validation'
 
 export default function ForgotPassword(){
 
     const [email,setEmail] = useState('')
-    const [emailVal, setEmailVal] = useState(false)
     const [successMessage, setSuccessMessage] = useState('')
 
     const dispatch = useDispatch()
@@ -35,17 +35,20 @@ export default function ForgotPassword(){
         dispatch(resetPasswordRequest({ email: email }))
     }
 
-    const emailValidation = () => {
-        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
-            setEmailVal(false)
-            return false
-        }
-        setEmailVal(true)
-        return true
-    }
+    const emailValidation = emailVal(email)
 
     const onClick = () => {
         navigate('/')
+    }
+
+    const emailInput = {
+        label: "Email",
+        type: "email",
+        name: "email",
+        handleChange: onChange,
+        inputValue: email,
+        validation: emailValidation,
+        errorMessage: 'Input is not valid'
     }
 
     return(
@@ -58,8 +61,8 @@ export default function ForgotPassword(){
                     <button className='btn' onClick={onClick}>Home</button>
                 </div>}
                 {!successMessage && <form onSubmit={onSubmit} noValidate={true} className="form">
-                    <TextInput label="Email" type="email" name="email" handleChange={onChange} inputValue={email} validation={emailValidation} errorMessage="Input is not valid"/>
-                    <button type="submit" className="btn" disabled={!email}>Reset</button>
+                    <TextInput {...emailInput} />
+                    <button type="submit" className="btn" disabled={!emailValidation}>Reset</button>
                 </form>}
             </div>
         </div>

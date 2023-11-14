@@ -28,7 +28,7 @@ module.exports = {
         password: req.body.password,
       })
 
-      const url = `http://localhost:5173/verify/${user._id}`
+      const url = `http://localhost:5173/account/verify/${user._id}`
 
       sendEmail(user.email, `Welcome to {untitled budget}, ${user.name.split(' ')[0]}!`, `<p>Hi ${user.name.split(' ')[0]}, <br><br> Thank you for signing up we hope you enjoy the app! <br><br> Please verify you email here ${url} <br><br> Thanks, <br> B</p>`)
 
@@ -96,8 +96,13 @@ module.exports = {
   },
   verifyEmail: async (req,res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, {verified: true})
-        return res.status(200).json({ id: user._id})
+        const user = await User.findOne({ _id: req.params.id })
+        if(!user){
+          return res.status(400).json('Not a valid verification url')
+        }
+
+        const update = await User.updateOne({ _id: user._id, verified: true })
+        return res.json('it worked')
       }
     catch (error) {
       console.log(error)

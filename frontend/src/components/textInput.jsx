@@ -16,7 +16,7 @@ export default function TextInput({ label, type, name, supporting, handleChange,
             setLabelVisable(false)
         }
 
-        setPassValidation(validation())
+        setPassValidation(validation)
     }
 
     return (

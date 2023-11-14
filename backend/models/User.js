@@ -21,7 +21,8 @@ const UserSchema = new mongoose.Schema({
       default: false
     },
     lastLoginDate: {
-      type: Date
+      type: Date,
+      default: Date.now()
     },
     lastLogoutDate: {
       type: Date

@@ -3,16 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset, resetPassword } from '../features/auth/authSlice'
 import TextInput from '../components/textInput'
+import { passwordVal, confirmPasswordVal } from '../scripts/validation'
 
 export default function passwordReset(){
     const [formData, setFormData] = useState({
         password: '',
         confirmPassword: ''
-    })
-
-    const [validation, setValidation] = useState({
-        password: false,
-        confirmPassword: false
     })
 
     const [error, setError] = useState('')
@@ -57,34 +53,27 @@ export default function passwordReset(){
         dispatch(resetPassword(data))
     }
 
-    const passwordValidation = () => {
-        if(password.length < 8 || !password.match(/[0-9]/) || !password.match(/[A-Z]/) || !password.match(/[^A-Z0-9]/i)) {
-            setValidation((prevState) => ({
-                ...prevState,
-                password: false
-            }))
-            return false
-        }
-        setValidation((prevState) => ({
-            ...prevState,
-            password: true
-        }))
-        return true
+    const passwordValidation = passwordVal(password)
+    const confirmPasswordValidation = confirmPasswordVal(password, confirmPassword)
+
+    const passwordInput = {
+        label: "Password",
+        type: "password",
+        name: "password",
+        handleChange: onChange,
+        inputValue: password,
+        validation: passwordValidation,
+        errorMessage: 'Input is not valid'
     }
 
-    const confirmPasswordValidation = () => {
-        if(password !== confirmPassword){
-            setValidation((prevState) => ({
-                ...prevState,
-                confirmPassword: false
-            }))
-            return false
-        }
-        setValidation((prevState) => ({
-            ...prevState,
-            confirmPassword: true
-        }))
-        return true
+    const confirmPasswordInput = {
+        label: "Confirm Password",
+        type: "password",
+        name: "confirmPassword",
+        handleChange: onChange,
+        inputValue: confirmPassword,
+        validation: confirmPasswordValidation,
+        errorMessage: 'Passwords do not match'
     }
 
     return(
@@ -93,9 +82,9 @@ export default function passwordReset(){
                 <h2 className='signUpTitle'>Reset password</h2>
                 {error && <p className='error signupError'>{error}</p>}
                 <form onSubmit={onSubmit} noValidate={true} className="form">
-                    <TextInput label="Password" type="password" name="password" handleChange={onChange} inputValue={password} validation={passwordValidation} errorMessage="Input is not valid" />
-                    <TextInput label="Confirm Password" type="password" name="confirmPassword" handleChange={onChange} inputValue={confirmPassword} validation= {confirmPasswordValidation} errorMessage="Passwords do not match" />
-                    <button type="submit" className="btn" disabled={!validation.password || !validation.confirmPassword ? true : false}>Reset</button>
+                    <TextInput {...passwordInput} />
+                    <TextInput {...confirmPasswordInput} />
+                    <button type="submit" className="btn" disabled={!passwordValidation || !confirmPasswordValidation}>Reset</button>
                 </form>
             </div>
         </div>
