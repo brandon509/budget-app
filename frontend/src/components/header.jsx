@@ -16,13 +16,19 @@ export default function Header(){
         }
     }, [isSuccess, navigate, dispatch])
 
-    const onClick = () => {
+    const onClickHome = () => {
+        navigate('/')
+    }
+
+    const onClickLogout = () => {
         dispatch(logout())
     }
+
     return(
-        <div>
+        <div className="header">
+            {location.pathname.includes('/account/verify') && <h1 className="header-title" onClick={onClickHome}>CENT</h1>}
             {/* {location.pathname != '/' && <h1>Budgey</h1>} */}
-            {user && <button onClick={onClick}>Logout</button>}
+            {user && <button onClick={onClickLogout}>Logout</button>}
         </div>
     )
 }

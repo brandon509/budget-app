@@ -30,9 +30,13 @@ export default function Login(){
             }
             
         }
-        if(isSuccess){
+
+        if(user){
             navigate(`/${user.id}`)
         }
+        // if(isSuccess){
+        //     navigate(`/${user.id}`)
+        // }
         dispatch(reset())
     }, [user, isError, isSuccess, message, navigate, dispatch])
 

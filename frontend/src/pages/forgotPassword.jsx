@@ -13,7 +13,7 @@ export default function ForgotPassword(){
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { isError, isSuccess, message } = useSelector((state) => state.auth)
+    const { isError, isSuccess, message, user } = useSelector((state) => state.auth)
 
     useEffect(() => {        
         if(isError){
@@ -21,6 +21,9 @@ export default function ForgotPassword(){
         }
         if(isSuccess){
             setSuccessMessage(message)
+        }
+        if(user){
+            navigate(`/${user.id}`)
         }
         dispatch(reset())
     }, [isError, isSuccess, message, dispatch])

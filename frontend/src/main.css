@@ -212,6 +212,13 @@ button{
     margin-top: 120px;
  }
 
+ .email-verify{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+ }
+
  .email-verify-success{
    border-radius: 2%;
    width: 25%;
@@ -341,7 +348,7 @@ input:-webkit-autofill:active{
 
 .title{
    font-weight: 600;
-   font-family: 'Josefin Sans';
+   /* font-family: 'Josefin Sans'; */
    letter-spacing: 1.4px;
    font-size: 80px;
    color: #366A21;
@@ -455,4 +462,20 @@ color: white;
    font-size: 14px;
    line-height: 24px;
    text-align: center;
+}
+
+.header-title{
+   font-weight: 600;
+   letter-spacing: 1.4px;
+   font-size: 50px;
+   color: #366A21;
+   cursor: pointer;
+   margin-left: 100px;
+   margin-top: 0px;
+   margin-bottom: 0px;
+   padding: 20px 0px
+}
+
+.header{
+   background: #b6f39873;
 }

@@ -26,6 +26,10 @@ export default function Signup(){
         if(isError){
             setError("Account already exists.")
         }
+
+        if(user){
+            navigate(`/${user.id}`)
+        }
         dispatch(reset())
     }, [user, isError, message, navigate, dispatch])
 

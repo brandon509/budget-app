@@ -98,11 +98,15 @@ module.exports = {
     try {
         const user = await User.findOne({ _id: req.params.id })
         if(!user){
-          return res.status(400).json('Not a valid verification url')
+          return res.status(404).json('Not a valid verification url')
+        }
+
+        if(user.verified){
+          return res.status(401).json('User already verified')
         }
 
         const update = await User.updateOne({ _id: user._id, verified: true })
-        return res.json('it worked')
+        return res.status(200).json('User verified successfully')
       }
     catch (error) {
       console.log(error)
@@ -140,6 +144,7 @@ module.exports = {
       
       if(!user){
         return res.status(400).json("User not found")
+        
       }
 
       const { id, name, lastLoginDate, email } = user

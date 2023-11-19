@@ -185,9 +185,10 @@ export const authSlice = createSlice({
                 state.isSuccess = true
                 state.message = action.payload
             })
-            .addCase(verifyEmail.rejected, (state) => {
+            .addCase(verifyEmail.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
+                state.message = action.payload
             })
             .addCase(resetPasswordRequest.pending, (state) => {
                 state.isLoading = true
