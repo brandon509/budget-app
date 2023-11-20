@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { verifyEmail, reset } from '../features/auth/authSlice'
@@ -11,14 +11,13 @@ export default function EmailVerify(){
 
     const params = useParams()
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const { isError, isSuccess, message } = useSelector((state) => state.auth)
 
     useEffect(() => {
         if(isError){
             if(message.includes("401")){
-                setError("Email already verified, please log in")
+                setError("Email already verified, please log in to continue.")
             }
             else{
                 setError("404: Page not found")
@@ -27,11 +26,6 @@ export default function EmailVerify(){
 
         dispatch(verifyEmail(params.id))
     }, [isError])
-
-    const onClick = () => {
-        dispatch(reset())
-        navigate('/')
-    }
     
     return(
         <div className='email-verify'>
@@ -41,12 +35,11 @@ export default function EmailVerify(){
                         <FontAwesomeIcon className='success-icon' icon={faCircleCheck} />
                         <p className='success'>Success! Your email has been verified.</p>
                     </div>
-                    <p className='success-signin'>Sign in to continue.</p>
+                    <p className='success-signin'>Log in to continue.</p>
                 </div>}
             {isError &&
-                <p>{error}</p>
+                <p className='email-verify-error'>{error}</p>
             }
-            <button onClick={onClick} className='home-btn'>Home</button>
         </div>
     )
 }

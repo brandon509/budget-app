@@ -28,7 +28,7 @@ export default function Signup(){
         }
 
         if(user){
-            navigate(`/${user.id}`)
+            navigate(`/${user.id}/profile`)
         }
         dispatch(reset())
     }, [user, isError, message, navigate, dispatch])

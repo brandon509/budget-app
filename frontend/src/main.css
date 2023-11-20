@@ -216,19 +216,18 @@ button{
    display: flex;
    flex-direction: column;
    align-items: center;
-
+   margin-top: 20px;
  }
 
  .email-verify-success{
    border-radius: 2%;
    width: 25%;
    margin-left: 1.5%;
-   background: rgb(240, 251, 240);
    padding: 1%;
  }
 
  .success-icon{
-   color: green;
+   color: #366A21;
    font-size: 25px;
    margin-top: 25px;
  }
@@ -467,15 +466,28 @@ color: white;
 .header-title{
    font-weight: 600;
    letter-spacing: 1.4px;
-   font-size: 50px;
+   font-size: 60px;
    color: #366A21;
    cursor: pointer;
    margin-left: 100px;
    margin-top: 0px;
    margin-bottom: 0px;
-   padding: 20px 0px
 }
 
 .header{
-   background: #b6f39873;
+   background: #a1b09672;
+}
+
+.header-contents{
+   display: flex;
+   justify-content: space-between;
+   padding: 20px 0px;
+}
+
+.header-btn{
+   margin-right: 20px;
+}
+
+.email-verify-error{
+   font-size: 18px;
 }

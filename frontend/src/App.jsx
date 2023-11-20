@@ -21,8 +21,8 @@ function App(){
             <Route path='/account/login' element={<Login />} />
             <Route path='/account/password/resetRequest' element={<ForgotPassword />} />
             <Route path='/account/password/reset/:ident/:timeStamp/:hash' element={<PasswordReset />} />
-            <Route path='/:id' element={<Profile />} />
             <Route path='/account/verify/:id' element={<EmailVerify />} />
+            <Route path='/:id/profile' element={<Profile />} />
             <Route path='/test' element={<Test />} />
           </Routes>
         </div>

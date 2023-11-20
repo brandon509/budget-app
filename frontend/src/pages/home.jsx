@@ -31,7 +31,7 @@ export default function Home(){
             
         }
         if(user){
-            navigate(`/${user.id}`)
+            navigate(`/${user.id}/profile`)
         }
 
         // if(isSuccess){

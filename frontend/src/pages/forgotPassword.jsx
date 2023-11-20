@@ -23,7 +23,7 @@ export default function ForgotPassword(){
             setSuccessMessage(message)
         }
         if(user){
-            navigate(`/${user.id}`)
+            navigate(`/${user.id}/profile`)
         }
         dispatch(reset())
     }, [isError, isSuccess, message, dispatch])
