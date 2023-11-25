@@ -1,20 +1,25 @@
 const mongoose = require("mongoose")
 
 const AmountSchema = new mongoose.Schema({
-    actual: {
+    description: {
+        type: String,
+        required: true
+    },
+    amount: {
         type: Number,
         required: true
     },
-    estimate: {
-        type: Number
+    adjAmount: {
+        type: Number,
+        required: true
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
         required: true
     },
-    time: {
-        type: String,
+    dateIncurred: {
+        type: Date,
         required: true
     },
     user: {
@@ -22,6 +27,6 @@ const AmountSchema = new mongoose.Schema({
         ref: "User",
         required: true
     }
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model("Amount", AmountSchema)

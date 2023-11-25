@@ -1,22 +1,30 @@
 const Amount = require("../models/Amount")
 
 module.exports = {
-    getAmounts: async (req,res) => {
+    get: async (req,res) => {
         try {
-            const amounts = await Amount.find({ time: req.body.time, user: req.user.id }).populate('category')
+            const { year, month } = req.body.timePeriod
+
+            const amounts = await Amount.find({ dateIncurred: {$gte: new Date(year,month-1,1), $lte: new Date(year,month-1,31)}, user: req.user.id }).populate('category')
             res.json({ amounts })
         } 
         catch (error) {
             console.log(error)
         }
     },
-    addAmount: async (req,res) => {
+    new: async (req,res) => {
         try {
-            let amount = await Amount.create({
-                actual: req.body.actual,
-                estimate: req.body.estimate,
+            if(typeof req.body.amount != "number"){
+                return res.status(400).json('amount not a valid number')
+            }
+            const { year, month, day } = req.body.dateIncurred
+
+            const amount = await Amount.create({
+                description: req.body.description,
+                amount: req.body.amount,
+                adjAmount: req.body.adjAmount,
                 category: req.body.category,
-                time: req.body.time,
+                dateIncurred: new Date(year,month-1,day),
                 user: req.user.id
             })
 
@@ -26,16 +34,40 @@ module.exports = {
             console.log(error)
         }
     },
-    editAmount: async (req,res) => {
+    update: async (req,res) => {
         try {
-            const amount = await Amount.findByIdAndUpdate(req.body.id, { actual: req.body.actual, estimate: req.body.estimate })
-            res.json('amount updated')
+            let changes = {}
+            if(req.body.description){
+                changes['description'] = req.body.description
+            }
+            if(req.body.amount && typeof req.body.dateIncurred === "number"){
+                changes['amount'] = req.body.amount
+            }
+            if(req.body.adjAmount){
+                changes['adjAmount'] = req.body.adjAmount
+            }
+            if(req.body.category){
+                changes['category'] = req.body.category
+            }
+            if(req.body.dateIncurred){
+                const { year, month, day } = req.body.dateIncurred
+                changes['dateIncurred'] = new Date(year, month-1, day)
+            }
+
+            const amount = await Amount.findByIdAndUpdate(req.body.id, changes)
+            res.status(200).json("line item updated")
         } 
         catch (error) {
             
         }
     },
-    deleteAmount: async (req,res) => {
-
+    delete: async (req,res) => {
+        try{
+            const amount = await Amount.findByIdAndDelete(req.body.id)
+            res.json('line item removed')
+        }
+        catch(error){
+            console.log(error)
+        }
     },
 }

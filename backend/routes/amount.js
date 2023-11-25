@@ -3,9 +3,9 @@ const router = express.Router()
 const amountController = require("../controllers/amount")
 const { ensureAuth } = require("../middleware/auth")
 
-router.get('/', ensureAuth, amountController.getAmounts)
-router.post('/addAmount', ensureAuth, amountController.addAmount)
-router.put('/editAmount', ensureAuth, amountController.editAmount)
-router.delete('/deleteAmount', ensureAuth, amountController.deleteAmount)
+router.get('/', ensureAuth, amountController.get)
+router.post('/new', ensureAuth, amountController.new)
+router.put('/update', ensureAuth, amountController.update)
+router.delete('/delete', ensureAuth, amountController.delete)
 
 module.exports = router

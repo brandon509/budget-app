@@ -3,10 +3,11 @@ const router = express.Router()
 const categoryController = require("../controllers/category")
 const { ensureAuth } = require("../middleware/auth")
 
-router.get('/', ensureAuth, categoryController.getUserCategories)
-router.post('/newCategory', ensureAuth, categoryController.newCategory)
-router.put('/deleteCategory', ensureAuth, categoryController.deleteCategory)
-router.put('/updateCategory', ensureAuth, categoryController.updateCategory) //edit name, joint status, split
-router.put('/updateBudget', ensureAuth, categoryController.updateBudget)
+//need to add ensureAuth to each of these
+
+router.get('/', ensureAuth, categoryController.get)
+router.post('/new', ensureAuth, categoryController.new)
+router.put('/update', ensureAuth, categoryController.update) //edit name, joint split
+router.put('/delete', ensureAuth, categoryController.delete)
 
 module.exports = router
