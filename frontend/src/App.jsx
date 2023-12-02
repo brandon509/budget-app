@@ -7,6 +7,7 @@ import Signup from './pages/signup'
 import Login from './pages/login'
 import ForgotPassword from './pages/forgotPassword'
 import PasswordReset from './pages/resetPassword'
+import Budget from './pages/budget'
 import Test from './pages/test'
 
 function App(){
@@ -23,6 +24,7 @@ function App(){
             <Route path='/account/password/reset/:ident/:timeStamp/:hash' element={<PasswordReset />} />
             <Route path='/account/verify/:id' element={<EmailVerify />} />
             <Route path='/:id/profile' element={<Profile />} />
+            <Route path='/:id/budget' element={<Budget />} />
             <Route path='/test' element={<Test />} />
           </Routes>
         </div>

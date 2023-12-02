@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const login = async (user) => {
-    const response = await axios.post('http://localhost:8000/login', user, {withCredentials: true})
+    const response = await axios.post('http://localhost:8000/login', user, { withCredentials: true })
 
     if(response.data){
         localStorage.setItem('user', JSON.stringify(response.data))
@@ -11,13 +11,13 @@ const login = async (user) => {
 }
 
 const signup = async (user) => {
-    const response = await axios.post('http://localhost:8000/newUser', user, {withCredentials: true})
+    const response = await axios.post('http://localhost:8000/newUser', user, { withCredentials: true })
     
     return response.data
 }
 
 const logout = async () => {
-    const response = await axios.get('http://localhost:8000/logout', {withCredentials: true})
+    const response = await axios.get('http://localhost:8000/logout', { withCredentials: true })
 
     if(response.data){
         localStorage.removeItem('user')

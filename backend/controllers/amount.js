@@ -3,10 +3,10 @@ const Amount = require("../models/Amount")
 module.exports = {
     get: async (req,res) => {
         try {
-            const { year, month } = req.body.timePeriod
+            const { year, month } = req.query
 
-            const amounts = await Amount.find({ dateIncurred: {$gte: new Date(year,month-1,1), $lte: new Date(year,month-1,31)}, user: req.user.id }).populate('category')
-            res.json({ amounts })
+            const amounts = await Amount.find({ dateIncurred: {$gte: new Date(year,month-1,1,-5,0,0), $lte: new Date(year,month-1,31)}, user: req.user.id }).populate('category')
+            res.json(amounts)
         } 
         catch (error) {
             console.log(error)
@@ -15,16 +15,15 @@ module.exports = {
     new: async (req,res) => {
         try {
             if(typeof req.body.amount != "number"){
-                return res.status(400).json('amount not a valid number')
+                return res.status(401).json('amount not a valid number')
             }
-            const { year, month, day } = req.body.dateIncurred
 
             const amount = await Amount.create({
                 description: req.body.description,
                 amount: req.body.amount,
                 adjAmount: req.body.adjAmount,
                 category: req.body.category,
-                dateIncurred: new Date(year,month-1,day),
+                dateIncurred: req.body.dateIncurred,
                 user: req.user.id
             })
 
