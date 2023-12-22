@@ -114,6 +114,7 @@ export const postSlice = createSlice({
                 state.isLoading = false
                 state.isSuccess = true
                 state.data.push(action.payload)
+                state.data = state.data.sort((a,b) => a.dateIncurred - b.dateIncurred)
             })
             .addCase(newAmount.rejected, (state,action) => {
                 state.isLoading = false
@@ -139,7 +140,7 @@ export const postSlice = createSlice({
             .addCase(deleteAmount.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.message = action.payload
+                state.data = state.data.filter(x => x._id != action.payload)
             })
             .addCase(deleteAmount.rejected, (state,action) => {
                 state.isLoading = false

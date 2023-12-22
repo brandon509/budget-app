@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
-import { reset, getAmounts, newAmount } from '../features/posts/postSlice'
+import { reset, getAmounts, newAmount, deleteAmount } from '../features/posts/postSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { getCategories } from '../features/categories/categorySlice'
 
 export default function(){
 
     const currentDate = new Date()
     
-    const [month, setMonth] = useState(currentDate.getMonth()+1)
+    const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
 
     const [formData, setFormData] = useState({
@@ -20,6 +21,7 @@ export default function(){
     const { description, category, amount, adjAmount, dateIncurred } = formData
 
     const { isError, isSuccess, isLoading, message, data } = useSelector((state) => state.post)
+    const { categories } = useSelector((state) => state.category)
 
     const dispatch = useDispatch()
     const timePeriod = { month: month, year: year}
@@ -29,6 +31,7 @@ export default function(){
             console.log(message)
         }
         dispatch(getAmounts(timePeriod))
+        dispatch(getCategories())
         
     }, [dispatch])
 
@@ -70,8 +73,50 @@ export default function(){
         }))
     } 
 
+    const onChangeDate = (e) => {
+        if(e.target.name === "month"){
+            setMonth(e.target.value)
+            dispatch(getAmounts({month: e.target.value, year: year}))
+        }
+        if(e.target.name === "year"){
+            setYear(e.target.value)
+            dispatch(getAmounts({month: month, year: e.target.value}))
+        }
+    }
+
+    const onClickDelete = (e) => {
+        dispatch(deleteAmount(e.target.id))
+    }
+
     return (
        <div>
+        <form>
+            <select name="month" defaultValue={month} onChange={onChangeDate}>
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">March</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option>
+            </select>
+            <select name="year" defaultValue={year} onChange={onChangeDate}>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+            </select>
+        </form>
         <form onSubmit={onSubmit}>
             <table>
                 <thead>
@@ -86,7 +131,12 @@ export default function(){
                 <tbody>
                     <tr>
                         <td><input type="text" id="description" name="description" onChange={onChange} value={description} /></td>
-                        <td><input type="text" id="category" name="category" list="category" onChange={onChange} value={category} /></td>
+                        <td>
+                            <select name="category" onChange={onChange}>
+                                {categories && categories.map(x => 
+                                    <option key={x._id} value={x._id}>{x.name}</option>
+                            )}</select>
+                        </td>
                         <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={amount} /></td>
                         <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} value={adjAmount} /></td>
                         <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={dateIncurred} /></td>
@@ -99,6 +149,7 @@ export default function(){
                             <td>{x.amount}</td>
                             <td>{x.adjAmount}</td>
                             <td>{x.dateIncurred.slice(0,10)}</td>
+                            <div id={x._id} onClick={onClickDelete}>x</div>
                         </tr>
                     )}
                 </tbody>

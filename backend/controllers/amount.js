@@ -5,7 +5,9 @@ module.exports = {
         try {
             const { year, month } = req.query
 
-            const amounts = await Amount.find({ dateIncurred: {$gte: new Date(year,month-1,1,-5,0,0), $lte: new Date(year,month-1,31)}, user: req.user.id }).populate('category')
+            const daysInMonth = new Date(year,+month+1,0).getDate()
+
+            const amounts = await Amount.find({ dateIncurred: {$gte: new Date(year,month,1,-5,0,0), $lte: new Date(year,month,daysInMonth)}, user: req.user.id }).sort({ dateIncurred: -1 }).populate('category')
             res.json(amounts)
         } 
         catch (error) {
@@ -27,7 +29,9 @@ module.exports = {
                 user: req.user.id
             })
 
-            res.json(amount)
+            const newAmount = await Amount.findById(amount._id).populate('category')
+
+            res.json(newAmount)
         } 
         catch (error) {
             console.log(error)
@@ -62,8 +66,8 @@ module.exports = {
     },
     delete: async (req,res) => {
         try{
-            const amount = await Amount.findByIdAndDelete(req.body.id)
-            res.json('line item removed')
+            const amount = await Amount.findByIdAndDelete(req.query.id)
+            res.status(200).json(req.query.id)
         }
         catch(error){
             console.log(error)
