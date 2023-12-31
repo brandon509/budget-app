@@ -32,7 +32,7 @@ export default function Login(){
         }
 
         if(user){
-            navigate(`/${user.id}/profile`)
+            navigate(`/${user.id}/budget`)
         }
         // if(isSuccess){
         //     navigate(`/${user.id}`)

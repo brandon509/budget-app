@@ -88,6 +88,21 @@ export default function(){
         dispatch(deleteAmount(e.target.id))
     }
 
+    let summaryObj = {}
+    data.forEach(x => {
+        if(!summaryObj[x.category.name]){
+            summaryObj[x.category.name] = 0
+        }
+
+        summaryObj[x.category.name] += x.adjAmount
+    })
+
+    let summaryArray = []
+
+    for (const x in summaryObj){
+        summaryArray.push({category: x, amount: summaryObj[x]})
+    }
+
     return (
        <div>
         <form>
@@ -117,6 +132,21 @@ export default function(){
                 <option value="2028">2028</option>
             </select>
         </form>
+        <h3>Summary</h3>
+        <table>
+            <tbody>
+                {summaryArray && summaryArray.map(x => 
+                    <tr key={x.category}>
+                        <td>{x.category}</td>
+                        <td>{x.amount}</td>
+                    </tr>
+                )}
+                <tr>
+                    <td>Total</td>
+                    <td>{summaryArray.reduce((a,b) => a + b.amount,0)}</td>
+                </tr>
+            </tbody>
+        </table>
         <form onSubmit={onSubmit}>
             <table>
                 <thead>
@@ -133,6 +163,7 @@ export default function(){
                         <td><input type="text" id="description" name="description" onChange={onChange} value={description} /></td>
                         <td>
                             <select name="category" onChange={onChange}>
+                            <option></option>
                                 {categories && categories.map(x => 
                                     <option key={x._id} value={x._id}>{x.name}</option>
                             )}</select>
@@ -149,7 +180,7 @@ export default function(){
                             <td>{x.amount}</td>
                             <td>{x.adjAmount}</td>
                             <td>{x.dateIncurred.slice(0,10)}</td>
-                            <div id={x._id} onClick={onClickDelete}>x</div>
+                            <td><button id={x._id} onClick={onClickDelete}>x</button></td>
                         </tr>
                     )}
                 </tbody>

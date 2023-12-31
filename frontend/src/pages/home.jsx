@@ -31,7 +31,7 @@ export default function Home(){
             
         }
         if(user){
-            navigate(`/${user.id}/profile`)
+            navigate(`/${user.id}/budget`)
         }
 
         // if(isSuccess){
