@@ -181,6 +181,7 @@ export default function(){
                             <td>{x.adjAmount}</td>
                             <td>{x.dateIncurred.slice(0,10)}</td>
                             <td><button id={x._id} onClick={onClickDelete}>x</button></td>
+                            <td><button id={x._id}>Edit</button></td>
                         </tr>
                     )}
                 </tbody>
