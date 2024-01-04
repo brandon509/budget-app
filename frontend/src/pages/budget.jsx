@@ -9,6 +9,7 @@ export default function(){
     
     const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
+    const [edit, setEdit] = useState('')
 
     const [formData, setFormData] = useState({
         description: '',
@@ -17,6 +18,8 @@ export default function(){
         adjAmount: '',
         dateIncurred: ''
     })
+
+    console.log(formData)
     
     const { description, category, amount, adjAmount, dateIncurred } = formData
 
@@ -86,6 +89,43 @@ export default function(){
 
     const onClickDelete = (e) => {
         dispatch(deleteAmount(e.target.id))
+    }
+
+    const onClickEdit = (e) => {
+        setEdit(e.target.id)
+        // const entry = data.filter(x => x._id === e.target.id)[0]
+
+        // setFormData((prevState) => ({
+        //     ...prevState,
+        //     description: entry.description,
+        //     category: entry.category.name,
+        //     amount: entry.amount,
+        //     adjAmount: entry.adjAmount,
+        //     dateIncurred: entry.dateIncurred.slice(0,10)
+        // }))
+    }
+
+    const onSubmitEdit = async (e) => {
+        e.preventDefault()
+
+        const userData = {
+            description,
+            category,
+            amount,
+            adjAmount,
+            dateIncurred
+        }
+
+        setEdit('')
+
+        setFormData((prevState) => ({
+            ...prevState,
+            description: '',
+            category: '',
+            amount: '',
+            adjAmount: '',
+            dateIncurred: ''
+        }))
     }
 
     let summaryObj = {}
@@ -160,7 +200,7 @@ export default function(){
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="text" id="description" name="description" onChange={onChange} value={description} /></td>
+                        <td><input type="text" id="description" name="description" onChange={onChange} value={edit ? "" : description} /></td>
                         <td>
                             <select name="category" onChange={onChange}>
                             <option></option>
@@ -168,20 +208,26 @@ export default function(){
                                     <option key={x._id} value={x._id}>{x.name}</option>
                             )}</select>
                         </td>
-                        <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={amount} /></td>
-                        <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} value={adjAmount} /></td>
-                        <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={dateIncurred} /></td>
+                        <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount} /></td>
+                        <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} value={edit ? "" : adjAmount} /></td>
+                        <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td>
                         <td><button>Submit</button></td>
                     </tr>
                     {data && data.map(x => 
                         <tr key={x._id}>
-                            <td>{x.description}</td>
-                            <td>{x.category.name}</td>
-                            <td>{x.amount}</td>
-                            <td>{x.adjAmount}</td>
-                            <td>{x.dateIncurred.slice(0,10)}</td>
+                            {edit === x._id ? <td><input type="text" id="description" name="description" defaultValue={x.description} onChange={onChange} /></td> : <td>{x.description}</td>}
+                            {edit === x._id ? <td>
+                            <select name="category" defaultValue={x.category._id} onChange={onChange}>
+                                {categories && categories.map(y => 
+                                    <option key={y._id} value={y._id}>{y.name}</option>
+                            )}</select>
+                        </td> : <td>{x.category.name}</td>}
+                            {edit === x._id ? <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} defaultValue={x.amount} /></td> : <td>{x.amount}</td>}
+                            {edit === x._id ? <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} defaultValue={x.adjAmount} /></td> : <td>{x.adjAmount}</td>}
+                            {edit === x._id ? <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} defaultValue={x.dateIncurred.slice(0,10)} /></td> : <td>{x.dateIncurred.slice(0,10)}</td>}
                             <td><button id={x._id} onClick={onClickDelete}>x</button></td>
-                            <td><button id={x._id}>Edit</button></td>
+                            {edit != x._id && <td><button id={x._id} onClick={onClickEdit}>Edit</button></td>}
+                            {edit === x._id && <td><button id={x._id} onClick={onSubmitEdit}>Save</button></td>}
                         </tr>
                     )}
                 </tbody>
