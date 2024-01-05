@@ -15,6 +15,7 @@ module.exports = {
         }
     },
     new: async (req,res) => {
+        console.log('new')
         try {
             if(typeof req.body.amount != "number"){
                 return res.status(401).json('amount not a valid number')
@@ -43,7 +44,7 @@ module.exports = {
             if(req.body.description){
                 changes['description'] = req.body.description
             }
-            if(req.body.amount && typeof req.body.dateIncurred === "number"){
+            if(req.body.amount){
                 changes['amount'] = req.body.amount
             }
             if(req.body.adjAmount){
@@ -53,12 +54,13 @@ module.exports = {
                 changes['category'] = req.body.category
             }
             if(req.body.dateIncurred){
-                const { year, month, day } = req.body.dateIncurred
-                changes['dateIncurred'] = new Date(year, month-1, day)
+                changes['dateIncurred'] = req.body.dateIncurred
             }
 
             const amount = await Amount.findByIdAndUpdate(req.body.id, changes)
-            res.status(200).json("line item updated")
+            const updatedAmount = await Amount.findById(req.body.id).populate('category')
+            
+            res.status(200).json(updatedAmount)
         } 
         catch (error) {
             

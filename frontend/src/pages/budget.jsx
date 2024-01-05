@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { reset, getAmounts, newAmount, deleteAmount } from '../features/posts/postSlice'
+import { reset, getAmounts, newAmount, deleteAmount, updateAmount } from '../features/posts/postSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../features/categories/categorySlice'
 
@@ -93,28 +93,21 @@ export default function(){
 
     const onClickEdit = (e) => {
         setEdit(e.target.id)
-        // const entry = data.filter(x => x._id === e.target.id)[0]
-
-        // setFormData((prevState) => ({
-        //     ...prevState,
-        //     description: entry.description,
-        //     category: entry.category.name,
-        //     amount: entry.amount,
-        //     adjAmount: entry.adjAmount,
-        //     dateIncurred: entry.dateIncurred.slice(0,10)
-        // }))
     }
 
     const onSubmitEdit = async (e) => {
         e.preventDefault()
 
         const userData = {
+            id: e.target.id,
             description,
             category,
             amount,
             adjAmount,
             dateIncurred
         }
+
+        dispatch(updateAmount(userData))
 
         setEdit('')
 
