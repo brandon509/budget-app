@@ -135,6 +135,8 @@ export default function(){
         summaryArray.push({category: x, amount: summaryObj[x]})
     }
 
+    console.log(split)
+
     return (
        <div>
         <form>
