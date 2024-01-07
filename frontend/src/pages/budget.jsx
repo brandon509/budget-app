@@ -9,6 +9,7 @@ export default function(){
     
     const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
+    const [split, setSplit] = useState(0)
     const [edit, setEdit] = useState('')
 
     const [formData, setFormData] = useState({
@@ -18,12 +19,10 @@ export default function(){
         adjAmount: '',
         dateIncurred: ''
     })
-
-    console.log(formData)
     
     const { description, category, amount, adjAmount, dateIncurred } = formData
 
-    const { isError, isSuccess, isLoading, message, data } = useSelector((state) => state.post)
+    const { isError, isLoading, message, data } = useSelector((state) => state.post)
     const { categories } = useSelector((state) => state.category)
 
     const dispatch = useDispatch()
@@ -38,19 +37,39 @@ export default function(){
         
     }, [dispatch])
 
-    const onChange = (e) => {
-        if(e.target.name === "amount" || e.target.name === "adjAmount"){
-            setFormData((prevState) => ({
-                ...prevState,
-                [e.target.name]: +e.target.value
-            }))
+    const onChangeDate = (e) => {
+        if(e.target.name === "month"){
+            setMonth(e.target.value)
+            dispatch(getAmounts({month: e.target.value, year: year}))
         }
-        else{
+        if(e.target.name === "year"){
+            setYear(e.target.value)
+            dispatch(getAmounts({month: month, year: e.target.value}))
+        }
+    }
+
+    const onChange = (e) => {
+        let value = +e.target.value || e.target.value
+
+        if(e.target.name === 'category'){
+            let category = categories.filter(x => x._id === e.target.value)
+            setSplit(category[0].split)
+        }
+
         setFormData((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value
+            [e.target.name]: value
         }))
     }
+
+    const onClickDelete = (e) => {
+        e.preventDefault()
+
+        dispatch(deleteAmount(e.target.id))
+    }
+
+    const onClickEdit = (e) => {
+        setEdit(e.target.id)
     }
 
     const onSubmit = async (e) => {
@@ -74,25 +93,6 @@ export default function(){
             adjAmount: '',
             dateIncurred: ''
         }))
-    } 
-
-    const onChangeDate = (e) => {
-        if(e.target.name === "month"){
-            setMonth(e.target.value)
-            dispatch(getAmounts({month: e.target.value, year: year}))
-        }
-        if(e.target.name === "year"){
-            setYear(e.target.value)
-            dispatch(getAmounts({month: month, year: e.target.value}))
-        }
-    }
-
-    const onClickDelete = (e) => {
-        dispatch(deleteAmount(e.target.id))
-    }
-
-    const onClickEdit = (e) => {
-        setEdit(e.target.id)
     }
 
     const onSubmitEdit = async (e) => {
@@ -110,7 +110,6 @@ export default function(){
         dispatch(updateAmount(userData))
 
         setEdit('')
-
         setFormData((prevState) => ({
             ...prevState,
             description: '',
@@ -202,19 +201,20 @@ export default function(){
                             )}</select>
                         </td>
                         <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount} /></td>
-                        <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} value={edit ? "" : adjAmount} /></td>
+                        <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} value={edit ? "" : (adjAmount)} /></td>
                         <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td>
                         <td><button>Submit</button></td>
                     </tr>
                     {data && data.map(x => 
                         <tr key={x._id}>
                             {edit === x._id ? <td><input type="text" id="description" name="description" defaultValue={x.description} onChange={onChange} /></td> : <td>{x.description}</td>}
-                            {edit === x._id ? <td>
-                            <select name="category" defaultValue={x.category._id} onChange={onChange}>
-                                {categories && categories.map(y => 
-                                    <option key={y._id} value={y._id}>{y.name}</option>
-                            )}</select>
-                        </td> : <td>{x.category.name}</td>}
+                            {edit === x._id ? 
+                                <td>
+                                    <select name="category" defaultValue={x.category._id} onChange={onChange}>
+                                        {categories && categories.map(y => 
+                                            <option key={y._id} value={y._id}>{y.name}</option>
+                                    )}</select>
+                                </td> : <td>{x.category.name}</td>}
                             {edit === x._id ? <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} defaultValue={x.amount} /></td> : <td>{x.amount}</td>}
                             {edit === x._id ? <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} defaultValue={x.adjAmount} /></td> : <td>{x.adjAmount}</td>}
                             {edit === x._id ? <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} defaultValue={x.dateIncurred.slice(0,10)} /></td> : <td>{x.dateIncurred.slice(0,10)}</td>}
