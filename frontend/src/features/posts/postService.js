@@ -21,7 +21,6 @@ const updateAmount = async (amount) => {
 }
 
 const deleteAmount = async (amount) => {
-    console.log(amount)
     const response = await axios.delete(`http://localhost:8000/amount/delete?id=${amount}`, { withCredentials: true })
 
     return response.data

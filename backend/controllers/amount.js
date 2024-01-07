@@ -15,7 +15,6 @@ module.exports = {
         }
     },
     new: async (req,res) => {
-        console.log('new')
         try {
             if(typeof req.body.amount != "number"){
                 return res.status(401).json('amount not a valid number')
