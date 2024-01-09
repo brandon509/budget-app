@@ -9,7 +9,7 @@ export default function(){
     
     const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
-    const [split, setSplit] = useState(0)
+    const [split, setSplit] = useState(1)
     const [edit, setEdit] = useState('')
 
     const [formData, setFormData] = useState({
@@ -49,6 +49,7 @@ export default function(){
     }
 
     const onChange = (e) => {
+        console.log(formData)
         let value = +e.target.value || e.target.value
 
         if(e.target.name === 'category'){
@@ -70,6 +71,16 @@ export default function(){
 
     const onClickEdit = (e) => {
         setEdit(e.target.id)
+
+        let item = data.filter(x => x._id === e.target.id)
+        setSplit(item[0].category.split)
+
+        console.log(amount)
+
+        setFormData((prevState) => ({
+            ...prevState,
+            amount: item[0].amount
+        }))
     }
 
     const onSubmit = async (e) => {
@@ -79,7 +90,7 @@ export default function(){
             description,
             category,
             amount,
-            adjAmount,
+            adjAmount: amount*split,
             dateIncurred
         }
         
@@ -134,8 +145,6 @@ export default function(){
     for (const x in summaryObj){
         summaryArray.push({category: x, amount: summaryObj[x]})
     }
-
-    console.log(split)
 
     return (
        <div>
@@ -203,7 +212,8 @@ export default function(){
                             )}</select>
                         </td>
                         <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount} /></td>
-                        <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} value={edit ? "" : (adjAmount)} /></td>
+                        {/* <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} value={edit ? "" : (adjAmount)} /></td> */}
+                        <td>{edit ? "" : amount*split}</td>
                         <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td>
                         <td><button>Submit</button></td>
                     </tr>
@@ -218,7 +228,8 @@ export default function(){
                                     )}</select>
                                 </td> : <td>{x.category.name}</td>}
                             {edit === x._id ? <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} defaultValue={x.amount} /></td> : <td>{x.amount}</td>}
-                            {edit === x._id ? <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} defaultValue={x.adjAmount} /></td> : <td>{x.adjAmount}</td>}
+                            {/* {edit === x._id ? <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} defaultValue={x.adjAmount} /></td> : <td>{x.adjAmount}</td>} */}
+                            {edit === x._id ? <td>{amount*split}</td> : <td>{x.adjAmount}</td>}
                             {edit === x._id ? <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} defaultValue={x.dateIncurred.slice(0,10)} /></td> : <td>{x.dateIncurred.slice(0,10)}</td>}
                             <td><button id={x._id} onClick={onClickDelete}>x</button></td>
                             {edit != x._id && <td><button id={x._id} onClick={onClickEdit}>Edit</button></td>}
