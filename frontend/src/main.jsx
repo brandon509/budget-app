@@ -5,6 +5,7 @@ import { store } from './app/store'
 import App from './App'
 import './normalize.css'
 import './main.css'
+import './budget.css'
 
 const container = document.getElementById('root')
 const root = createRoot(container)

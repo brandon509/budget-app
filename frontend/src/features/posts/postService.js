@@ -15,8 +15,6 @@ const newAmount = async (amount) => {
 const updateAmount = async (amount) => {
     const response = await axios.put('http://localhost:8000/amount/update', amount, { withCredentials: true })
 
-    console.log(response.data)
-
     return response.data
 }
 

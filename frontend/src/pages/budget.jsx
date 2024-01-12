@@ -9,18 +9,16 @@ export default function(){
     
     const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
-    const [split, setSplit] = useState(1)
+    const [split, setSplit] = useState(0)
     const [edit, setEdit] = useState('')
-
     const [formData, setFormData] = useState({
         description: '',
         category: '',
         amount: '',
-        adjAmount: '',
         dateIncurred: ''
     })
     
-    const { description, category, amount, adjAmount, dateIncurred } = formData
+    const { description, category, amount, dateIncurred } = formData
 
     const { isError, isLoading, message, data } = useSelector((state) => state.post)
     const { categories } = useSelector((state) => state.category)
@@ -49,11 +47,10 @@ export default function(){
     }
 
     const onChange = (e) => {
-        console.log(formData)
         let value = +e.target.value || e.target.value
 
         if(e.target.name === 'category'){
-            let category = categories.filter(x => x._id === e.target.value)
+            const category = categories.filter(x => x._id === e.target.value)
             setSplit(category[0].split)
         }
 
@@ -71,16 +68,6 @@ export default function(){
 
     const onClickEdit = (e) => {
         setEdit(e.target.id)
-
-        let item = data.filter(x => x._id === e.target.id)
-        setSplit(item[0].category.split)
-
-        console.log(amount)
-
-        setFormData((prevState) => ({
-            ...prevState,
-            amount: item[0].amount
-        }))
     }
 
     const onSubmit = async (e) => {
@@ -101,7 +88,6 @@ export default function(){
             description: '',
             category: '',
             amount: '',
-            adjAmount: '',
             dateIncurred: ''
         }))
     }
@@ -109,24 +95,33 @@ export default function(){
     const onSubmitEdit = async (e) => {
         e.preventDefault()
 
+        let adjValue = null
+
+        if(amount || category){
+            const item = data.filter(x => x._id === e.target.id)
+            const a = amount || item[0].amount
+            const s = split || item[0].category.split
+            adjValue = a*s
+        }
+
         const userData = {
             id: e.target.id,
             description,
             category,
             amount,
-            adjAmount,
+            adjAmount: adjValue,
             dateIncurred
         }
 
         dispatch(updateAmount(userData))
 
         setEdit('')
+        setSplit(0)
         setFormData((prevState) => ({
             ...prevState,
             description: '',
             category: '',
             amount: '',
-            adjAmount: '',
             dateIncurred: ''
         }))
     }
@@ -212,8 +207,7 @@ export default function(){
                             )}</select>
                         </td>
                         <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount} /></td>
-                        {/* <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} value={edit ? "" : (adjAmount)} /></td> */}
-                        <td>{edit ? "" : amount*split}</td>
+                        <td>{edit ? "" : amount*split || amount}</td>
                         <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td>
                         <td><button>Submit</button></td>
                     </tr>
@@ -228,8 +222,10 @@ export default function(){
                                     )}</select>
                                 </td> : <td>{x.category.name}</td>}
                             {edit === x._id ? <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} defaultValue={x.amount} /></td> : <td>{x.amount}</td>}
-                            {/* {edit === x._id ? <td><input type="number" id="adjAmount" name="adjAmount" step="0.01" onChange={onChange} defaultValue={x.adjAmount} /></td> : <td>{x.adjAmount}</td>} */}
-                            {edit === x._id ? <td>{amount*split}</td> : <td>{x.adjAmount}</td>}
+
+                            {/* {edit === x._id ? <td>{amount && split ? amount*split : amount ? amount*x.category.split : split ? x.amount*split : x.adjAmount}</td> : <td>{x.adjAmount}</td>} */}
+                            {edit === x._id ? <td>{amount*split || amount*x.category.split || x.amount*split || x.adjAmount}</td> : <td>{x.adjAmount}</td>}
+
                             {edit === x._id ? <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} defaultValue={x.dateIncurred.slice(0,10)} /></td> : <td>{x.dateIncurred.slice(0,10)}</td>}
                             <td><button id={x._id} onClick={onClickDelete}>x</button></td>
                             {edit != x._id && <td><button id={x._id} onClick={onClickEdit}>Edit</button></td>}
