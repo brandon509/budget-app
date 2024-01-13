@@ -1,0 +1,10 @@
+.x-btn, .edit-btn, .save-btn{
+    width: 20px;
+    height: 20px;
+    font-size: 8px
+}
+
+.modify-icons{
+    display: flex;
+    gap: 4px;
+}

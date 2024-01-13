@@ -2,10 +2,18 @@ import { useState, useEffect } from 'react'
 import { reset, getAmounts, newAmount, deleteAmount, updateAmount } from '../features/posts/postSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../features/categories/categorySlice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare, faX, faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
 
 export default function(){
 
     const currentDate = new Date()
+    const monthOptions = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    let yearOptions = []
+
+    for(let i = 2020; i < currentDate.getFullYear()+3; i++){
+        yearOptions.push(i)
+    }
     
     const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
@@ -30,6 +38,7 @@ export default function(){
         if(isError){
             console.log(message)
         }
+
         dispatch(getAmounts(timePeriod))
         dispatch(getCategories())
         
@@ -63,11 +72,13 @@ export default function(){
     const onClickDelete = (e) => {
         e.preventDefault()
 
-        dispatch(deleteAmount(e.target.id))
+        dispatch(deleteAmount(e.currentTarget.id))
     }
 
     const onClickEdit = (e) => {
-        setEdit(e.target.id)
+        e.preventDefault()
+
+        setEdit(e.currentTarget.id)
     }
 
     const onSubmit = async (e) => {
@@ -105,7 +116,7 @@ export default function(){
         }
 
         const userData = {
-            id: e.target.id,
+            id: e.currentTarget.id,
             description,
             category,
             amount,
@@ -144,30 +155,11 @@ export default function(){
     return (
        <div>
         <form>
-            <select name="month" defaultValue={month} onChange={onChangeDate}>
-                <option value="0">January</option>
-                <option value="1">February</option>
-                <option value="2">March</option>
-                <option value="3">April</option>
-                <option value="4">May</option>
-                <option value="5">June</option>
-                <option value="6">July</option>
-                <option value="7">August</option>
-                <option value="8">September</option>
-                <option value="9">October</option>
-                <option value="10">November</option>
-                <option value="11">December</option>
+            <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input'>
+               {monthOptions.map((x,i) => <option key={i} value={i}>{x}</option>)}
             </select>
-            <select name="year" defaultValue={year} onChange={onChangeDate}>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-                <option value="2027">2027</option>
-                <option value="2028">2028</option>
+            <select name="year" defaultValue={year} onChange={onChangeDate} className='date-input'>
+                {yearOptions.map(x => <option key={x} value={x}>{x}</option>)}
             </select>
         </form>
         <h3>Summary</h3>
@@ -209,7 +201,7 @@ export default function(){
                         <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount} /></td>
                         <td>{edit ? "" : amount*split || amount}</td>
                         <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td>
-                        <td><button>Submit</button></td>
+                        <td><button className='btn'>Submit</button></td>
                     </tr>
                     {data && data.map(x => 
                         <tr key={x._id}>
@@ -227,9 +219,25 @@ export default function(){
                             {edit === x._id ? <td>{amount*split || amount*x.category.split || x.amount*split || x.adjAmount}</td> : <td>{x.adjAmount}</td>}
 
                             {edit === x._id ? <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} defaultValue={x.dateIncurred.slice(0,10)} /></td> : <td>{x.dateIncurred.slice(0,10)}</td>}
-                            <td><button id={x._id} onClick={onClickDelete}>x</button></td>
-                            {edit != x._id && <td><button id={x._id} onClick={onClickEdit}>Edit</button></td>}
-                            {edit === x._id && <td><button id={x._id} onClick={onSubmitEdit}>Save</button></td>}
+
+
+                            {/* <td className='modify-icons'>
+                            {edit != x._id && <button id={x._id} onClick={onClickDelete} className='btn x-btn'><FontAwesomeIcon icon={faX} /></button>}
+
+                            {edit != x._id && <button id={x._id} onClick={onClickEdit} className='btn edit-btn'><FontAwesomeIcon icon={faPenToSquare} /></button>}
+
+                            {edit === x._id && <button id={x._id} onClick={onSubmitEdit} className='btn save-btn'><FontAwesomeIcon icon={faFloppyDisk} /></button>}
+                            </td> */}
+
+                            <td>
+                                {edit != x._id ? 
+                                    <div className='modify-icons'>
+                                        <button id={x._id} onClick={onClickDelete} className='btn x-btn'><FontAwesomeIcon icon={faX} /></button>
+                                        <button id={x._id} onClick={onClickEdit} className='btn edit-btn'><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                    </div> :
+                                    <button id={x._id} onClick={onSubmitEdit} className='btn save-btn'><FontAwesomeIcon icon={faFloppyDisk} /></button>
+                                }
+                            </td>
                         </tr>
                     )}
                 </tbody>
