@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { reset, getAmounts, newAmount, deleteAmount, updateAmount } from '../features/posts/postSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../features/categories/categorySlice'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare, faX, faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
+import Button from '../components/button'
+import TextInput from '../components/textInput'
 
 export default function(){
 
@@ -152,18 +152,48 @@ export default function(){
         summaryArray.push({category: x, amount: summaryObj[x]})
     }
 
+    const descriptionInput = {
+        label: "Description",
+        type: "text",
+        name: "description",
+        handleChange: onChange,
+        inputValue: edit ? "" : description,
+        validation: true,
+        errorMessage: null
+    }
+
+    const dateIncurredInput = {
+        label: "Date",
+        type: "date",
+        name: "dateIncurred",
+        handleChange: onChange,
+        inputValue: edit ? "" : dateIncurred,
+        validation: true,
+        errorMessage: null
+    }
+
+    const amountInput = {
+        label: "Amount",
+        type: "number",
+        name: "amount",
+        handleChange: onChange,
+        inputValue: edit ? "" : amount,
+        validation: true,
+        errorMessage: null
+    }
+
     return (
        <div>
-        <form>
-            <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input'>
+        <form className='date-input-form'>
+            <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input input'>
                {monthOptions.map((x,i) => <option key={i} value={i}>{x}</option>)}
             </select>
-            <select name="year" defaultValue={year} onChange={onChangeDate} className='date-input'>
+            <select name="year" defaultValue={year} onChange={onChangeDate} className='date-input input'>
                 {yearOptions.map(x => <option key={x} value={x}>{x}</option>)}
             </select>
         </form>
-        <h3>Summary</h3>
-        <table>
+        <h3 className='test'>Summary</h3>
+        <table className='test'>
             <tbody>
                 {summaryArray && summaryArray.map(x => 
                     <tr key={x.category}>
@@ -190,7 +220,8 @@ export default function(){
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="text" id="description" name="description" onChange={onChange} value={edit ? "" : description} /></td>
+                        {/* <td><input type="text" id="description" name="description" onChange={onChange} value={edit ? "" : description} /></td> */}
+                        <td><TextInput {...descriptionInput} /></td>
                         <td>
                             <select name="category" onChange={onChange}>
                             <option></option>
@@ -198,9 +229,11 @@ export default function(){
                                     <option key={x._id} value={x._id}>{x.name}</option>
                             )}</select>
                         </td>
-                        <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount} /></td>
+                        <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount*split || amount} /></td>
+                        <td><TextInput {...amountInput} /></td>
                         <td>{edit ? "" : amount*split || amount}</td>
-                        <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td>
+                        <td><TextInput {...dateIncurredInput} /></td>
+                        {/* <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td> */}
                         <td><button className='btn'>Submit</button></td>
                     </tr>
                     {data && data.map(x => 
@@ -214,28 +247,15 @@ export default function(){
                                     )}</select>
                                 </td> : <td>{x.category.name}</td>}
                             {edit === x._id ? <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} defaultValue={x.amount} /></td> : <td>{x.amount}</td>}
-
-                            {/* {edit === x._id ? <td>{amount && split ? amount*split : amount ? amount*x.category.split : split ? x.amount*split : x.adjAmount}</td> : <td>{x.adjAmount}</td>} */}
                             {edit === x._id ? <td>{amount*split || amount*x.category.split || x.amount*split || x.adjAmount}</td> : <td>{x.adjAmount}</td>}
-
                             {edit === x._id ? <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} defaultValue={x.dateIncurred.slice(0,10)} /></td> : <td>{x.dateIncurred.slice(0,10)}</td>}
-
-
-                            {/* <td className='modify-icons'>
-                            {edit != x._id && <button id={x._id} onClick={onClickDelete} className='btn x-btn'><FontAwesomeIcon icon={faX} /></button>}
-
-                            {edit != x._id && <button id={x._id} onClick={onClickEdit} className='btn edit-btn'><FontAwesomeIcon icon={faPenToSquare} /></button>}
-
-                            {edit === x._id && <button id={x._id} onClick={onSubmitEdit} className='btn save-btn'><FontAwesomeIcon icon={faFloppyDisk} /></button>}
-                            </td> */}
-
                             <td>
                                 {edit != x._id ? 
                                     <div className='modify-icons'>
-                                        <button id={x._id} onClick={onClickDelete} className='btn x-btn'><FontAwesomeIcon icon={faX} /></button>
-                                        <button id={x._id} onClick={onClickEdit} className='btn edit-btn'><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                        <Button id={x._id} click={onClickDelete} item='x'/>
+                                        <Button id={x._id} click={onClickEdit} item='edit'/>
                                     </div> :
-                                    <button id={x._id} onClick={onSubmitEdit} className='btn save-btn'><FontAwesomeIcon icon={faFloppyDisk} /></button>
+                                    <Button id={x._id} click={onSubmitEdit} item='save'/>
                                 }
                             </td>
                         </tr>

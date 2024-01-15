@@ -1,3 +1,21 @@
+.date-input-form{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.date-input{
+    width: auto;
+    height: auto;
+    padding: 8px;
+}
+
+.test{
+    display: flex;
+    justify-content: center;
+}
+
 .x-btn, .edit-btn, .save-btn{
     width: 20px;
     height: 20px;
@@ -8,3 +26,5 @@
     display: flex;
     gap: 4px;
 }
+
+
