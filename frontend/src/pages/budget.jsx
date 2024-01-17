@@ -58,7 +58,7 @@ export default function(){
     const onChange = (e) => {
         let value = +e.target.value || e.target.value
 
-        if(e.target.name === 'category'){
+        if(e.target.name === 'category' && e.target.value){
             const category = categories.filter(x => x._id === e.target.value)
             setSplit(category[0].split)
         }
@@ -159,7 +159,8 @@ export default function(){
         handleChange: onChange,
         inputValue: edit ? "" : description,
         validation: true,
-        errorMessage: null
+        errorMessage: null,
+        className: 'ln-item-input'
     }
 
     const dateIncurredInput = {
@@ -169,7 +170,8 @@ export default function(){
         handleChange: onChange,
         inputValue: edit ? "" : dateIncurred,
         validation: true,
-        errorMessage: null
+        errorMessage: null,
+        className: 'ln-item-input'
     }
 
     const amountInput = {
@@ -179,7 +181,19 @@ export default function(){
         handleChange: onChange,
         inputValue: edit ? "" : amount,
         validation: true,
-        errorMessage: null
+        errorMessage: null,
+        className: 'ln-item-input'
+    }
+
+    const adjAmountInput = {
+        label: "Adjusted Amount",
+        type: "number",
+        name: "adjAmount",
+        handleChange: onChange,
+        inputValue: edit ? "" : amount*split || amount,
+        validation: true,
+        errorMessage: null,
+        className: 'ln-item-input'
     }
 
     return (
@@ -209,7 +223,7 @@ export default function(){
         </table>
         <form onSubmit={onSubmit}>
             <table>
-                <thead>
+                {/* <thead>
                     <tr>
                         <th>Description</th>
                         <th>Category</th>
@@ -217,23 +231,25 @@ export default function(){
                         <th>Adjusted Amount</th>
                         <th>Date</th>
                     </tr>
-                </thead>
+                </thead> */}
                 <tbody>
                     <tr>
                         {/* <td><input type="text" id="description" name="description" onChange={onChange} value={edit ? "" : description} /></td> */}
                         <td><TextInput {...descriptionInput} /></td>
                         <td>
-                            <select name="category" onChange={onChange}>
-                            <option></option>
+                            <h5 className={category ? 'inputLabel category-label' : 'hidden'}>Category</h5>
+                            <select name="category" onChange={onChange} className='select'>
+                            <option value=''>Category</option>
                                 {categories && categories.map(x => 
                                     <option key={x._id} value={x._id}>{x.name}</option>
                             )}</select>
                         </td>
-                        <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount*split || amount} /></td>
+                        {/* <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount*split || amount} /></td> */}
                         <td><TextInput {...amountInput} /></td>
-                        <td>{edit ? "" : amount*split || amount}</td>
+                        {/* <td>{edit ? "" : amount*split || amount}</td> */}
+                        <td><TextInput {...adjAmountInput} /></td>
+                        {/* <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td> */}   
                         <td><TextInput {...dateIncurredInput} /></td>
-                        {/* <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td> */}
                         <td><button className='btn'>Submit</button></td>
                     </tr>
                     {data && data.map(x => 
