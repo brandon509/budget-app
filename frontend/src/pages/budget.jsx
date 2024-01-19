@@ -238,7 +238,7 @@ export default function(){
                         <td><TextInput {...descriptionInput} /></td>
                         <td>
                             <h5 className={category ? 'inputLabel category-label' : 'hidden'}>Category</h5>
-                            <select name="category" onChange={onChange} className='select'>
+                            <select name="category" onChange={onChange} className={category ? 'select' : 'select category-placeholder' }>
                             <option value=''>Category</option>
                                 {categories && categories.map(x => 
                                     <option key={x._id} value={x._id}>{x.name}</option>
