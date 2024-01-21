@@ -3,9 +3,10 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { store } from './app/store'
 import App from './App'
-import './normalize.css'
-import './main.css'
-import './budget.css'
+import './styles/normalize.css'
+import './styles/main.css'
+import './styles/budget.css'
+import './styles/modal.css'
 
 const container = document.getElementById('root')
 const root = createRoot(container)

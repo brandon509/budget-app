@@ -3,7 +3,7 @@ import { reset, getAmounts, newAmount, deleteAmount, updateAmount } from '../fea
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../features/categories/categorySlice'
 import Button from '../components/button'
-import TextInput from '../components/textInput'
+import Modal from '../components/modal'
 
 export default function(){
 
@@ -25,6 +25,16 @@ export default function(){
         amount: '',
         dateIncurred: ''
     })
+
+    const resetState = () => {
+        setFormData((prevState) => ({
+            ...prevState,
+            description: '',
+            category: '',
+            amount: '',
+            dateIncurred: ''
+        }))
+    }
     
     const { description, category, amount, dateIncurred } = formData
 
@@ -82,7 +92,7 @@ export default function(){
     }
 
     const onSubmit = async (e) => {
-        e.preventDefault()
+        //e.preventDefault()
 
         const userData = {
             description,
@@ -104,7 +114,8 @@ export default function(){
     }
 
     const onSubmitEdit = async (e) => {
-        e.preventDefault()
+        //e.preventDefault()
+        console.log(formData)
 
         let adjValue = null
 
@@ -157,18 +168,6 @@ export default function(){
         type: "text",
         name: "description",
         handleChange: onChange,
-        inputValue: edit ? "" : description,
-        validation: true,
-        errorMessage: null,
-        className: 'ln-item-input'
-    }
-
-    const dateIncurredInput = {
-        label: "Date",
-        type: "date",
-        name: "dateIncurred",
-        handleChange: onChange,
-        inputValue: edit ? "" : dateIncurred,
         validation: true,
         errorMessage: null,
         className: 'ln-item-input'
@@ -179,7 +178,6 @@ export default function(){
         type: "number",
         name: "amount",
         handleChange: onChange,
-        inputValue: edit ? "" : amount,
         validation: true,
         errorMessage: null,
         className: 'ln-item-input'
@@ -190,14 +188,38 @@ export default function(){
         type: "number",
         name: "adjAmount",
         handleChange: onChange,
-        inputValue: edit ? "" : amount*split || amount,
+        validation: true,
+        errorMessage: null,
+        className: 'ln-item-input'
+    }
+
+    const dateIncurredInput = {
+        label: "Date",
+        type: "date",
+        name: "dateIncurred",
+        handleChange: onChange,
         validation: true,
         errorMessage: null,
         className: 'ln-item-input'
     }
 
     return (
-       <div>
+       <div className='testerapp'>
+        <Modal 
+            descriptionInput={{...descriptionInput, inputValue: description}} 
+            category={<select name="category" onChange={onChange} className={category ? 'select' : 'select category-placeholder' }>
+                            <option value=''>Category</option>
+                            {categories && categories.map(x => 
+                                <option key={x._id} value={x._id}>{x.name}</option>
+                                )}
+                    </select>} 
+            amountInput={{...amountInput, inputValue: amount}} 
+            adjAmountInput={{...adjAmountInput, inputValue: amount*split || amount}} 
+            dateIncurredInput={{...dateIncurredInput, inputValue: dateIncurred}} 
+            onSubmit={onSubmit} 
+            btnInfo={{item:'new'}} 
+            resetState={resetState}/>
+        
         <form className='date-input-form'>
             <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input input'>
                {monthOptions.map((x,i) => <option key={i} value={i}>{x}</option>)}
@@ -221,9 +243,8 @@ export default function(){
                 </tr>
             </tbody>
         </table>
-        <form onSubmit={onSubmit}>
             <table>
-                {/* <thead>
+                <thead>
                     <tr>
                         <th>Description</th>
                         <th>Category</th>
@@ -231,30 +252,16 @@ export default function(){
                         <th>Adjusted Amount</th>
                         <th>Date</th>
                     </tr>
-                </thead> */}
+                </thead>
                 <tbody>
-                    <tr>
-                        {/* <td><input type="text" id="description" name="description" onChange={onChange} value={edit ? "" : description} /></td> */}
-                        <td><TextInput {...descriptionInput} /></td>
-                        <td>
-                            <h5 className={category ? 'inputLabel category-label' : 'hidden'}>Category</h5>
-                            <select name="category" onChange={onChange} className={category ? 'select' : 'select category-placeholder' }>
-                            <option value=''>Category</option>
-                                {categories && categories.map(x => 
-                                    <option key={x._id} value={x._id}>{x.name}</option>
-                            )}</select>
-                        </td>
-                        {/* <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} value={edit ? "" : amount*split || amount} /></td> */}
-                        <td><TextInput {...amountInput} /></td>
-                        {/* <td>{edit ? "" : amount*split || amount}</td> */}
-                        <td><TextInput {...adjAmountInput} /></td>
-                        {/* <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} value={edit ? "" : dateIncurred} /></td> */}   
-                        <td><TextInput {...dateIncurredInput} /></td>
-                        <td><button className='btn'>Submit</button></td>
-                    </tr>
                     {data && data.map(x => 
                         <tr key={x._id}>
-                            {edit === x._id ? <td><input type="text" id="description" name="description" defaultValue={x.description} onChange={onChange} /></td> : <td>{x.description}</td>}
+                            <td>{x.description}</td>
+                            <td>{x.category.name}</td>
+                            <td>{x.amount}</td>
+                            <td>{x.adjAmount}</td>
+                            <td>{x.dateIncurred.slice(0,10)}</td>
+                            {/* {edit === x._id ? <td><input type="text" id="description" name="description" defaultValue={x.description} onChange={onChange} /></td> : <td>{x.description}</td>}
                             {edit === x._id ? 
                                 <td>
                                     <select name="category" defaultValue={x.category._id} onChange={onChange}>
@@ -264,21 +271,29 @@ export default function(){
                                 </td> : <td>{x.category.name}</td>}
                             {edit === x._id ? <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} defaultValue={x.amount} /></td> : <td>{x.amount}</td>}
                             {edit === x._id ? <td>{amount*split || amount*x.category.split || x.amount*split || x.adjAmount}</td> : <td>{x.adjAmount}</td>}
-                            {edit === x._id ? <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} defaultValue={x.dateIncurred.slice(0,10)} /></td> : <td>{x.dateIncurred.slice(0,10)}</td>}
+                            {edit === x._id ? <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} defaultValue={x.dateIncurred.slice(0,10)} /></td> : <td>{x.dateIncurred.slice(0,10)}</td>} */}
                             <td>
-                                {edit != x._id ? 
-                                    <div className='modify-icons'>
-                                        <Button id={x._id} click={onClickDelete} item='x'/>
-                                        <Button id={x._id} click={onClickEdit} item='edit'/>
-                                    </div> :
-                                    <Button id={x._id} click={onSubmitEdit} item='save'/>
-                                }
+                                <div className='modify-icons'>
+                                    <Button id={x._id} click={onClickDelete} item='x' className='x-btn'/>
+                                    <Modal 
+                                        descriptionInput={{...descriptionInput, defaultValue: x.description}}
+                                        category={<select name="category" defaultValue={x.category._id} onChange={onChange}>
+                                                    {categories && categories.map(y => 
+                                                        <option key={y._id} value={y._id}>{y.name}</option>
+                                                    )}
+                                                </select>}
+                                        amountInput={{...amountInput, defaultValue: x.amount}} 
+                                        adjAmountInput={{...adjAmountInput, defaultValue: x.adjAmount}}
+                                        dateIncurredInput={{...dateIncurredInput, defaultValue: x.dateIncurred.slice(0,10)}} 
+                                        onSubmit={onSubmitEdit} 
+                                        btnInfo={{ id:x._id, item:'edit', className: 'edit-btn' }}
+                                        resetState={resetState}/>
+                                    </div>
                             </td>
                         </tr>
                     )}
                 </tbody>
             </table>
-            </form>
        </div>
     )
 }

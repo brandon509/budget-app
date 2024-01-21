@@ -38,6 +38,7 @@ module.exports = {
         }
     },
     update: async (req,res) => {
+        console.log(req.body)
         try {
             let changes = {}
             if(req.body.description){
