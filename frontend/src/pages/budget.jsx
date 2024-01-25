@@ -85,10 +85,11 @@ export default function(){
         dispatch(deleteAmount(e.currentTarget.id))
     }
 
-    const onClickEdit = (e) => {
-        e.preventDefault()
+    const onClickEdit = (id) => {
+        //e.preventDefault()
+        console.log(id)
 
-        setEdit(e.currentTarget.id)
+        //setEdit(e.currentTarget.id)
     }
 
     const onSubmit = async (e) => {
@@ -113,21 +114,21 @@ export default function(){
         }))
     }
 
-    const onSubmitEdit = async (e) => {
+    const onSubmitEdit = async (id) => {
         //e.preventDefault()
         console.log(formData)
 
         let adjValue = null
 
         if(amount || category){
-            const item = data.filter(x => x._id === e.target.id)
+            const item = data.filter(x => x._id === id)
             const a = amount || item[0].amount
             const s = split || item[0].category.split
             adjValue = a*s
         }
 
         const userData = {
-            id: e.currentTarget.id,
+            id: id,
             description,
             category,
             amount,
@@ -207,12 +208,12 @@ export default function(){
        <div className='testerapp'>
         <Modal 
             descriptionInput={{...descriptionInput, inputValue: description}} 
-            category={<select name="category" onChange={onChange} className={category ? 'select' : 'select category-placeholder' }>
+            category={<div><h5 className={category ? 'inputLabel category-label' : 'hidden'}>Category</h5><select name="category" onChange={onChange} className={category ? 'select' : 'select category-placeholder' }>
                             <option value=''>Category</option>
                             {categories && categories.map(x => 
                                 <option key={x._id} value={x._id}>{x.name}</option>
                                 )}
-                    </select>} 
+                    </select></div>} 
             amountInput={{...amountInput, inputValue: amount}} 
             adjAmountInput={{...adjAmountInput, inputValue: amount*split || amount}} 
             dateIncurredInput={{...dateIncurredInput, inputValue: dateIncurred}} 
@@ -277,18 +278,20 @@ export default function(){
                                     <Button id={x._id} click={onClickDelete} item='x' className='x-btn'/>
                                     <Modal 
                                         descriptionInput={{...descriptionInput, defaultValue: x.description}}
-                                        category={<select name="category" defaultValue={x.category._id} onChange={onChange}>
+                                        category={<div><h5 className={category ? 'inputLabel category-label' : 'hidden'}>Category</h5><select name="category" defaultValue={x.category._id} className={category ? 'select' : 'select category-placeholder' } onChange={onChange}>
                                                     {categories && categories.map(y => 
                                                         <option key={y._id} value={y._id}>{y.name}</option>
                                                     )}
-                                                </select>}
+                                                </select></div>}
                                         amountInput={{...amountInput, defaultValue: x.amount}} 
-                                        adjAmountInput={{...adjAmountInput, defaultValue: x.adjAmount}}
+                                        // adjAmountInput={{...adjAmountInput, defaultValue: x.adjAmount}}
+                                        adjAmountInput={{...adjAmountInput, inputValue: amount*split || amount || x.adjAmount}}
                                         dateIncurredInput={{...dateIncurredInput, defaultValue: x.dateIncurred.slice(0,10)}} 
                                         onSubmit={onSubmitEdit} 
                                         btnInfo={{ id:x._id, item:'edit', className: 'edit-btn' }}
-                                        resetState={resetState}/>
-                                    </div>
+                                        resetState={resetState}
+                                        id={x._id}/>
+                                </div>
                             </td>
                         </tr>
                     )}

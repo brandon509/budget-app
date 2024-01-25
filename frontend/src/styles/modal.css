@@ -1,15 +1,16 @@
 .modal{
     position: absolute;
-    top: 50%;
-    left: 25%;
     right: auto;
     bottom: auto;
-    width: 50%;
     box-shadow: 0 0 0 1px rgba(33, 50, 108, 0.1);
     border-radius: 4px;
-    background: #FAFAFA;
-    /* background: white; */
-    padding: 20px;
+    background: white;
+    padding-top: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 400px;
 }
 
 .modal-overlay{
@@ -18,7 +19,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(250, 250, 250, 0.8);
 }
 
 .close-btn {
@@ -37,4 +38,50 @@
   .close-btn:hover{
     background: rgb(230, 229, 230);
   }
+
+  .modal-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .select{
+    border: 1px solid #73796E;
+    border-radius: 4px;
+    color: #1A1C18;
+    height: 58px;
+    width: 214px;
+    padding: 0px 16px;
+    font-size: 16px;
+    line-height: 24px;
+    caret-color: #366A21;
+}
+ 
+.select:focus{
+    outline: none;
+    box-shadow: 0 0 0 1px #366A21;
+    color: #1A1C18;
+}
+ 
+.select:hover{
+    cursor:pointer;
+}
+
+.category-label{
+    top: 62px;
+    left: 55px;
+}
+
+.category-placeholder{
+    color: #43483F;
+}
+
+.hidden{
+    display: none;
+}
+
+.submit-btn{
+  width: 220px;
+}
 
