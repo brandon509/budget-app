@@ -1,0 +1,41 @@
+.category-section{
+    width: 80%;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.progress-bar{
+    border-radius: 10px;
+    text-align: right;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.category-name{
+    font-size: 14px;
+    margin: 0px;
+    padding-left: 5px;
+}
+
+.data-table{
+    width: 70%;
+    border-collapse: collapse;
+    margin-left: 5%;
+}
+
+.table-header{
+    font-size: 14px;
+    border-bottom: solid 1px rgb(193, 193, 193);
+
+}
+
+.head{
+    padding-bottom: 6px;
+}
+
+.table-body{
+    font-size: 14px;
+    text-align: center;
+    border: black solid 1px;
+}

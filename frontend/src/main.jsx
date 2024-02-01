@@ -7,6 +7,7 @@ import './styles/normalize.css'
 import './styles/main.css'
 import './styles/budget.css'
 import './styles/modal.css'
+import './styles/category.css'
 
 const container = document.getElementById('root')
 const root = createRoot(container)

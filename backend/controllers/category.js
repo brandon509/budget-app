@@ -4,8 +4,16 @@ const validator = require("validator")
 module.exports = {
     get: async (req,res) => {
         try {
-            let categories = await Category.find({ user: req.user.id, active: true })
-            res.status(200).json(categories)
+            let { year, month } = req.query
+            month++
+            const date = new Date(year,month,1,-5,0,0)
+
+            const categories = await Category.find({ user: req.user.id })
+
+            const activeCategories = categories.filter(x => x.active)
+            const currentCategories = categories.filter(x => (x.deactivationDate > date && x.createdAt < date) || (x.createdAt < date && x.active))
+            
+            res.status(200).json({ activeCategories, currentCategories })
         } catch (error) {
             console.log(error)
         }
@@ -28,7 +36,7 @@ module.exports = {
     },
     delete: async (req,res) => {
         try {
-            await Category.updateOne({ _id: req.body.id }, { active: false })
+            await Category.updateOne({ _id: req.body.id }, { active: false, deactivationDate: new Date() })
             res.status(200).json({ msg: 'Category has been deleted' })
         } 
         catch (error) {

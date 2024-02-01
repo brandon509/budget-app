@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../features/categories/categorySlice'
 import Button from '../components/button'
 import Modal from '../components/modal'
+import CateogryLineItem from '../components/categoryLineItem'
 
 export default function(){
 
@@ -39,7 +40,7 @@ export default function(){
     const { description, category, amount, dateIncurred } = formData
 
     const { isError, isLoading, message, data } = useSelector((state) => state.post)
-    const { categories } = useSelector((state) => state.category)
+    const { activeCategories, currentCategories } = useSelector((state) => state.category)
 
     const dispatch = useDispatch()
     const timePeriod = { month: month, year: year}
@@ -50,17 +51,19 @@ export default function(){
         }
 
         dispatch(getAmounts(timePeriod))
-        dispatch(getCategories())
+        dispatch(getCategories(timePeriod))
         
     }, [dispatch])
 
     const onChangeDate = (e) => {
         if(e.target.name === "month"){
             setMonth(e.target.value)
+            dispatch(getCategories({month: e.target.value, year: year}))
             dispatch(getAmounts({month: e.target.value, year: year}))
         }
         if(e.target.name === "year"){
             setYear(e.target.value)
+            dispatch(getCategories({month: month, year: e.target.value}))
             dispatch(getAmounts({month: month, year: e.target.value}))
         }
     }
@@ -69,7 +72,7 @@ export default function(){
         let value = +e.target.value || e.target.value
 
         if(e.target.name === 'category' && e.target.value){
-            const category = categories.filter(x => x._id === e.target.value)
+            const category = activeCategories.filter(x => x._id === e.target.value)
             setSplit(category[0].split)
         }
 
@@ -149,20 +152,20 @@ export default function(){
         }))
     }
 
-    let summaryObj = {}
-    data.forEach(x => {
-        if(!summaryObj[x.category.name]){
-            summaryObj[x.category.name] = 0
-        }
+    // let summaryObj = {}
+    // data.forEach(x => {
+    //     if(!summaryObj[x.category.name]){
+    //         summaryObj[x.category.name] = 0
+    //     }
 
-        summaryObj[x.category.name] += x.adjAmount
-    })
+    //     summaryObj[x.category.name] += x.adjAmount
+    // })
 
-    let summaryArray = []
+    // let summaryArray = []
 
-    for (const x in summaryObj){
-        summaryArray.push({category: x, amount: summaryObj[x]})
-    }
+    // for (const x in summaryObj){
+    //     summaryArray.push({category: x, amount: summaryObj[x]})
+    // }
 
     const descriptionInput = {
         label: "Description",
@@ -210,7 +213,7 @@ export default function(){
             descriptionInput={{...descriptionInput, inputValue: description}} 
             category={<div><h5 className={category ? 'inputLabel category-label' : 'hidden'}>Category</h5><select name="category" onChange={onChange} className={category ? 'select' : 'select category-placeholder' }>
                             <option value=''>Category</option>
-                            {categories && categories.map(x => 
+                            {activeCategories && activeCategories.map(x => 
                                 <option key={x._id} value={x._id}>{x.name}</option>
                                 )}
                     </select></div>} 
@@ -229,7 +232,9 @@ export default function(){
                 {yearOptions.map(x => <option key={x} value={x}>{x}</option>)}
             </select>
         </form>
-        <h3 className='test'>Summary</h3>
+        {currentCategories && currentCategories.map(x => 
+           <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} /> )}
+        {/* <h3 className='test'>Summary</h3>
         <table className='test'>
             <tbody>
                 {summaryArray && summaryArray.map(x => 
@@ -243,8 +248,8 @@ export default function(){
                     <td>{summaryArray.reduce((a,b) => a + b.amount,0)}</td>
                 </tr>
             </tbody>
-        </table>
-            <table>
+        </table> */}
+            {/* <table>
                 <thead>
                     <tr>
                         <th>Description</th>
@@ -262,29 +267,17 @@ export default function(){
                             <td>{x.amount}</td>
                             <td>{x.adjAmount}</td>
                             <td>{x.dateIncurred.slice(0,10)}</td>
-                            {/* {edit === x._id ? <td><input type="text" id="description" name="description" defaultValue={x.description} onChange={onChange} /></td> : <td>{x.description}</td>}
-                            {edit === x._id ? 
-                                <td>
-                                    <select name="category" defaultValue={x.category._id} onChange={onChange}>
-                                        {categories && categories.map(y => 
-                                            <option key={y._id} value={y._id}>{y.name}</option>
-                                    )}</select>
-                                </td> : <td>{x.category.name}</td>}
-                            {edit === x._id ? <td><input type="number" id="amount" name="amount" step="0.01" onChange={onChange} defaultValue={x.amount} /></td> : <td>{x.amount}</td>}
-                            {edit === x._id ? <td>{amount*split || amount*x.category.split || x.amount*split || x.adjAmount}</td> : <td>{x.adjAmount}</td>}
-                            {edit === x._id ? <td><input type="date" id="dateIncurred" name="dateIncurred" onChange={onChange} defaultValue={x.dateIncurred.slice(0,10)} /></td> : <td>{x.dateIncurred.slice(0,10)}</td>} */}
                             <td>
                                 <div className='modify-icons'>
                                     <Button id={x._id} click={onClickDelete} item='x' className='x-btn'/>
                                     <Modal 
                                         descriptionInput={{...descriptionInput, defaultValue: x.description}}
                                         category={<div><h5 className={category ? 'inputLabel category-label' : 'hidden'}>Category</h5><select name="category" defaultValue={x.category._id} className={category ? 'select' : 'select category-placeholder' } onChange={onChange}>
-                                                    {categories && categories.map(y => 
+                                                    {activeCategories && activeCategories.map(y => 
                                                         <option key={y._id} value={y._id}>{y.name}</option>
                                                     )}
                                                 </select></div>}
                                         amountInput={{...amountInput, defaultValue: x.amount}} 
-                                        // adjAmountInput={{...adjAmountInput, defaultValue: x.adjAmount}}
                                         adjAmountInput={{...adjAmountInput, inputValue: amount*split || amount || x.adjAmount}}
                                         dateIncurredInput={{...dateIncurredInput, defaultValue: x.dateIncurred.slice(0,10)}} 
                                         onSubmit={onSubmitEdit} 
@@ -296,7 +289,7 @@ export default function(){
                         </tr>
                     )}
                 </tbody>
-            </table>
+            </table> */}
        </div>
     )
 }

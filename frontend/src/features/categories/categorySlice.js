@@ -5,15 +5,16 @@ const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
-    categories: [],
+    activeCategories: [],
+    currentCategories: [],
     message: ''
 }
 
 export const getCategories = createAsyncThunk(
     'categories/getCategories',
-    async (thunkAPI) => {
+    async (timePeriod, thunkAPI) => {
         try {
-            return await categoryService.getCategories()
+            return await categoryService.getCategories(timePeriod)
         }
         catch (error) {
             const message =
@@ -100,7 +101,8 @@ export const categorySlice = createSlice({
             .addCase(getCategories.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.categories = action.payload
+                state.activeCategories = action.payload.activeCategories
+                state.currentCategories = action.payload.currentCategories
             })
             .addCase(getCategories.rejected, (state, action) => {
                 state.isLoading = false

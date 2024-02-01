@@ -24,6 +24,9 @@ const CategorySchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
+    deactivationDate: {
+        type: Date
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model("Category", CategorySchema)
