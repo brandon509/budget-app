@@ -21,7 +21,8 @@
 .data-table{
     width: 70%;
     border-collapse: collapse;
-    margin-left: 5%;
+    margin-left: 7%;
+    margin-bottom: 25px;
 }
 
 .table-header{
@@ -31,11 +32,14 @@
 }
 
 .head{
-    padding-bottom: 6px;
+    padding-bottom: 4px;
 }
 
 .table-body{
     font-size: 14px;
     text-align: center;
-    border: black solid 1px;
+}
+
+.body{
+    padding-top: 5px;
 }

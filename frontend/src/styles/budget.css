@@ -11,11 +11,6 @@
     padding: 8px;
 }
 
-.test{
-    display: flex;
-    justify-content: center;
-}
-
 .x-btn, .edit-btn, .save-btn{
     width: 20px;
     height: 20px;

@@ -1,4 +1,5 @@
 import Button from '../components/button'
+import Modal from '../components/modal'
 import { useDispatch } from 'react-redux'
 import { deleteAmount } from '../features/posts/postSlice'
 import { useState } from 'react'
@@ -37,10 +38,15 @@ export default function CateogryLineItem({ category, data }){
                 <tbody>
                     {data && data.map(x => 
                         <tr key={x._id} className='table-body'>
-                            <td>{x.description}</td>
-                            <td>${x.adjAmount}</td>
-                            <td>{x.dateIncurred.slice(0,10)}</td>
-                            <td><Button id={x._id} click={onClickDelete} item='x' className='x-btn'/></td>
+                            <td className='body'>{x.description}</td>
+                            <td className='body'>${x.adjAmount}</td>
+                            <td className='body'>{x.dateIncurred.slice(0,10)}</td>
+                            <td className='body'>
+                                <div className='modify-icons'>
+                                    <Button id={x._id} click={onClickDelete} item='x' className='x-btn'/>
+                                    <Modal type='edit' lineItem={x} />
+                                </div>
+                            </td>
                         </tr>
                     )}
                 </tbody>

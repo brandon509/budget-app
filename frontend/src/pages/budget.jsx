@@ -19,7 +19,6 @@ export default function(){
     const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
     const [split, setSplit] = useState(0)
-    const [edit, setEdit] = useState('')
     const [formData, setFormData] = useState({
         description: '',
         category: '',
@@ -35,6 +34,7 @@ export default function(){
             amount: '',
             dateIncurred: ''
         }))
+        setSplit(0)
     }
     
     const { description, category, amount, dateIncurred } = formData
@@ -82,21 +82,7 @@ export default function(){
         }))
     }
 
-    const onClickDelete = (e) => {
-        e.preventDefault()
-
-        dispatch(deleteAmount(e.currentTarget.id))
-    }
-
-    const onClickEdit = (id) => {
-        //e.preventDefault()
-        console.log(id)
-
-        //setEdit(e.currentTarget.id)
-    }
-
     const onSubmit = async (e) => {
-        //e.preventDefault()
 
         const userData = {
             description,
@@ -107,20 +93,11 @@ export default function(){
         }
         
         dispatch(newAmount(userData))
-
-        setFormData((prevState) => ({
-            ...prevState,
-            description: '',
-            category: '',
-            amount: '',
-            dateIncurred: ''
-        }))
+        resetState()
     }
 
     const onSubmitEdit = async (id) => {
-        //e.preventDefault()
-        console.log(formData)
-
+       
         let adjValue = null
 
         if(amount || category){
@@ -140,16 +117,7 @@ export default function(){
         }
 
         dispatch(updateAmount(userData))
-
-        setEdit('')
-        setSplit(0)
-        setFormData((prevState) => ({
-            ...prevState,
-            description: '',
-            category: '',
-            amount: '',
-            dateIncurred: ''
-        }))
+        resetState()
     }
 
     // let summaryObj = {}
@@ -207,9 +175,13 @@ export default function(){
         className: 'ln-item-input'
     }
 
+    
+
     return (
-       <div className='testerapp'>
-        <Modal 
+       <div>
+        <Modal type='new' />
+
+        {/* <Modal 
             descriptionInput={{...descriptionInput, inputValue: description}} 
             category={<div><h5 className={category ? 'inputLabel category-label' : 'hidden'}>Category</h5><select name="category" onChange={onChange} className={category ? 'select' : 'select category-placeholder' }>
                             <option value=''>Category</option>
@@ -222,7 +194,7 @@ export default function(){
             dateIncurredInput={{...dateIncurredInput, inputValue: dateIncurred}} 
             onSubmit={onSubmit} 
             btnInfo={{item:'new'}} 
-            resetState={resetState}/>
+            resetState={resetState}/> */}
         
         <form className='date-input-form'>
             <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input input'>
@@ -232,8 +204,10 @@ export default function(){
                 {yearOptions.map(x => <option key={x} value={x}>{x}</option>)}
             </select>
         </form>
+
         {currentCategories && currentCategories.map(x => 
            <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} /> )}
+        
         {/* <h3 className='test'>Summary</h3>
         <table className='test'>
             <tbody>
