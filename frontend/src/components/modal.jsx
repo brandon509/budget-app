@@ -25,7 +25,19 @@ export default function Modal({ type, lineItem }) {
 
   const dispatch = useDispatch()
 
-  const openModal = () => setIsOpen(true)
+  const openModal = () => {
+    setIsOpen(true)
+    if(lineItem){
+      setFormData((prevState) => ({
+        ...prevState,
+        description: lineItem.description,
+        category: lineItem.category._id,
+        amount: lineItem.amount,
+        dateIncurred: lineItem.dateIncurred.slice(0,10)
+    }))
+    setSplit(lineItem.category.split)
+  } 
+  }
 
   const closeModal = () => {
     resetState()
@@ -74,21 +86,12 @@ const onSubmit = async (e) => {
 
 const onSubmitEdit = async () => {
  
-  let adjValue = null
-
-  if(amount || category){
-      const item = data.filter(x => x._id === id)
-      const a = amount || item[0].amount
-      const s = split || item[0].category.split
-      adjValue = a*s
-  }
-
   const userData = {
       id: lineItem._id,
       description,
       category,
       amount,
-      adjAmount: adjValue,
+      adjAmount: amount*split,
       dateIncurred
   }
 
@@ -105,8 +108,7 @@ const onSubmitEdit = async () => {
     validation: true,
     errorMessage: null,
     className: 'ln-item-input',
-    inputValue: !lineItem ? description : undefined,
-    defaultValue: lineItem ? lineItem.description : undefined
+    inputValue: description
 }
 
 const amountInput = {
@@ -117,8 +119,7 @@ const amountInput = {
     validation: true,
     errorMessage: null,
     className: 'ln-item-input',
-    inputValue: !lineItem ? amount : undefined,
-    defaultValue: lineItem ? lineItem.amount : undefined
+    inputValue: amount
 }
 
 const adjAmountInput = {
@@ -129,8 +130,7 @@ const adjAmountInput = {
     validation: true,
     errorMessage: null,
     className: 'ln-item-input',
-    inputValue: !lineItem ? amount*split || amount : undefined,
-    defaultValue: lineItem ? amount*split || amount || lineItem.adjAmount : undefined
+    inputValue: amount*split || amount
 }
 
 const dateIncurredInput = {
@@ -141,8 +141,7 @@ const dateIncurredInput = {
     validation: true,
     errorMessage: null,
     className: 'ln-item-input',
-    inputValue: !lineItem ? dateIncurred : undefined,
-    defaultValue: lineItem ? lineItem.dateIncurred.slice(0,10) : undefined
+    inputValue: dateIncurred
 }
 
   return(
@@ -162,37 +161,3 @@ const dateIncurredInput = {
     </div>
   )
 }
-
-// export default function Modal({ descriptionInput, amountInput, adjAmountInput, dateIncurredInput, onSubmit, btnInfo, category, resetState, id }) {
-
-//   const [modalIsOpen, setIsOpen] = useState(false)
-
-//   const openModal = () => setIsOpen(true)
-
-//   const closeModal = () => {
-//     resetState()
-//     setIsOpen(false)
-//   }
-
-//   const submit = () => {
-//     onSubmit(id)
-//     setIsOpen(false)
-//   }
-
-//   return(
-//     <div>
-//       <Button {...btnInfo} click={openModal} />
-//       <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal' overlayClassName='modal-overlay'  contentLabel="Example Modal" ariaHideApp={false}>
-//             <Button click={closeModal} item='x' className='close-btn'/> 
-//             <form className='modal-form'>
-//                 <TextInput {...descriptionInput} />
-//                 {category}
-//                 <TextInput {...amountInput} />
-//                 <TextInput {...adjAmountInput} />
-//                 <TextInput {...dateIncurredInput} />
-//                 <button type='button' onClick={submit} className='btn submit-btn'>Submit</button>
-//             </form>
-//       </ReactModal>
-//     </div>
-//   )
-// }

@@ -18,29 +18,9 @@ export default function(){
     
     const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
-    const [split, setSplit] = useState(0)
-    const [formData, setFormData] = useState({
-        description: '',
-        category: '',
-        amount: '',
-        dateIncurred: ''
-    })
-
-    const resetState = () => {
-        setFormData((prevState) => ({
-            ...prevState,
-            description: '',
-            category: '',
-            amount: '',
-            dateIncurred: ''
-        }))
-        setSplit(0)
-    }
-    
-    const { description, category, amount, dateIncurred } = formData
 
     const { isError, isLoading, message, data } = useSelector((state) => state.post)
-    const { activeCategories, currentCategories } = useSelector((state) => state.category)
+    const { currentCategories } = useSelector((state) => state.category)
 
     const dispatch = useDispatch()
     const timePeriod = { month: month, year: year}
@@ -67,59 +47,6 @@ export default function(){
             dispatch(getAmounts({month: month, year: e.target.value}))
         }
     }
-
-    const onChange = (e) => {
-        let value = +e.target.value || e.target.value
-
-        if(e.target.name === 'category' && e.target.value){
-            const category = activeCategories.filter(x => x._id === e.target.value)
-            setSplit(category[0].split)
-        }
-
-        setFormData((prevState) => ({
-            ...prevState,
-            [e.target.name]: value
-        }))
-    }
-
-    const onSubmit = async (e) => {
-
-        const userData = {
-            description,
-            category,
-            amount,
-            adjAmount: amount*split,
-            dateIncurred
-        }
-        
-        dispatch(newAmount(userData))
-        resetState()
-    }
-
-    const onSubmitEdit = async (id) => {
-       
-        let adjValue = null
-
-        if(amount || category){
-            const item = data.filter(x => x._id === id)
-            const a = amount || item[0].amount
-            const s = split || item[0].category.split
-            adjValue = a*s
-        }
-
-        const userData = {
-            id: id,
-            description,
-            category,
-            amount,
-            adjAmount: adjValue,
-            dateIncurred
-        }
-
-        dispatch(updateAmount(userData))
-        resetState()
-    }
-
     // let summaryObj = {}
     // data.forEach(x => {
     //     if(!summaryObj[x.category.name]){
@@ -134,48 +61,6 @@ export default function(){
     // for (const x in summaryObj){
     //     summaryArray.push({category: x, amount: summaryObj[x]})
     // }
-
-    const descriptionInput = {
-        label: "Description",
-        type: "text",
-        name: "description",
-        handleChange: onChange,
-        validation: true,
-        errorMessage: null,
-        className: 'ln-item-input'
-    }
-
-    const amountInput = {
-        label: "Amount",
-        type: "number",
-        name: "amount",
-        handleChange: onChange,
-        validation: true,
-        errorMessage: null,
-        className: 'ln-item-input'
-    }
-
-    const adjAmountInput = {
-        label: "Adjusted Amount",
-        type: "number",
-        name: "adjAmount",
-        handleChange: onChange,
-        validation: true,
-        errorMessage: null,
-        className: 'ln-item-input'
-    }
-
-    const dateIncurredInput = {
-        label: "Date",
-        type: "date",
-        name: "dateIncurred",
-        handleChange: onChange,
-        validation: true,
-        errorMessage: null,
-        className: 'ln-item-input'
-    }
-
-    
 
     return (
        <div>

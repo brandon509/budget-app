@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 
-export default function TextInput({ label, type, name, supporting, handleChange, inputValue, validation, errorMessage, className, defaultValue }){
+export default function TextInput({ label, type, name, supporting, handleChange, inputValue, validation, errorMessage, className }){
 
     const [labelVisable, setLabelVisable] = useState(false)
     const [passValidation, setPassValidation] = useState(true)
@@ -26,7 +26,7 @@ export default function TextInput({ label, type, name, supporting, handleChange,
 
     return (
             <div className="inputParent">
-                {(labelVisable || (inputValue)) && <h5 className = {!passValidation ? "inputLabel inputError" : "inputLabel"}>{label}</h5>}
+                {(labelVisable || inputValue) && <h5 className = {!passValidation ? "inputLabel inputError" : "inputLabel"}>{label}</h5>}
                 <input 
                     type={type} 
                     placeholder={!labelVisable ? label: undefined} 
@@ -36,7 +36,7 @@ export default function TextInput({ label, type, name, supporting, handleChange,
                     onBlur={onBlur} 
                     onChange={handleChange}
                     value={inputValue}
-                    defaultValue={defaultValue}>
+                    >
                 </input>
                 {!passValidation && <FontAwesomeIcon icon={faCircleExclamation} className="errorIcon inputError" />}
                 <p className={!passValidation ? "support inputError" : "support"}>{!passValidation ? errorMessage : supporting}</p>
