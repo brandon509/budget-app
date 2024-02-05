@@ -27,6 +27,7 @@ export default function Modal({ type, lineItem }) {
 
   const openModal = () => {
     setIsOpen(true)
+
     if(lineItem){
       setFormData((prevState) => ({
         ...prevState,
@@ -35,8 +36,8 @@ export default function Modal({ type, lineItem }) {
         amount: lineItem.amount,
         dateIncurred: lineItem.dateIncurred.slice(0,10)
     }))
-    setSplit(lineItem.category.split)
-  } 
+      setSplit(lineItem.category.split)
+    } 
   }
 
   const closeModal = () => {
@@ -69,7 +70,7 @@ const onChange = (e) => {
   }))
 }
 
-const onSubmit = async (e) => {
+const onSubmit = async () => {
 
   const userData = {
       description,
