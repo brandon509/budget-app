@@ -39,7 +39,7 @@ export default function CateogryLineItem({ category, data }){
                     {data && data.map(x => 
                         <tr key={x._id} className='table-body'>
                             <td className='body'>{x.description}</td>
-                            <td className='body'>${x.adjAmount}</td>
+                            <td className='body'>$ -{x.adjAmount}</td>
                             <td className='body'>{x.dateIncurred.slice(0,10)}</td>
                             <td className='body'>
                                 <div className='modify-icons'>

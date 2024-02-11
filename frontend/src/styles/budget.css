@@ -22,9 +22,50 @@
     gap: 4px;
 }
 
-.ln-item-input{
+/* .ln-item-input{
     height: 56px;
     width: 180px;
-}
- 
+} */
 
+.summary{
+    display: flex;
+    justify-content: center;
+    border-collapse: collapse;
+    margin-bottom: 50px;
+}
+
+.summary-label{
+    text-align: center;
+}
+
+.income-label, .expense-label, .savings-label{
+    padding-right: 50px;
+}
+
+.income-value, .expense-value, .savings-value{
+    padding-left: 50px;
+}
+
+.savings{
+    border-top: solid black 1px;
+}
+
+.big{
+    display: flex;
+}
+
+.tester{
+    border-left: solid black 1px;
+    width: 20vw;
+}
+
+.test{
+    width: 80vw;
+}
+
+.cat{
+    background: red;
+    margin: 0px;
+    padding: 15px;
+    text-align: center;
+}

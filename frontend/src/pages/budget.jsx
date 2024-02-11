@@ -62,8 +62,12 @@ export default function(){
         summaryArray.push({category: x, amount: summaryObj[x]})
     }
 
+    const totalExpenses = summaryArray.filter(x => x.category != 'Income')
+    const income = summaryArray.filter(x => x.category === 'Income').reduce((a,b) => a + b.amount,0)
+
     return (
-       <div>
+        <div className='big'>
+       <div className='test'>
             <Modal type='new' />      
             <form className='date-input-form'>
                 <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input input'>
@@ -73,25 +77,31 @@ export default function(){
                     {yearOptions.map(x => <option key={x} value={x}>{x}</option>)}
                 </select>
             </form>
-            <div>
-                <h3>Monthly Summary</h3>
-                    <table>
-                        <tbody>
-                            {summaryArray && summaryArray.map(x => 
-                                <tr key={x.category}>
-                                    <td>{x.category}</td>
-                                    <td>${x.amount}</td>
-                                </tr>
-                            )}
-                            <tr>
-                                <td>Monthly Savings</td>
-                                <td>${summaryArray.reduce((a,b) => a + b.amount,0)}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-            </div>
+            <h3 className='summary-label'>Monthly Summary</h3>
+            <table className='summary'>
+                <tbody>
+                    <tr>
+                        <td className='income-label'>Income</td>
+                        <td className='income-value'>{income}</td>
+                    </tr>
+                    {totalExpenses && totalExpenses.map(x => 
+                        <tr key={x.category}>
+                            <td className='expense-label'>{x.category}</td>
+                            <td className='expense-value'>-{x.amount}</td>
+                        </tr>
+                    )}
+                    <tr className='savings'>
+                        <td className='savings-label'>Monthly Savings</td>
+                        <td className='savings-value'>${income - totalExpenses.reduce((a,b) => a + b.amount,0)}</td>
+                    </tr>
+                </tbody>
+            </table>
             {currentCategories && currentCategories.map(x => 
                 <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} /> )}
+       </div>
+       <div className='tester'>
+        <h1 className='cat'>Categories</h1>
+       </div>
        </div>
     )
 }
