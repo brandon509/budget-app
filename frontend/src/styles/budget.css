@@ -55,18 +55,15 @@
 }
 
 .tester{
-    width: 25vw;
-    /* width: 0vw; */
-    transition: width 1s;
     transition: transform 0.5s;
     transform-origin: right;
     border-left: black 1px solid;
     display: flex;
     justify-content: center;
+    height: 100vh;
 }
 
 .vis{
-    /* width: 25vw; */
     transform: scaleX(0);
 }
 

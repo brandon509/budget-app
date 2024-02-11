@@ -81,8 +81,7 @@ export default function(){
     return (
         <div className='big'>
        <div className='test'>
-            <button className='btn' onClick={openAddEdit}>Click me</button>
-            <Modal type='new' />      
+            <button className='btn' onClick={openAddEdit}>Click me</button>     
             <form className='date-input-form'>
                 <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input input'>
                     {monthOptions.map((x,i) => <option key={i} value={i}>{x}</option>)}
