@@ -55,17 +55,22 @@
 }
 
 .tester{
-    border-left: solid black 1px;
-    width: 20vw;
+    width: 25vw;
+    /* width: 0vw; */
+    transition: width 1s;
+    transition: transform 0.5s;
+    transform-origin: right;
+    border-left: black 1px solid;
+    display: flex;
+    justify-content: center;
+}
+
+.vis{
+    /* width: 25vw; */
+    transform: scaleX(0);
 }
 
 .test{
-    width: 80vw;
+    width: 100vw;
 }
 
-.cat{
-    background: red;
-    margin: 0px;
-    padding: 15px;
-    text-align: center;
-}

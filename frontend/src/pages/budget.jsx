@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../features/categories/categorySlice'
 import Modal from '../components/modal'
 import CateogryLineItem from '../components/categoryLineItem'
+import AddEditPopout from '../components/addEditPopout'
 
 export default function(){
 
@@ -17,6 +18,8 @@ export default function(){
     
     const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
+    const [isVisable, setIsVisable] = useState(false)
+    const [item, setItem] = useState(undefined)
 
     const { isError, isLoading, message, data } = useSelector((state) => state.post)
     const { currentCategories } = useSelector((state) => state.category)
@@ -47,6 +50,16 @@ export default function(){
         }
     }
 
+    const openAddEdit = (x) => {
+        if(x.description) setItem(x)
+    
+        setIsVisable(true)
+    }
+
+    const closeAddEdit = () => {
+        setIsVisable(false)
+    }
+
     let summaryObj = {}
     data.forEach(x => {
         if(!summaryObj[x.category.name]){
@@ -68,6 +81,7 @@ export default function(){
     return (
         <div className='big'>
        <div className='test'>
+            <button className='btn' onClick={openAddEdit}>Click me</button>
             <Modal type='new' />      
             <form className='date-input-form'>
                 <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input input'>
@@ -97,10 +111,10 @@ export default function(){
                 </tbody>
             </table>
             {currentCategories && currentCategories.map(x => 
-                <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} /> )}
+                <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} edit={openAddEdit} /> )}
        </div>
-       <div className='tester'>
-        <h1 className='cat'>Categories</h1>
+       <div className={!isVisable ? 'tester vis' : 'tester'}>
+        <AddEditPopout close={closeAddEdit} lineItem={item} />
        </div>
        </div>
     )

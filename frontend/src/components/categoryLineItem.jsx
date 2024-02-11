@@ -3,8 +3,9 @@ import Modal from '../components/modal'
 import { useDispatch } from 'react-redux'
 import { deleteAmount } from '../features/posts/postSlice'
 import { useState } from 'react'
+import AddEditPopout from './addEditPopout'
 
-export default function CateogryLineItem({ category, data }){
+export default function CateogryLineItem({ category, data, edit }){
 
     const dispatch = useDispatch()
 
@@ -44,7 +45,7 @@ export default function CateogryLineItem({ category, data }){
                             <td className='body'>
                                 <div className='modify-icons'>
                                     <Button id={x._id} click={onClickDelete} item='x' className='x-btn'/>
-                                    <Modal type='edit' lineItem={x} />
+                                    <Button id={x._id} item='edit' className= 'edit-btn' click={() => edit(x)} />
                                 </div>
                             </td>
                         </tr>

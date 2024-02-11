@@ -8,6 +8,8 @@ import './styles/main.css'
 import './styles/budget.css'
 import './styles/modal.css'
 import './styles/category.css'
+import './styles/addEditPopout.css'
+import './styles/select.css'
 
 const container = document.getElementById('root')
 const root = createRoot(container)

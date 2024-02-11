@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux'
 
 export default function CateogryInput({ category, onChange, options, defaultValue }){
+    console.log(defaultValue)
+    console.log(options)
 
     const { activeCategories } = useSelector((state) => state.category)
     
