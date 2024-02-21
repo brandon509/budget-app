@@ -1,3 +1,18 @@
+.new-btn{
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+
+}
+
+.main-body{
+    display: flex;
+}
+
+.category-lines{
+    width: 100vw;
+}
+
 .date-input-form{
     display: flex;
     justify-content: center;
@@ -22,11 +37,6 @@
     gap: 4px;
 }
 
-/* .ln-item-input{
-    height: 56px;
-    width: 180px;
-} */
-
 .summary{
     display: flex;
     justify-content: center;
@@ -50,24 +60,29 @@
     border-top: solid black 1px;
 }
 
-.big{
-    display: flex;
-}
-
-.tester{
+.popout{
     transition: transform 0.5s;
     transform-origin: right;
-    border-left: black 1px solid;
+    border-left: rgb(193, 193, 193) 1px solid;
     display: flex;
     justify-content: center;
-    height: 100vh;
+    min-height: 100%;
 }
 
 .vis{
     transform: scaleX(0);
 }
 
-.test{
-    width: 100vw;
+.main-body{
+    height: auto;
+    width: 100%;
+    position: absolute;
+    top: 109px;
+    bottom: 0;
+}
+
+.categories{
+    overflow-y: auto;
+    height: 300px;
 }
 

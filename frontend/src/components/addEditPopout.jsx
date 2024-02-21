@@ -144,11 +144,11 @@ const dateIncurredInput = {
             <Button click={closePopOut} item='x' className='close-btn'/> 
             <form className='popout-form'>
                 <TextInput {...descriptionInput} />
-                <CateogryInput category={category} onChange={onChange} options={activeCategories} defaultValue={lineItem && lineItem.category._id} />
+                <CateogryInput category={category} onChange={onChange} options={activeCategories} />
                 <TextInput {...amountInput} />
                 <TextInput {...adjAmountInput} />
                 <TextInput {...dateIncurredInput} />
-                <button type='button' onClick={!lineItem ? onSubmit : onSubmitEdit} className='btn submit-btn'>Submit</button>
+                <button type='button' onClick={!lineItem ? onSubmit : onSubmitEdit} className='btn submit-btn'>Save</button>
             </form>
     </div>
   )

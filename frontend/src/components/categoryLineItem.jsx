@@ -1,9 +1,7 @@
 import Button from '../components/button'
-import Modal from '../components/modal'
 import { useDispatch } from 'react-redux'
 import { deleteAmount } from '../features/posts/postSlice'
 import { useState } from 'react'
-import AddEditPopout from './addEditPopout'
 
 export default function CateogryLineItem({ category, data, edit }){
 
@@ -28,7 +26,7 @@ export default function CateogryLineItem({ category, data, edit }){
                 <p className='progress-bar' style={{background:`linear-gradient(to right, ${percent < 50 ? 'green' : percent < 75 ? 'yellow' : 'red'} ${percent}%, rgb(235, 235, 235) ${percent}%)`}}>{category.budget - data.reduce((a,b) => a + b.adjAmount,0)} of {category.budget} remaining</p>
             </div>
             {isVisable && <table className='data-table'>
-                <thead className='testerr'>
+                <thead>
                     <tr className='table-header'>
                         <th className='head'>Description</th>
                         <th className='head'>Amount</th>

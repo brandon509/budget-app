@@ -13,13 +13,13 @@ const newCategory = async (category) => {
 }
 
 const deleteCategory = async (category) => {
-    const response = await axios.post('http://localhost:8000/category/delete', category, { withCredentials: true })
+    const response = await axios.put('http://localhost:8000/category/delete', category, { withCredentials: true })
 
     return response.data
 }
 
 const updateCategory = async (category) => {
-    const response = await axios.post('http://localhost:8000/category/update', category, { withCredentials: true })
+    const response = await axios.put('http://localhost:8000/category/update', category, { withCredentials: true })
 
     return response.data
 }

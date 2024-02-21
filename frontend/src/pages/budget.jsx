@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import { getAmounts } from '../features/posts/postSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../features/categories/categorySlice'
-import Modal from '../components/modal'
 import CateogryLineItem from '../components/categoryLineItem'
 import AddEditPopout from '../components/addEditPopout'
+import Button from '../components/button'
+import Modal from '../components/modal'
 
 export default function(){
 
@@ -79,42 +80,45 @@ export default function(){
     const income = summaryArray.filter(x => x.category === 'Income').reduce((a,b) => a + b.amount,0)
 
     return (
-        <div className='big'>
-       <div className='test'>
-            <button className='btn' onClick={openAddEdit}>Click me</button>     
-            <form className='date-input-form'>
-                <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input input'>
-                    {monthOptions.map((x,i) => <option key={i} value={i}>{x}</option>)}
-                </select>
-                <select name="year" defaultValue={year} onChange={onChangeDate} className='date-input input'>
-                    {yearOptions.map(x => <option key={x} value={x}>{x}</option>)}
-                </select>
-            </form>
-            <h3 className='summary-label'>Monthly Summary</h3>
-            <table className='summary'>
-                <tbody>
-                    <tr>
-                        <td className='income-label'>Income</td>
-                        <td className='income-value'>{income}</td>
-                    </tr>
-                    {totalExpenses && totalExpenses.map(x => 
-                        <tr key={x.category}>
-                            <td className='expense-label'>{x.category}</td>
-                            <td className='expense-value'>-{x.amount}</td>
+        <div className='main-body'>
+            <div className='category-lines'>
+                <Button click={openAddEdit} item='new' className='new-btn' />
+                <Modal />    
+                <form className='date-input-form'>
+                    <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input input'>
+                        {monthOptions.map((x,i) => <option key={i} value={i}>{x}</option>)}
+                    </select>
+                    <select name="year" defaultValue={year} onChange={onChangeDate} className='date-input input'>
+                        {yearOptions.map(x => <option key={x} value={x}>{x}</option>)}
+                    </select>
+                </form>
+                <h3 className='summary-label'>Monthly Summary</h3>
+                <table className='summary'>
+                    <tbody>
+                        <tr>
+                            <td className='income-label'>Income</td>
+                            <td className='income-value'>{income}</td>
                         </tr>
-                    )}
-                    <tr className='savings'>
-                        <td className='savings-label'>Monthly Savings</td>
-                        <td className='savings-value'>${income - totalExpenses.reduce((a,b) => a + b.amount,0)}</td>
-                    </tr>
-                </tbody>
-            </table>
-            {currentCategories && currentCategories.map(x => 
-                <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} edit={openAddEdit} /> )}
-       </div>
-       <div className={!isVisable ? 'tester vis' : 'tester'}>
-        <AddEditPopout close={closeAddEdit} lineItem={item} />
-       </div>
+                        {totalExpenses && totalExpenses.map(x => 
+                            <tr key={x.category}>
+                                <td className='expense-label'>{x.category}</td>
+                                <td className='expense-value'>-{x.amount}</td>
+                            </tr>
+                        )}
+                        <tr className='savings'>
+                            <td className='savings-label'>Monthly Savings</td>
+                            <td className='savings-value'>${income - totalExpenses.reduce((a,b) => a + b.amount,0)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div className='categories'>
+                    {currentCategories && currentCategories.map(x => 
+                        <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} edit={openAddEdit} /> )}
+                </div>
+            </div>
+            <div className={!isVisable ? 'popout vis' : 'popout'}>
+                <AddEditPopout close={closeAddEdit} lineItem={item} />
+            </div>
        </div>
     )
 }

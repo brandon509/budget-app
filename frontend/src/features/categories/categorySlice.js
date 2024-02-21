@@ -115,7 +115,7 @@ export const categorySlice = createSlice({
             .addCase(newCategory.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.categories.push(action.payload)
+                state.activeCategories.push(action.payload)
             })
             .addCase(newCategory.rejected, (state, action) => {
                 state.isLoading = false
@@ -128,7 +128,7 @@ export const categorySlice = createSlice({
             .addCase(deleteCategory.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.categories = action.payload
+                state.activeCategories = state.activeCategories.filter(x => x._id != action.payload.id)
             })
             .addCase(deleteCategory.rejected, (state, action) => {
                 state.isLoading = false

@@ -1,163 +1,143 @@
 import ReactModal from 'react-modal';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { newAmount, updateAmount } from '../features/posts/postSlice'
 import TextInput from './textInput';
 import Button from './button'
-import CateogryInput from './categoryInput';
+import { newCategory, updateCategory, deleteCategory } from '../features/categories/categorySlice'
 
 //ReactModal.setAppElement('#main')
 
-export default function Modal({ type, lineItem }) {
+export default function Modal() {
 
   const [modalIsOpen, setIsOpen] = useState(false)
-  const [split, setSplit] = useState(0)
-  const [formData, setFormData] = useState({
-        description: '',
-        category: '',
-        amount: '',
-        dateIncurred: ''
-    })
+  const [editCategory, setEditCategory] = useState(undefined)
+  const [categoryFormData, setCategoryFormData] = useState({
+    name: '',
+    split: '',
+    budget: ''
+})
 
-  const { description, category, amount, dateIncurred } = formData
+  const { name, split, budget } = categoryFormData
 
   const { activeCategories } = useSelector((state) => state.category)
 
   const dispatch = useDispatch()
 
+  const resetState = () => {
+    setCategoryFormData((prevState) => ({
+      ...prevState,
+      name: '',
+      split: '',
+      budget: ''
+    }))
+    setEditCategory(undefined)
+  }
+
   const openModal = () => {
     setIsOpen(true)
-
-    if(lineItem){
-      setFormData((prevState) => ({
-        ...prevState,
-        description: lineItem.description,
-        category: lineItem.category._id,
-        amount: lineItem.amount,
-        dateIncurred: lineItem.dateIncurred.slice(0,10)
-    }))
-      setSplit(lineItem.category.split)
-    } 
   }
 
   const closeModal = () => {
-    resetState()
     setIsOpen(false)
+    resetState()
   }
 
-  const resetState = () => {
-    setFormData((prevState) => ({
-        ...prevState,
-        description: '',
-        category: '',
-        amount: '',
-        dateIncurred: ''
-    }))
-    setSplit(0)
-}
+  const onClickCategory = (e) => {
+    setEditCategory(e.target.id)
+    const selectedCategory = activeCategories.filter(x => x._id === e.target.id)[0]  
 
-const onChange = (e) => {
-  let value = +e.target.value || e.target.value
-
-  if(e.target.name === 'category' && e.target.value){
-      const category = activeCategories.filter(x => x._id === e.target.value)
-      setSplit(category[0].split)
-  }
-
-  setFormData((prevState) => ({
+    setCategoryFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: value
+      name: selectedCategory.name,
+      split: selectedCategory.split,
+      budget: selectedCategory.budget
   }))
-}
+  }
 
-const onSubmit = async () => {
-
-  const userData = {
-      description,
-      category,
-      amount,
-      adjAmount: amount*split,
-      dateIncurred
+  const onChange = (e) => {
+    let value = +e.target.value || e.target.value
+  
+    setCategoryFormData((prevState) => ({
+        ...prevState,
+        [e.target.name]: value
+    }))
   }
   
-  dispatch(newAmount(userData))
-  resetState()
-  setIsOpen(false)
-}
-
-const onSubmitEdit = async () => {
- 
-  const userData = {
-      id: lineItem._id,
-      description,
-      category,
-      amount,
-      adjAmount: amount*split,
-      dateIncurred
+  const onSubmit = async () => {
+  
+    const userData = {
+        name,
+        split,
+        budget
+    }
+    
+    dispatch(newCategory(userData))
+    resetState()
   }
 
-  dispatch(updateAmount(userData))
-  resetState()
-  setIsOpen(false)
-}
+  const onSubmitDelete = () => {
+    dispatch(deleteCategory({ id: editCategory }))
 
-  const descriptionInput = {
-    label: "Description",
+    resetState()
+  }
+
+  const categoryName = {
+    label: "Name",
     type: "text",
-    name: "description",
+    name: "name",
     handleChange: onChange,
     validation: true,
     errorMessage: null,
     className: 'ln-item-input',
-    inputValue: description
+    inputValue: name
 }
 
-const amountInput = {
-    label: "Amount",
-    type: "number",
-    name: "amount",
-    handleChange: onChange,
-    validation: true,
-    errorMessage: null,
-    className: 'ln-item-input',
-    inputValue: amount
+const categorySplit = {
+  label: "Split",
+  type: "number",
+  name: "split",
+  handleChange: onChange,
+  validation: true,
+  errorMessage: null,
+  className: 'ln-item-input',
+  inputValue: split
 }
 
-const adjAmountInput = {
-    label: "Adjusted Amount",
-    type: "number",
-    name: "adjAmount",
-    handleChange: onChange,
-    validation: true,
-    errorMessage: null,
-    className: 'ln-item-input',
-    inputValue: amount*split || amount
-}
-
-const dateIncurredInput = {
-    label: "Date",
-    type: "date",
-    name: "dateIncurred",
-    handleChange: onChange,
-    validation: true,
-    errorMessage: null,
-    className: 'ln-item-input',
-    inputValue: dateIncurred
+const categoryBudget = {
+  label: "Budget",
+  type: "number",
+  name: "budget",
+  handleChange: onChange,
+  validation: true,
+  errorMessage: null,
+  className: 'ln-item-input',
+  inputValue: budget
 }
 
   return(
     <div>
-      {type === 'new' ? <Button item='new'  click={openModal} /> : <Button id={lineItem._id} item='edit' className= 'edit-btn' click={openModal} />}
+      <button onClick={openModal}>Category</button>
       <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal' overlayClassName='modal-overlay'  contentLabel="Example Modal" ariaHideApp={false}>
-            <Button click={closeModal} item='x' className='close-btn'/> 
-            <form className='modal-form'>
-                <TextInput {...descriptionInput} />
-                <CateogryInput category={category} onChange={onChange} options={activeCategories} defaultValue={lineItem && lineItem.category._id} />
-                <TextInput {...amountInput} />
-                <TextInput {...adjAmountInput} />
-                <TextInput {...dateIncurredInput} />
-                <button type='button' onClick={type === 'new' ? onSubmit : onSubmitEdit} className='btn submit-btn'>Submit</button>
+          <div className='test'>
+            <div className='left'>
+              {/* <Button click={closeModal} item='x' className='close-btn'/> */}
+              <h4 className='category-header'>Category</h4>
+              <ul className='category-list'>
+                {activeCategories && activeCategories.map((x,i) => 
+                    <li key={x._id} id={x._id} className={ x._id === editCategory ? 'category-list-item edit' : 'category-list-item'} onClick={onClickCategory}>{x.name}</li>
+                )}
+              </ul>
+            </div>
+            <div>
+            <form className=''>
+                <TextInput {...categoryName} />
+                <TextInput {...categorySplit} />
+                <TextInput {...categoryBudget} />
+                <button type='button' className='btn' onClick={onSubmit}>{editCategory ? 'Update' : 'Create'}</button>
+                {editCategory && <button type='button' className='btn' onClick={onSubmitDelete} >Delete</button>}
             </form>
+            </div>
+          </div>
       </ReactModal>
     </div>
   )

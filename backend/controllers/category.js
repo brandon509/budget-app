@@ -37,7 +37,7 @@ module.exports = {
     delete: async (req,res) => {
         try {
             await Category.updateOne({ _id: req.body.id }, { active: false, deactivationDate: new Date() })
-            res.status(200).json({ msg: 'Category has been deleted' })
+            res.status(200).json({ id: req.body.id })
         } 
         catch (error) {
             console.log(error)
