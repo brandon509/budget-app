@@ -56,9 +56,10 @@ module.exports = {
                 changes['budget'] = req.body.budget
             }
 
-            const category = await Category.updateOne({ _id: req.body.id }, changes)
+            await Category.updateOne({ _id: req.body.id }, changes)
+            const category = await Category.findById(req.body.id)
 
-            res.status(200).json('Category has been updated')
+            res.status(200).json(category)
         } 
         catch (error) {
             console.log(error)

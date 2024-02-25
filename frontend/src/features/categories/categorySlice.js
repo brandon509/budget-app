@@ -141,7 +141,14 @@ export const categorySlice = createSlice({
             .addCase(updateCategory.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.categories = action.payload
+                state.activeCategories = state.activeCategories.filter(x => x._id != action.payload._id)
+                state.activeCategories.push(action.payload)
+                state.activeCategories = state.activeCategories.sort((a,b) => {
+                    const dateA = new Date(a.createdAt)
+                    const dateB = new Date(b.createdAt)
+
+                    return dateA - dateB
+                })
             })
             .addCase(updateCategory.rejected, (state, action) => {
                 state.isLoading = false

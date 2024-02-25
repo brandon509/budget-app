@@ -20,7 +20,7 @@ const deleteCategory = async (category) => {
 
 const updateCategory = async (category) => {
     const response = await axios.put('http://localhost:8000/category/update', category, { withCredentials: true })
-
+    console.log(response.data)
     return response.data
 }
 
