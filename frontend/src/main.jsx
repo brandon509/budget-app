@@ -10,6 +10,7 @@ import './styles/modal.css'
 import './styles/category.css'
 import './styles/addEditPopout.css'
 import './styles/select.css'
+import './styles/header.css'
 
 const container = document.getElementById('root')
 const root = createRoot(container)

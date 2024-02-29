@@ -5,7 +5,7 @@ import TextInput from './textInput';
 import Button from './button'
 import { newCategory, updateCategory, deleteCategory } from '../features/categories/categorySlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faFolder } from '@fortawesome/free-solid-svg-icons'
 
 //ReactModal.setAppElement('#main')
 
@@ -131,7 +131,8 @@ const categoryBudget = {
 
   return(
     <div>
-      <button onClick={openModal}>Category</button>
+      <div onClick={openModal}><FontAwesomeIcon className="icon" icon={faFolder} />Categories</div>
+      {/* <button onClick={openModal}>Category</button> */}
       <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal' overlayClassName='modal-overlay'  contentLabel="Example Modal" ariaHideApp={false}>
           <div className='modal-content'>
             <div className='left'>
