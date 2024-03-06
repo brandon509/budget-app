@@ -1,23 +1,27 @@
 .header-title{
     font-weight: 600;
     letter-spacing: 1.4px;
-    font-size: 60px;
+    font-size: 40px;
     color: #366A21;
     cursor: pointer;
-    margin-left: 100px;
+    margin-left: 60px;
     margin-top: 0px;
     margin-bottom: 0px;
+    height: 38px;
+    padding-top: 11px;
  }
  
  .header{
     background: #a1b09672;
+    height: 70px;
  }
  
  .header-contents{
     display: flex;
     justify-content: space-between;
-    padding: 20px 0px;
+    /* padding: 6px 0px; */
     align-items: center;
+    height: 60px;
  }
  
  .header-btn{
@@ -27,21 +31,33 @@
 .hamburger{
     color: #366A21;
     height: 25px;
-    margin-right: 150px;
     cursor: pointer;
+    border-radius: 50%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-right: 2px;
+}
+
+.hamburger:hover{
+    background: rgb(203, 203, 203);
 }
 
 .hamburger-container{
     height: 121.2px;
     width: 171.875px;
     position: absolute;
-    background: #a1b09672;
-    right: 0px;
+    /* background: #a1b09672; */
+    right: 20px;
     /* top: 109px; */
-    top: 65px;
+    top: 50px;
     z-index: 1;
     display: none;
-    padding-top: 44px;
+    padding-top: 20px;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, 
+        rgba(161, 176, 150, 0) 20px, 
+        #a1b09672 20px,
+        #a1b09672 121.2px)
 }
 
 .hamburger-list{

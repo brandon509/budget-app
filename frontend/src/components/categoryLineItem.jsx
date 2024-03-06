@@ -25,7 +25,7 @@ export default function CateogryLineItem({ category, data, edit }){
                 <h4 className='category-name'>{category.name}</h4>
                 <p className='progress-bar' style={{background:`linear-gradient(to right, ${percent < 50 ? 'green' : percent < 75 ? 'yellow' : 'red'} ${percent}%, rgb(235, 235, 235) ${percent}%)`}}>{category.budget - data.reduce((a,b) => a + b.adjAmount,0)} of {category.budget} remaining</p>
             </div>
-            {isVisable && <table className='data-table'>
+            {isVisable && data.length > 0 ? <table className='data-table'>
                 <thead>
                     <tr className='table-header'>
                         <th className='head'>Description</th>
@@ -49,7 +49,7 @@ export default function CateogryLineItem({ category, data, edit }){
                         </tr>
                     )}
                 </tbody>
-            </table>}
+            </table> : isVisable ? <p className='no-items'>No items yet.</p> : null}
         </div>
     )
 }

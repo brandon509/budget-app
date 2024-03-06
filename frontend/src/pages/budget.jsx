@@ -81,6 +81,9 @@ export default function(){
 
     return (
         <div className='main-body'>
+            {isVisable && <div className='popout'>
+                <AddEditPopout close={closeAddEdit} lineItem={item} />
+            </div>}
             <div className='category-lines'>
                 <Button click={openAddEdit} item='new' className='new-btn' />
                 <form className='date-input-form'>
@@ -115,9 +118,9 @@ export default function(){
                         <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} edit={openAddEdit} /> )}
                 </div>
             </div>
-            <div className={!isVisable ? 'popout vis' : 'popout'}>
+            {/* <div className={!isVisable ? 'popout vis' : 'popout'}>
                 <AddEditPopout close={closeAddEdit} lineItem={item} />
-            </div>
+            </div> */}
        </div>
     )
 }

@@ -1,6 +1,7 @@
 .category-section{
-    width: 80%;
-    margin-left: 20px;
+    width: 95%;
+    margin: 0% 2.5%;
+    /* margin-left: 20px; */
     margin-bottom: 20px;
     cursor: pointer;
 }
@@ -19,9 +20,9 @@
 }
 
 .data-table{
-    width: 70%;
+    width: 90%;
+    margin: 0% 5%;
     border-collapse: collapse;
-    margin-left: 7%;
     margin-bottom: 25px;
 }
 
@@ -41,4 +42,10 @@
 
 .body{
     padding-top: 5px;
+}
+
+.no-items{
+    width: 90%;
+    margin-left: 0% 5%;
+    text-align: center;
 }
