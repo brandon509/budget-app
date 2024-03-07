@@ -141,7 +141,7 @@ const dateIncurredInput = {
 
   return(
     <div>
-            <Button click={closePopOut} item='x' className='close-btn'/> 
+            {/* <Button click={closePopOut} item='x' className='close-btn'/>  */}
             <form className='popout-form'>
                 <TextInput {...descriptionInput} />
                 <CateogryInput category={category} onChange={onChange} options={activeCategories} />

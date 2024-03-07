@@ -20,6 +20,8 @@ export default function(){
     const [month, setMonth] = useState(currentDate.getMonth())
     const [year, setYear] = useState(currentDate.getFullYear())
     const [isVisable, setIsVisable] = useState(false)
+    const [isForm, setIsForm] = useState(false)
+    const [isSummary, setIsSummary] = useState(false)
     const [item, setItem] = useState(undefined)
 
     const { isError, isLoading, message, data } = useSelector((state) => state.post)
@@ -51,14 +53,41 @@ export default function(){
         }
     }
 
-    const openAddEdit = (x) => {
+    const openForm = (x) => {
         if(x.description) setItem(x)
     
-        setIsVisable(true)
+        if(isVisable && isForm){
+            setIsVisable(false)
+            setIsForm(false)
+        }
+        else{
+            setIsVisable(true)
+            setIsForm(true)
+            setIsSummary(false)
+        }
     }
 
-    const closeAddEdit = () => {
+    const closeForm = () => {
         setIsVisable(false)
+        setIsForm(false)
+    }
+
+    const openSummary = (x) => {
+
+        if(isVisable && isSummary){
+            setIsVisable(false)
+            setIsSummary(false)
+        }
+        else{
+            setIsVisable(true)
+            setIsSummary(true)
+            setIsForm(false)
+        }
+    }
+
+    const closeSummary = () => {
+        setIsVisable(false)
+        setIsSummary(false)
     }
 
     let summaryObj = {}
@@ -80,12 +109,15 @@ export default function(){
     const income = summaryArray.filter(x => x.category === 'Income').reduce((a,b) => a + b.amount,0)
 
     return (
-        <div className='main-body'>
+        <div className={isVisable ? 'main-body main-body-small' : 'main-body'}>
+            <div className='nav-buttons'>
+                <Button click={openForm} item='new' className={isForm ? 'nav-btn nav-btn-clicked' : 'nav-btn'} />
+                <Button click={openSummary} item='group' className={isSummary ? 'nav-btn nav-btn-clicked' : 'nav-btn'} />
+            </div>
             {isVisable && <div className='popout'>
-                <AddEditPopout close={closeAddEdit} lineItem={item} />
+                {isForm && <AddEditPopout close={openForm} lineItem={item} />}
             </div>}
-            <div className='category-lines'>
-                <Button click={openAddEdit} item='new' className='new-btn' />
+            <div className={isVisable ? 'category-lines category-lines-small' : 'category-lines'}>
                 <form className='date-input-form'>
                     <select name="month" defaultValue={month} onChange={onChangeDate} className='date-input input'>
                         {monthOptions.map((x,i) => <option key={i} value={i}>{x}</option>)}
@@ -94,7 +126,7 @@ export default function(){
                         {yearOptions.map(x => <option key={x} value={x}>{x}</option>)}
                     </select>
                 </form>
-                <h3 className='summary-label'>Monthly Summary</h3>
+                {/* <h3 className='summary-label'>Monthly Summary</h3>
                 <table className='summary'>
                     <tbody>
                         <tr>
@@ -112,10 +144,10 @@ export default function(){
                             <td className='savings-value'>${income - totalExpenses.reduce((a,b) => a + b.amount,0)}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> */}
                 <div className='categories'>
                     {currentCategories && currentCategories.map(x => 
-                        <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} edit={openAddEdit} /> )}
+                        <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} edit={openForm} /> )}
                 </div>
             </div>
             {/* <div className={!isVisable ? 'popout vis' : 'popout'}>

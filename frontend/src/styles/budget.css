@@ -1,9 +1,8 @@
-.new-btn{
+/* .new-btn{
     width: 30px;
     height: 30px;
     border-radius: 5px;
-
-}
+} */
 
 .main-body{
     display: flex;
@@ -11,17 +10,26 @@
     /* height: 100vh; */
     /* position: absolute;
     top: 109px; */
-    justify-content: center;
+    /* justify-content: center; */
+    justify-content: flex-start;
     background: #a1b09672;
     height: calc(100vh - 70px);
 }
 
 .category-lines{
-    width: calc(100vw - 80px);
+    width: calc(100vw - 108px);
     height: calc(100vh - 90px);
     /* height: 88vh; */
     background: #FAFAFA;
     border-radius: 10px;
+}
+
+.main-body-small{
+    justify-content: flex-start;
+}
+
+.category-lines-small{
+    width: calc(100vw - 270px - 108px);
 }
 
 .date-input-form{
@@ -72,12 +80,13 @@
 }
 
 .popout{
-    transition: transform 0.5s;
-    transform-origin: right;
-    border-left: rgb(193, 193, 193) 1px solid;
+    /* transition: transform 0.5s;
+    transform-origin: left; */
+    /* border-left: rgb(193, 193, 193) 1px solid; */
     display: flex;
     justify-content: center;
     min-height: 100%;
+    width: 270px;
 }
 
 .vis{
@@ -106,5 +115,28 @@
   
   .categories::-webkit-scrollbar-thumb:hover {
     background: #555;
+  }
+
+  .nav-buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 30px 12px 0px 12px;
+  }
+
+  .nav-btn{
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    background: none;
+    color: #366A21;
+  }
+
+  .nav-btn:hover{
+    background: rgb(203, 203, 203);
+  }
+
+  .nav-btn-clicked{
+    background: rgb(203, 203, 203);
   }
 
