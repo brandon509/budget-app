@@ -9,7 +9,7 @@ import { faPlus, faFolder } from '@fortawesome/free-solid-svg-icons'
 
 //ReactModal.setAppElement('#main')
 
-export default function Modal() {
+export default function Modal({ close }) {
 
   const [modalIsOpen, setIsOpen] = useState(false)
   const [editCategory, setEditCategory] = useState(undefined)
@@ -22,6 +22,7 @@ export default function Modal() {
   const { name, split, budget } = categoryFormData
 
   const { activeCategories } = useSelector((state) => state.category)
+  const { year, month } = useSelector((state) => state.post)
 
   const dispatch = useDispatch()
 
@@ -37,10 +38,11 @@ export default function Modal() {
 
   const openModal = () => {
     setIsOpen(true)
+    console.log('test')
   }
 
   const closeModal = () => {
-    setIsOpen(false)
+    close()
     resetState()
   }
 
@@ -73,7 +75,7 @@ export default function Modal() {
         budget
     }
     
-    dispatch(newCategory(userData))
+    dispatch(newCategory({ category: userData, year: year, month: month }))
     resetState()
   }
 
@@ -130,10 +132,39 @@ const categoryBudget = {
 }
 
   return(
+    // <div>
+    //   <div onClick={openModal}><FontAwesomeIcon className="icon" icon={faFolder} />Categories</div>
+    //   <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal' overlayClassName='modal-overlay'  contentLabel="Example Modal" ariaHideApp={false}>
+    //       <div className='modal-content'>
+    //         <div className='left'>
+    //           <h4 className='category-header'>Category</h4>
+    //           <ul className='category-list'>
+    //             {activeCategories && activeCategories.map((x,i) => 
+    //                 <li key={x._id} id={x._id} className={ x._id === editCategory ? 'category-list-item edit' : 'category-list-item'} onClick={onClickCategory}>{x.name}</li>
+    //             )}
+    //           </ul>
+    //           <div className='new-category-container'>
+    //             <p className='new-category' onClick={resetState}><FontAwesomeIcon icon={faPlus} /> new category</p>
+    //           </div>
+    //         </div>
+    //         <div className='right'>
+    //           <form className='category-form'>
+    //               {!editCategory ? <h3>New Category</h3> : <h3>Update Category</h3>}
+    //               <TextInput {...categoryName} />
+    //               <TextInput {...categorySplit} />
+    //               <TextInput {...categoryBudget} />
+    //               <div className='category-buttons-group'>
+    //                 <button type='button' className='btn category-button' onClick={editCategory ? onSubmitUpdate : onSubmit}>{editCategory ? 'Update' : 'Create'}</button>
+    //                 {editCategory && <button type='button' className='btn category-button' onClick={onSubmitDelete} >Delete</button>}
+    //               </div>
+    //           </form>
+    //           <Button click={closeModal} item='x' className='close-btn modal-close'/>
+    //         </div>
+    //       </div>
+    //   </ReactModal>
+    // </div>
     <div>
-      <div onClick={openModal}><FontAwesomeIcon className="icon" icon={faFolder} />Categories</div>
-      {/* <button onClick={openModal}>Category</button> */}
-      <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal' overlayClassName='modal-overlay'  contentLabel="Example Modal" ariaHideApp={false}>
+    <div className='modal'>
           <div className='modal-content'>
             <div className='left'>
               <h4 className='category-header'>Category</h4>
@@ -160,7 +191,8 @@ const categoryBudget = {
               <Button click={closeModal} item='x' className='close-btn modal-close'/>
             </div>
           </div>
-      </ReactModal>
+    </div>
+    <div className='overlay'></div>
     </div>
   )
 }

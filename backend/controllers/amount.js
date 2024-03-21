@@ -8,7 +8,8 @@ module.exports = {
             const daysInMonth = new Date(year,+month+1,0).getDate()
 
             const amounts = await Amount.find({ dateIncurred: {$gte: new Date(year,month,1,-5,0,0), $lte: new Date(year,month,daysInMonth)}, user: req.user.id }).sort({ dateIncurred: -1 }).populate('category')
-            res.json(amounts)
+            
+            res.json({ amounts })
         } 
         catch (error) {
             console.log(error)

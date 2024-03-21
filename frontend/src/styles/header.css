@@ -4,7 +4,7 @@
     font-size: 40px;
     color: #366A21;
     cursor: pointer;
-    margin-left: 60px;
+    margin-left: 80px;
     margin-top: 0px;
     margin-bottom: 0px;
     height: 38px;
@@ -19,7 +19,6 @@
  .header-contents{
     display: flex;
     justify-content: space-between;
-    /* padding: 6px 0px; */
     align-items: center;
     height: 60px;
  }
@@ -33,31 +32,27 @@
     height: 25px;
     cursor: pointer;
     border-radius: 50%;
-    padding: 12px;
+    padding: 18px;
     margin-top: 5px;
-    margin-right: 2px;
+    margin-right: 4px;
 }
 
 .hamburger:hover{
-    background: rgb(203, 203, 203);
+    background: radial-gradient(circle at center, 
+        rgb(203, 203, 203) 24px, 
+        rgba(161, 176, 150, 0) 24px, 
+        rgba(161, 176, 150, 0) 100% );
 }
 
 .hamburger-container{
     height: 121.2px;
-    width: 171.875px;
+    width: 150px;
     position: absolute;
-    /* background: #a1b09672; */
-    right: 20px;
-    /* top: 109px; */
-    top: 50px;
+    right: 10px;
+    top: 60px;
     z-index: 1;
-    display: none;
-    padding-top: 20px;
     border-radius: 5px;
-    background: linear-gradient(to bottom, 
-        rgba(161, 176, 150, 0) 20px, 
-        #a1b09672 20px,
-        #a1b09672 121.2px)
+    background: whitesmoke;
 }
 
 .hamburger-list{
@@ -84,12 +79,4 @@
 
 .last-item{
     border-bottom: none;
-}
-
-.hamburger:hover + .hamburger-container{
-    display: block;
-}
-
-.hamburger-container:hover{
-    display: block;
 }

@@ -12,22 +12,33 @@ module.exports = {
 
             const activeCategories = categories.filter(x => x.active)
             const currentCategories = categories.filter(x => (x.deactivationDate > date && x.createdAt < date) || (x.createdAt < date && x.active))
+
+            const currentDate = new Date()
+            let isCurrentDate = false
+
+            if(req.query.year > currentDate.getFullYear()){
+                isCurrentDate = true
+            }
+            else if(req.query.year == currentDate.getFullYear() && req.query.month >= currentDate.getMonth()){
+                isCurrentDate = true
+            }
             
-            res.status(200).json({ activeCategories, currentCategories })
+            res.status(200).json({ activeCategories, currentCategories, isCurrentDate })
         } catch (error) {
             console.log(error)
         }
     },
     new: async (req,res) => {
         try {
+            
             let category = await Category.create({
-                name: req.body.name,
-                budget: req.body.budget,
+                name: req.body.category.name,
+                budget: req.body.category.budget,
                 user: req.user.id,
-                split: req.body.split
+                split: req.body.category.split
             })
 
-            res.status(200).json(category)
+            res.status(200).json({ category })
             
         } 
         catch (error) {

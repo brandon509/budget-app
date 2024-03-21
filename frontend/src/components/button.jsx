@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare, faX, faFloppyDisk, faPlus, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faX, faFloppyDisk, faPlus, faLayerGroup, faPiggyBank, faMoneyBillTrendUp } from '@fortawesome/free-solid-svg-icons'
 
 export default function Button({ id, click, item, className }){
 
@@ -8,7 +8,9 @@ export default function Button({ id, click, item, className }){
         edit: faPenToSquare,
         save: faFloppyDisk,
         new: faPlus,
-        group: faLayerGroup
+        group: faLayerGroup,
+        savings: faPiggyBank,
+        invest: faMoneyBillTrendUp
     }
     
     return (

@@ -2,7 +2,7 @@
     width: 95%;
     margin: 0% 2.5%;
     /* margin-left: 20px; */
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     cursor: pointer;
 }
 
@@ -45,7 +45,6 @@
 }
 
 .no-items{
-    width: 90%;
-    margin-left: 0% 5%;
+    width: 100%;
     text-align: center;
 }

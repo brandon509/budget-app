@@ -11,6 +11,7 @@ import './styles/category.css'
 import './styles/addEditPopout.css'
 import './styles/select.css'
 import './styles/header.css'
+import './styles/summary.css'
 
 const container = document.getElementById('root')
 const root = createRoot(container)

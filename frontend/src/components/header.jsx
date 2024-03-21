@@ -13,6 +13,7 @@ export default function Header(){
     const { user, isSuccess, message } = useSelector((state) => state.auth)
 
     const [isVisable, setIsVisable] = useState(false)
+    const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
 
     useEffect(() => {
         if(isSuccess && !user && !message){
@@ -35,8 +36,21 @@ export default function Header(){
         dispatch(reset())
     }
 
-    const onClickVisable = () => {
-        setIsVisable(!isVisable)
+    const onMouseEnter = () => {
+        setIsVisable(true)
+    }
+
+    const onMouseLeave = () => {
+        setIsVisable(false)
+    }
+
+    const onClickCategoriesOpen = () => {
+        setIsCategoriesOpen(true)
+        setIsVisable(false)
+    }
+
+    const onClickCategoriesClose = () => {
+        setIsCategoriesOpen(false)
     }
 
     return(
@@ -45,7 +59,7 @@ export default function Header(){
                 <div className="header-contents">
                     <h1 className="header-title" onClick={onClickHome}>CENT</h1>
 
-                    {user && <FontAwesomeIcon className="hamburger" onClick={onClickVisable} icon={faBars} />}
+                    {user && <FontAwesomeIcon className="hamburger" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} icon={faBars} />}
                     {/* {isVisable && <div className="hamburger-container">
                         <ul className="hamburger-list">
                             <li className="hamburger-list-item"><FontAwesomeIcon className="icon" icon={faUser} />View Profile</li>
@@ -53,14 +67,17 @@ export default function Header(){
                             <li className="hamburger-list-item last-item" onClick={onClickLogout}><FontAwesomeIcon className="icon" icon={faPowerOff} />Log out</li>
                         </ul>
                         </div>} */}
-                        <div className="hamburger-container">
-                        <ul className="hamburger-list">
-                            <li className="hamburger-list-item"><FontAwesomeIcon className="icon" icon={faUser} />View Profile</li>
-                            <li className="hamburger-list-item"><Modal /></li>
-                            <li className="hamburger-list-item last-item" onClick={onClickLogout}><FontAwesomeIcon className="icon" icon={faPowerOff} />Log out</li>
-                        </ul>
+                        {isVisable && 
+                        <div className="hamburger-container" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+                            <ul className="hamburger-list">
+                                <li className="hamburger-list-item"><FontAwesomeIcon className="icon" icon={faUser} />View Profile</li>
+                                <li className="hamburger-list-item" onClick={onClickCategoriesOpen}><FontAwesomeIcon className="icon" icon={faFolder} />Categories</li>
+                                <li className="hamburger-list-item last-item" onClick={onClickLogout}><FontAwesomeIcon className="icon" icon={faPowerOff} />Log out</li>
+                            </ul>
                         </div>
+                        }
                     {/* {user && <button className="btn header-btn" onClick={onClickLogout}>Log out</button>} */}
+                    {isCategoriesOpen && <Modal close={onClickCategoriesClose} />}
 
                     {location.pathname.includes('/account/verify') && <button className="btn header-btn" onClick={onClickLogin}>Log in</button>}
                 </div>

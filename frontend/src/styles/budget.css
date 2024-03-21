@@ -22,6 +22,7 @@
     /* height: 88vh; */
     background: #FAFAFA;
     border-radius: 10px;
+    box-shadow: 0 0 0 1px rgba(203, 203, 203, 0.2);
 }
 
 .main-body-small{
@@ -36,7 +37,14 @@
     display: flex;
     justify-content: center;
     gap: 5px;
-    margin-top: 10px;
+    /* margin-top: 10px;
+    margin-bottom: 50px; */
+    padding-top: 10px;
+    padding-bottom: 40px;
+    margin-bottom: 30px;
+    background: rgb(235, 235, 235);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
 }
 
 .date-input{
@@ -56,29 +64,6 @@
     gap: 4px;
 }
 
-.summary{
-    display: flex;
-    justify-content: center;
-    border-collapse: collapse;
-    height: 150px;
-}
-
-.summary-label{
-    text-align: center;
-}
-
-.income-label, .expense-label, .savings-label{
-    padding-right: 50px;
-}
-
-.income-value, .expense-value, .savings-value{
-    padding-left: 50px;
-}
-
-.savings{
-    border-top: solid black 1px;
-}
-
 .popout{
     /* transition: transform 0.5s;
     transform-origin: left; */
@@ -96,7 +81,7 @@
 .categories{
     overflow-y: auto;
     /* height: 300px; */
-    height: calc(100% - 284.963px);
+    height: calc(100% - 116px);
 }
 
 .categories::-webkit-scrollbar {
@@ -130,6 +115,7 @@
     border-radius: 5px;
     background: none;
     color: #366A21;
+    font-size: 18px;
   }
 
   .nav-btn:hover{

@@ -7,6 +7,7 @@ const initialState = {
     isLoading: false,
     activeCategories: [],
     currentCategories: [],
+    isCurrentDate: true,
     message: ''
 }
 
@@ -103,6 +104,7 @@ export const categorySlice = createSlice({
                 state.isSuccess = true
                 state.activeCategories = action.payload.activeCategories
                 state.currentCategories = action.payload.currentCategories
+                state.isCurrentDate = action.payload.isCurrentDate
             })
             .addCase(getCategories.rejected, (state, action) => {
                 state.isLoading = false
@@ -115,7 +117,8 @@ export const categorySlice = createSlice({
             .addCase(newCategory.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.activeCategories.push(action.payload)
+                state.activeCategories.push(action.payload.category)
+                if(state.isCurrentDate) state.currentCategories.push(action.payload.category)
             })
             .addCase(newCategory.rejected, (state, action) => {
                 state.isLoading = false
@@ -129,6 +132,7 @@ export const categorySlice = createSlice({
                 state.isLoading = false
                 state.isSuccess = true
                 state.activeCategories = state.activeCategories.filter(x => x._id != action.payload.id)
+                if(state.isCurrentDate) state.currentCategories = state.currentCategories.filter(x => x._id != action.payload.id)
             })
             .addCase(deleteCategory.rejected, (state, action) => {
                 state.isLoading = false

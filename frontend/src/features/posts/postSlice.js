@@ -100,7 +100,7 @@ export const postSlice = createSlice({
             .addCase(getAmounts.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
-                state.data = action.payload
+                state.data = action.payload.amounts
             })
             .addCase(getAmounts.rejected, (state,action) => {
                 state.isLoading = false

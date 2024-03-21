@@ -31,11 +31,13 @@ export default function TextInput({ label, type, name, supporting, handleChange,
                     type={type} 
                     placeholder={!labelVisable ? label: undefined} 
                     name={name} 
-                    className={!passValidation ? `input enabledInputError ${className}` : `input ${className}`} 
+                    // className={!passValidation ? `input enabledInputError ${className}` : `input ${className}`}
+                    className={!passValidation ? `input enabledInputError` : `input`}  
                     onFocus={onFocus} 
                     onBlur={onBlur} 
                     onChange={handleChange}
                     value={inputValue}
+                    autoComplete='off'
                     >
                 </input>
                 {!passValidation && <FontAwesomeIcon icon={faCircleExclamation} className="errorIcon inputError" />}

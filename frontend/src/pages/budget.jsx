@@ -5,7 +5,7 @@ import { getCategories } from '../features/categories/categorySlice'
 import CateogryLineItem from '../components/categoryLineItem'
 import AddEditPopout from '../components/addEditPopout'
 import Button from '../components/button'
-import Modal from '../components/modal'
+import Summary from '../components/summary'
 
 export default function(){
 
@@ -22,6 +22,8 @@ export default function(){
     const [isVisable, setIsVisable] = useState(false)
     const [isForm, setIsForm] = useState(false)
     const [isSummary, setIsSummary] = useState(false)
+    const [isSavings, setIsSavings] = useState(false)
+    const [isInvest, setIsInvest] = useState(false)
     const [item, setItem] = useState(undefined)
 
     const { isError, isLoading, message, data } = useSelector((state) => state.post)
@@ -56,23 +58,21 @@ export default function(){
     const openForm = (x) => {
         if(x.description) setItem(x)
     
-        if(isVisable && isForm){
+        if(isVisable && isForm && !x.description){
             setIsVisable(false)
             setIsForm(false)
+            setItem(undefined)
         }
         else{
             setIsVisable(true)
             setIsForm(true)
             setIsSummary(false)
+            setIsSavings(false)
+            setIsInvest(false)
         }
     }
 
-    const closeForm = () => {
-        setIsVisable(false)
-        setIsForm(false)
-    }
-
-    const openSummary = (x) => {
+    const openSummary = () => {
 
         if(isVisable && isSummary){
             setIsVisable(false)
@@ -82,40 +82,52 @@ export default function(){
             setIsVisable(true)
             setIsSummary(true)
             setIsForm(false)
+            setIsSavings(false)
+            setIsInvest(false)
         }
     }
 
-    const closeSummary = () => {
-        setIsVisable(false)
-        setIsSummary(false)
-    }
+    const openSavings = () => {
 
-    let summaryObj = {}
-    data.forEach(x => {
-        if(!summaryObj[x.category.name]){
-            summaryObj[x.category.name] = 0
+        if(isVisable && isSavings){
+            setIsVisable(false)
+            setIsSavings(false)
         }
-
-        summaryObj[x.category.name] += x.adjAmount
-    })
-
-    let summaryArray = []
-
-    for (const x in summaryObj){
-        summaryArray.push({category: x, amount: summaryObj[x]})
+        else{
+            setIsVisable(true)
+            setIsSavings(true)
+            setIsSummary(false)
+            setIsForm(false)
+            setIsInvest(false)
+        }
     }
 
-    const totalExpenses = summaryArray.filter(x => x.category != 'Income')
-    const income = summaryArray.filter(x => x.category === 'Income').reduce((a,b) => a + b.amount,0)
+    const openInvest = () => {
+
+        if(isVisable && isInvest){
+            setIsVisable(false)
+            setIsInvest(false)
+        }
+        else{
+            setIsVisable(true)
+            setIsInvest(true)
+            setIsSummary(false)
+            setIsForm(false)
+            setIsSavings(false)
+        }
+    }
 
     return (
         <div className={isVisable ? 'main-body main-body-small' : 'main-body'}>
             <div className='nav-buttons'>
                 <Button click={openForm} item='new' className={isForm ? 'nav-btn nav-btn-clicked' : 'nav-btn'} />
                 <Button click={openSummary} item='group' className={isSummary ? 'nav-btn nav-btn-clicked' : 'nav-btn'} />
+                <Button click={openSavings} item='savings' className={isSavings ? 'nav-btn nav-btn-clicked' : 'nav-btn'} />
+                <Button click={openInvest} item='invest' className={isInvest ? 'nav-btn nav-btn-clicked' : 'nav-btn'} />
             </div>
             {isVisable && <div className='popout'>
                 {isForm && <AddEditPopout close={openForm} lineItem={item} />}
+                {isSummary && <Summary />}
             </div>}
             <div className={isVisable ? 'category-lines category-lines-small' : 'category-lines'}>
                 <form className='date-input-form'>
@@ -126,33 +138,11 @@ export default function(){
                         {yearOptions.map(x => <option key={x} value={x}>{x}</option>)}
                     </select>
                 </form>
-                {/* <h3 className='summary-label'>Monthly Summary</h3>
-                <table className='summary'>
-                    <tbody>
-                        <tr>
-                            <td className='income-label'>Income</td>
-                            <td className='income-value'>{income}</td>
-                        </tr>
-                        {totalExpenses && totalExpenses.map(x => 
-                            <tr key={x.category}>
-                                <td className='expense-label'>{x.category}</td>
-                                <td className='expense-value'>-{x.amount}</td>
-                            </tr>
-                        )}
-                        <tr className='savings'>
-                            <td className='savings-label'>Monthly Savings</td>
-                            <td className='savings-value'>${income - totalExpenses.reduce((a,b) => a + b.amount,0)}</td>
-                        </tr>
-                    </tbody>
-                </table> */}
                 <div className='categories'>
                     {currentCategories && currentCategories.map(x => 
                         <CateogryLineItem key={x._id} category={x} data={data.filter(y => y.category._id === x._id)} edit={openForm} /> )}
                 </div>
             </div>
-            {/* <div className={!isVisable ? 'popout vis' : 'popout'}>
-                <AddEditPopout close={closeAddEdit} lineItem={item} />
-            </div> */}
        </div>
     )
 }
