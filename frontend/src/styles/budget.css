@@ -4,123 +4,124 @@
     border-radius: 5px;
 } */
 
-.main-body{
-    display: flex;
-    width: 100vw;
-    /* height: 100vh; */
-    /* position: absolute;
+.main-body {
+  display: flex;
+  width: 100vw;
+  /* height: 100vh; */
+  /* position: absolute;
     top: 109px; */
-    /* justify-content: center; */
-    justify-content: flex-start;
-    background: #a1b09672;
-    height: calc(100vh - 70px);
+  /* justify-content: center; */
+  justify-content: flex-start;
+  background: #a1b09672;
+  height: calc(100vh - 70px);
 }
 
-.category-lines{
-    width: calc(100vw - 108px);
-    height: calc(100vh - 90px);
-    /* height: 88vh; */
-    background: #FAFAFA;
-    border-radius: 10px;
-    box-shadow: 0 0 0 1px rgba(203, 203, 203, 0.2);
+.category-lines {
+  width: calc(100vw - 108px);
+  height: calc(100vh - 90px);
+  /* height: 88vh; */
+  background: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(203, 203, 203, 0.2);
 }
 
-.main-body-small{
-    justify-content: flex-start;
+.main-body-small {
+  justify-content: flex-start;
 }
 
-.category-lines-small{
-    width: calc(100vw - 270px - 108px);
+.category-lines-small {
+  width: calc(100vw - 270px - 108px);
 }
 
-.date-input-form{
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    padding-top: 10px;
-    padding-bottom: 40px;
-    margin-bottom: 30px;
-    background: rgb(235, 235, 235);
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+.date-input-form {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  margin-bottom: 30px;
+  background: rgb(235, 235, 235);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 
-.date-input{
-    width: auto;
-    height: auto;
-    padding: 8px;
+.date-input {
+  width: auto;
+  height: auto;
+  padding: 8px;
 }
 
-.x-btn, .edit-btn, .save-btn{
-    width: 20px;
-    height: 20px;
-    font-size: 8px
+.x-btn,
+.edit-btn,
+.save-btn {
+  width: 20px;
+  height: 20px;
+  font-size: 8px;
 }
 
-.modify-icons{
-    display: flex;
-    gap: 4px;
+.modify-icons {
+  display: flex;
+  gap: 4px;
 }
 
-.popout{
-    /* transition: transform 0.5s;
+.popout {
+  /* transition: transform 0.5s;
     transform-origin: left; */
-    /* border-left: rgb(193, 193, 193) 1px solid; */
-    display: flex;
-    justify-content: center;
-    min-height: 100%;
-    width: 270px;
+  /* border-left: rgb(193, 193, 193) 1px solid; */
+  display: flex;
+  justify-content: center;
+  min-height: 100%;
+  width: 270px;
 }
 
-.vis{
-    transform: scaleX(0);
+.vis {
+  transform: scaleX(0);
 }
 
-.categories{
-    overflow-y: auto;
-    /* height: 300px; */
-    height: calc(100% - 116px);
+.categories {
+  overflow-y: auto;
+  /* height: 300px; */
+  height: calc(100% - 116px);
 }
 
 .categories::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  .categories::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 5px;
-  }
-  
-  .categories::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 5px;
-  }
-  
-  .categories::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+  width: 10px;
+}
 
-  .nav-buttons{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 30px 12px 0px 12px;
-  }
+.categories::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
 
-  .nav-btn{
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    background: none;
-    color: #366A21;
-    font-size: 18px;
-  }
+.categories::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
 
-  .nav-btn:hover{
-    background: rgb(203, 203, 203);
-  }
+.categories::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
-  .nav-btn-clicked{
-    background: rgb(203, 203, 203);
-  }
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 30px 12px 0px 12px;
+}
 
+.nav-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background: none;
+  color: #366a21;
+  font-size: 18px;
+}
+
+.nav-btn:hover {
+  background: rgb(203, 203, 203);
+}
+
+.nav-btn-clicked {
+  background: rgb(203, 203, 203);
+}

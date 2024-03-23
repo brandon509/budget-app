@@ -1,50 +1,50 @@
-.category-section{
-    width: 95%;
-    margin: 0% 2.5%;
-    /* margin-left: 20px; */
-    margin-bottom: 40px;
-    cursor: pointer;
+.category-section {
+  width: 95%;
+  margin: 0% 2.5%;
+  /* margin-left: 20px; */
+  margin-bottom: 40px;
+  cursor: pointer;
 }
 
-.progress-bar{
-    border-radius: 10px;
-    text-align: right;
-    padding: 5px;
-    font-size: 12px;
+.progress-bar {
+  border-radius: 10px;
+  text-align: right;
+  padding: 5px;
+  font-size: 12px;
 }
 
-.category-name{
-    font-size: 14px;
-    margin: 0px;
-    padding-left: 5px;
+.category-name {
+  font-size: 14px;
+  margin: 0px;
+  padding-left: 5px;
 }
 
-.data-table{
-    width: 90%;
-    margin: 0% 5%;
-    border-collapse: collapse;
-    margin-bottom: 25px;
+.data-table {
+  width: 90%;
+  margin: 0% 5%;
+  border-collapse: collapse;
+  margin-bottom: 25px;
 }
 
-.table-header{
-    font-size: 14px;
-    border-bottom: solid 1px rgb(193, 193, 193);
+.table-header {
+  font-size: 14px;
+  border-bottom: solid 1px rgb(193, 193, 193);
 }
 
-.head{
-    padding-bottom: 4px;
+.head {
+  padding-bottom: 4px;
 }
 
-.table-body{
-    font-size: 14px;
-    text-align: center;
+.table-body {
+  font-size: 14px;
+  text-align: center;
 }
 
-.body{
-    padding-top: 5px;
+.body {
+  padding-top: 5px;
 }
 
-.no-items{
-    width: 100%;
-    text-align: center;
+.no-items {
+  width: 100%;
+  text-align: center;
 }

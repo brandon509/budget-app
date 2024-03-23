@@ -1,4 +1,4 @@
-.close-btn{
+.close-btn {
   position: relative;
   display: block;
   padding-top: 5px;
@@ -11,24 +11,31 @@
   color: black;
 }
 
-.close-btn:hover{
+.close-btn:hover {
   background: rgb(230, 229, 230);
 }
 
-.popout-form{
+.popout-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 40px 15px 40px 0px;
 }
 
-.submit-btn{
+.submit-btn,
+.cancel-btn {
+  width: 125px;
+}
+
+.big-submit-btn {
   width: 255px;
 }
 
-.popout-form .inputParent .inputLabel{
-  background: linear-gradient(to bottom, 
-    #a1b09600 35%, 
-    white 35%,
-    white 100%);
+.popout-form .inputParent .inputLabel {
+  background: linear-gradient(to bottom, #a1b09600 44%, white 44%, white 100%);
+}
+
+.popout-form-btns {
+  display: flex;
+  gap: 5px;
 }
