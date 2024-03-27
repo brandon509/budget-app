@@ -34,6 +34,7 @@ module.exports = {
 				budget: req.body.category.budget,
 				user: req.user.id,
 				split: req.body.category.split,
+				type: req.body.category.type,
 			});
 
 			res.status(200).json({ category });
@@ -60,6 +61,9 @@ module.exports = {
 			}
 			if (req.body.budget) {
 				changes["budget"] = req.body.budget;
+			}
+			if (req.body.type) {
+				changes["type"] = req.body.type;
 			}
 
 			await Category.updateOne({ _id: req.body.id }, changes);

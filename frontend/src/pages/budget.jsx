@@ -189,14 +189,16 @@ export default function () {
         </form>
         <div className="categories">
           {currentCategories &&
-            currentCategories.map((x) => (
-              <CateogryLineItem
-                key={x._id}
-                category={x}
-                data={data.filter((y) => y.category._id === x._id)}
-                edit={openForm}
-              />
-            ))}
+            currentCategories
+              .filter((x) => x.type === "expense")
+              .map((x) => (
+                <CateogryLineItem
+                  key={x._id}
+                  category={x}
+                  data={data.filter((y) => y.category._id === x._id)}
+                  edit={openForm}
+                />
+              ))}
         </div>
       </div>
     </div>

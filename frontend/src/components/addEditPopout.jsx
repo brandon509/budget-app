@@ -134,7 +134,8 @@ export default function AddEditPopout({ lineItem, close }) {
       <form className="popout-form">
         <TextInput {...descriptionInput} />
         <CateogryInput
-          category={category}
+          name="category"
+          state={category}
           onChange={onChange}
           options={activeCategories}
         />

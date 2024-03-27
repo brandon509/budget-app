@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux"
 
 export default function () {
-  const { isError, message, data } = useSelector((state) => state.post)
+  const { data } = useSelector((state) => state.post)
+  const { currentCategories } = useSelector((state) => state.category)
 
   let summaryObj = {}
   data.forEach((x) => {
@@ -18,9 +19,16 @@ export default function () {
     summaryArray.push({ category: x, amount: summaryObj[x] })
   }
 
-  const totalExpenses = summaryArray.filter((x) => x.category != "Income")
+  for (let i = 0; i < summaryArray.length; i++) {
+    const test = currentCategories.filter(
+      (x) => x.name == summaryArray[i].category
+    )
+    summaryArray[i].type = test[0].type
+  }
+
+  const totalExpenses = summaryArray.filter((x) => x.type === "expense")
   const income = summaryArray
-    .filter((x) => x.category === "Income")
+    .filter((x) => x.type === "income")
     .reduce((a, b) => a + b.amount, 0)
 
   return (

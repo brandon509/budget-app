@@ -1,18 +1,16 @@
-import { useSelector } from "react-redux"
-
-export default function CateogryInput({ category, onChange, options }) {
-  const { activeCategories } = useSelector((state) => state.category)
-
+export default function CateogryInput({ name, state, onChange, options }) {
   return (
     <div className="inputParent">
-      <h5 className={category ? "inputLabel" : "hidden"}>Category</h5>
+      <h5 className={state ? "inputLabel" : "hidden"}>
+        {name[0].toUpperCase() + name.slice(1)}
+      </h5>
       <select
-        name="category"
+        name={name}
         onChange={onChange}
-        className={category ? "select" : "select category-placeholder"}
-        value={category}
+        className={state ? "select" : "select placeholder"}
+        value={state}
       >
-        <option value="">Category</option>
+        <option value="">{name[0].toUpperCase() + name.slice(1)}</option>
         {options &&
           options.map((x) => (
             <option key={x._id} value={x._id}>
