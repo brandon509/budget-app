@@ -21,28 +21,33 @@ export default function () {
   }
 
   for (let i = 0; i < summaryArray.length; i++) {
-    const item = currentCategories.filter(
+    const test = currentCategories.filter(
       (x) => x.name == summaryArray[i].category
     )
-    summaryArray[i].type = item[0].type
+    summaryArray[i].type = test[0].type
   }
 
-  const totalExpenses = summaryArray.filter((x) => x.type === "expense")
+  const totalSavings = summaryArray.filter((x) => x.type === "savings")
+  const totalExpenses = summaryArray
+    .filter((x) => x.type === "expense")
+    .reduce((a, b) => a + b.amount, 0)
   const income = summaryArray
     .filter((x) => x.type === "income")
     .reduce((a, b) => a + b.amount, 0)
 
   return (
     <div className="summary">
-      <h3 className="summary-label">Monthly Summary</h3>
+      <h3 className="summary-label">Monthly Savings</h3>
       <table className="summary-table">
         <tbody>
           <tr>
-            <td className="income-label">Income</td>
-            <td className="income-value">{currencyFormatter(income)}</td>
+            <td className="income-label">Remaining</td>
+            <td className="income-value">
+              {currencyFormatter(income - totalExpenses)}
+            </td>
           </tr>
-          {totalExpenses &&
-            totalExpenses.map((x) => (
+          {totalSavings &&
+            totalSavings.map((x) => (
               <tr key={x.category} className="expenses">
                 <td className="expense-label">{x.category}</td>
                 <td className="expense-value">
@@ -54,7 +59,9 @@ export default function () {
             <td className="savings-label">Monthly Savings</td>
             <td className="savings-value">
               {currencyFormatter(
-                income - totalExpenses.reduce((a, b) => a + b.amount, 0)
+                income -
+                  totalExpenses -
+                  totalSavings.reduce((a, b) => a + b.amount, 0)
               )}
             </td>
           </tr>

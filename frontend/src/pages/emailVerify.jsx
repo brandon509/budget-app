@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { verifyEmail, reset } from "../features/auth/authSlice"
+import { verifyEmail } from "../features/auth/authSlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons"
 

@@ -2,6 +2,7 @@ import Button from "../components/button"
 import { useDispatch } from "react-redux"
 import { deleteAmount } from "../features/posts/postSlice"
 import { useState } from "react"
+import { currencyFormatter } from "../scripts/currencyFormatter"
 
 export default function CateogryLineItem({ category, data, edit }) {
   const dispatch = useDispatch()
@@ -22,17 +23,21 @@ export default function CateogryLineItem({ category, data, edit }) {
   return (
     <div>
       <div onClick={onClickVisable} className="category-section">
-        <h4 className="category-name">{category.name}</h4>
+        <h4 className="category-name">
+          {category.name}: {category.budget}
+        </h4>
         <p
           className="progress-bar"
           style={{
             background: `linear-gradient(to right, ${
-              percent < 50 ? "green" : percent < 75 ? "yellow" : "red"
+              percent < 100 ? "green" : "red"
             } ${percent}%, rgb(235, 235, 235) ${percent}%)`,
           }}
         >
-          {category.budget - data.reduce((a, b) => a + b.adjAmount, 0)} of{" "}
-          {category.budget} remaining
+          {currencyFormatter(
+            category.budget - data.reduce((a, b) => a + b.adjAmount, 0)
+          )}{" "}
+          remaining
         </p>
       </div>
       {isVisable && data.length > 0 ? (
@@ -50,7 +55,7 @@ export default function CateogryLineItem({ category, data, edit }) {
               data.map((x) => (
                 <tr key={x._id} className="table-body">
                   <td className="body">{x.description}</td>
-                  <td className="body">$ -{x.adjAmount}</td>
+                  <td className="body">{currencyFormatter(-x.adjAmount)}</td>
                   <td className="body">{x.dateIncurred.slice(0, 10)}</td>
                   <td className="body">
                     <div className="modify-icons">

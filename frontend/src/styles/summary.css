@@ -1,6 +1,5 @@
 .summary {
   padding: 28px 15px 40px 0px;
-  /* border: solid black 1px; */
 }
 
 .summary-label {
@@ -12,13 +11,11 @@
   display: flex;
   justify-content: center;
   border-collapse: collapse;
-  /* width: 270px; */
 }
 
 .income-label,
 .expense-label,
 .savings-label {
-  /* padding: 5px 50px 5px 0px; */
   padding: 2px 0px 2px 0px;
   width: 204px;
 }
@@ -26,7 +23,6 @@
 .income-value,
 .expense-value,
 .savings-value {
-  /* padding: 5px 0px 5px 50px; */
   padding: 2px 0px 2px 0px;
   text-align: end;
   width: 50px;

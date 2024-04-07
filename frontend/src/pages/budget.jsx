@@ -6,6 +6,20 @@ import CateogryLineItem from "../components/categoryLineItem"
 import AddEditPopout from "../components/addEditPopout"
 import Button from "../components/button"
 import Summary from "../components/summary"
+import Savings from "../components/savings"
+import Investments from "../components/investments"
+
+// If number in description of line item you cant add spaces??
+//Fix label when selected for line item
+//If you enter the wrong savings or income there isnt a way to see them?
+//Colors of bars
+//Updating category doesnt update page automatically, need a refresh to see changes
+//Split validation, can only be between 0 and 1
+
+//Feature requests
+//expand/collapse all
+//Initals in corner instad of hamburger
+//Tool tips on some inputs
 
 export default function () {
   const currentDate = new Date()
@@ -154,6 +168,8 @@ export default function () {
         <div className="popout">
           {isForm && <AddEditPopout close={openForm} lineItem={item} />}
           {isSummary && <Summary />}
+          {isSavings && <Savings />}
+          {isInvest && <Investments />}
         </div>
       )}
       <div

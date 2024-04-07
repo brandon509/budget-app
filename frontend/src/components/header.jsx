@@ -74,13 +74,6 @@ export default function Header() {
               icon={faBars}
             />
           )}
-          {/* {isVisable && <div className="hamburger-container">
-                        <ul className="hamburger-list">
-                            <li className="hamburger-list-item"><FontAwesomeIcon className="icon" icon={faUser} />View Profile</li>
-                            <li className="hamburger-list-item"><Modal /></li>
-                            <li className="hamburger-list-item last-item" onClick={onClickLogout}><FontAwesomeIcon className="icon" icon={faPowerOff} />Log out</li>
-                        </ul>
-                        </div>} */}
           {isVisable && (
             <div
               className="hamburger-container"
@@ -109,7 +102,6 @@ export default function Header() {
               </ul>
             </div>
           )}
-          {/* {user && <button className="btn header-btn" onClick={onClickLogout}>Log out</button>} */}
           {isCategoriesOpen && <Modal close={onClickCategoriesClose} />}
 
           {location.pathname.includes("/account/verify") && (

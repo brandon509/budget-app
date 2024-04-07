@@ -18,3 +18,16 @@ export function passwordVal(password) {
 export function confirmPasswordVal(password, confirmPassword) {
   return password === confirmPassword
 }
+
+export function decimalVal(num) {
+  const stringNum = String(num)
+
+  if (stringNum.replaceAll(".", "") != stringNum) {
+    const split = stringNum.split(".")
+    if (split[1].length > 2) {
+      const newNum = stringNum.slice(0, split[0].length + 3)
+      return newNum
+    }
+  }
+  return stringNum
+}

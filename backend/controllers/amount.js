@@ -24,8 +24,8 @@ module.exports = {
 
 			const amount = await Amount.create({
 				description: req.body.description,
-				amount: req.body.amount,
-				adjAmount: req.body.adjAmount,
+				amount: Number.parseFloat(req.body.amount).toFixed(2),
+				adjAmount: Number.parseFloat(req.body.adjAmount).toFixed(2),
 				category: req.body.category,
 				dateIncurred: req.body.dateIncurred,
 				user: req.user.id,
@@ -45,10 +45,10 @@ module.exports = {
 				changes["description"] = req.body.description;
 			}
 			if (req.body.amount) {
-				changes["amount"] = req.body.amount;
+				changes["amount"] = Number.parseFloat(req.body.amount).toFixed(2);
 			}
 			if (req.body.adjAmount) {
-				changes["adjAmount"] = req.body.adjAmount;
+				changes["adjAmount"] = Number.parseFloat(req.body.adjAmount).toFixed(2);
 			}
 			if (req.body.category) {
 				changes["category"] = req.body.category;

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { newAmount, updateAmount } from "../features/posts/postSlice"
 import TextInput from "./textInput"
 import CateogryInput from "./categoryInput"
+import { decimalVal } from "../scripts/validation"
 
 export default function AddEditPopout({ lineItem, close }) {
   const [split, setSplit] = useState(0)
@@ -51,6 +52,10 @@ export default function AddEditPopout({ lineItem, close }) {
       setSplit(category[0].split)
     }
 
+    if (e.target.name === "amount") {
+      value = decimalVal(value)
+    }
+
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: value,
@@ -81,8 +86,8 @@ export default function AddEditPopout({ lineItem, close }) {
     }
 
     dispatch(updateAmount(userData))
+    //close()
     resetState()
-    close()
   }
 
   const descriptionInput = {

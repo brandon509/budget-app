@@ -10,9 +10,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import CateogryInput from "./categoryInput"
+import { decimalVal } from "../scripts/validation"
 
 export default function Modal({ close }) {
-  const [modalIsOpen, setIsOpen] = useState(false)
   const [editCategory, setEditCategory] = useState(undefined)
   const [categoryFormData, setCategoryFormData] = useState({
     name: "",
@@ -39,11 +39,6 @@ export default function Modal({ close }) {
     setEditCategory(undefined)
   }
 
-  const openModal = () => {
-    setIsOpen(true)
-    console.log("test")
-  }
-
   const closeModal = () => {
     close()
     resetState()
@@ -64,8 +59,36 @@ export default function Modal({ close }) {
     }))
   }
 
+  // const decimalValidation = (num) => {
+  //   const stringNum = String(num)
+
+  //   if (stringNum.replaceAll(".", "") != stringNum) {
+  //     const split = stringNum.split(".")
+  //     if (split[1].length > 2) {
+  //       const newNum = stringNum.slice(0, split[0].length + 3)
+  //       return newNum
+  //     }
+  //   }
+  //   return stringNum
+  // }
+
+  const splitValidation = (num) => {
+    if (num > 1 || num < 0) return ""
+    if (String(num).length > 4) return String(num).slice(0, 4)
+
+    return num
+  }
+
   const onChange = (e) => {
     let value = +e.target.value || e.target.value
+
+    if (e.target.name === "split") {
+      value = splitValidation(value)
+    }
+
+    if (e.target.name === "budget") {
+      value = decimalVal(value)
+    }
 
     setCategoryFormData((prevState) => ({
       ...prevState,
@@ -189,6 +212,7 @@ export default function Modal({ close }) {
                   { _id: "income", name: "Income" },
                   { _id: "expense", name: "Expense" },
                   { _id: "savings", name: "Savings" },
+                  { _id: "investment", name: "Investment" },
                 ]}
               />
               <TextInput {...categorySplit} />
