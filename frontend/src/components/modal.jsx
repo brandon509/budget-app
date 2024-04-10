@@ -134,7 +134,6 @@ export default function Modal({ close }) {
     handleChange: onChange,
     validation: true,
     errorMessage: null,
-    className: "ln-item-input",
     inputValue: name,
   }
 
@@ -145,7 +144,6 @@ export default function Modal({ close }) {
     handleChange: onChange,
     validation: true,
     errorMessage: null,
-    className: "ln-item-input",
     inputValue: type,
   }
 
@@ -156,7 +154,6 @@ export default function Modal({ close }) {
     handleChange: onChange,
     validation: true,
     errorMessage: null,
-    className: "ln-item-input",
     inputValue: split,
   }
 
@@ -167,12 +164,12 @@ export default function Modal({ close }) {
     handleChange: onChange,
     validation: true,
     errorMessage: null,
-    className: "ln-item-input",
     inputValue: budget,
   }
 
   return (
     <div>
+      s
       <div className="modal">
         <div className="modal-content">
           <div className="left">

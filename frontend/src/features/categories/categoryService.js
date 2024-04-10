@@ -35,7 +35,6 @@ const updateCategory = async (category) => {
     category,
     { withCredentials: true }
   )
-  console.log(response.data)
   return response.data
 }
 

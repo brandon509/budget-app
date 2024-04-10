@@ -1,13 +1,17 @@
 import Button from "../components/button"
 import { useDispatch } from "react-redux"
 import { deleteAmount } from "../features/posts/postSlice"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { currencyFormatter } from "../scripts/currencyFormatter"
 
-export default function CateogryLineItem({ category, data, edit }) {
+export default function CateogryLineItem({ category, data, edit, expandAll }) {
   const dispatch = useDispatch()
 
-  const [isVisable, setisVisable] = useState(false)
+  const [isVisable, setIsVisable] = useState(false)
+
+  useEffect(() => {
+    setIsVisable(expandAll)
+  }, [expandAll])
 
   const onClickDelete = (e) => {
     e.preventDefault()
@@ -15,7 +19,10 @@ export default function CateogryLineItem({ category, data, edit }) {
     dispatch(deleteAmount(e.currentTarget.id))
   }
 
-  const onClickVisable = () => setisVisable((prev) => !prev)
+  const onClickVisable = () => {
+    setIsVisable((prev) => !prev)
+    console.log("click")
+  }
 
   let percent =
     (data.reduce((a, b) => a + b.adjAmount, 0) / category.budget) * 100
@@ -30,7 +37,7 @@ export default function CateogryLineItem({ category, data, edit }) {
           className="progress-bar"
           style={{
             background: `linear-gradient(to right, ${
-              percent < 100 ? "green" : "red"
+              percent < 100 ? "#366a21" : "#ca4139"
             } ${percent}%, rgb(235, 235, 235) ${percent}%)`,
           }}
         >

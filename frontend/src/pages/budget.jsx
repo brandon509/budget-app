@@ -9,17 +9,14 @@ import Summary from "../components/summary"
 import Savings from "../components/savings"
 import Investments from "../components/investments"
 
-// If number in description of line item you cant add spaces??
 //Fix label when selected for line item
 //If you enter the wrong savings or income there isnt a way to see them?
-//Colors of bars
-//Updating category doesnt update page automatically, need a refresh to see changes
-//Split validation, can only be between 0 and 1
 
 //Feature requests
 //expand/collapse all
 //Initals in corner instad of hamburger
 //Tool tips on some inputs
+//filter by category type
 
 export default function () {
   const currentDate = new Date()
@@ -51,6 +48,8 @@ export default function () {
   const [isSavings, setIsSavings] = useState(false)
   const [isInvest, setIsInvest] = useState(false)
   const [item, setItem] = useState(undefined)
+  const [expandAll, setExpandAll] = useState(false)
+  const [categoryFilter, setCategoryFilter] = useState("expense")
 
   const { isError, isLoading, message, data } = useSelector(
     (state) => state.post
@@ -140,6 +139,14 @@ export default function () {
     }
   }
 
+  const expandAllOnClick = () => {
+    setExpandAll((prev) => !prev)
+  }
+
+  const categoryFilterOnChange = (e) => {
+    setCategoryFilter(e.target.value)
+  }
+
   return (
     <div className={isVisable ? "main-body main-body-small" : "main-body"}>
       <div className="nav-buttons">
@@ -203,16 +210,39 @@ export default function () {
             ))}
           </select>
         </form>
+        <button onClick={expandAllOnClick} className="expand-collapse">
+          {expandAll ? "- Collapse All" : "+ Expand All"}
+        </button>
+        <select
+          name="categoryFilter"
+          defaultValue="expense"
+          className="categoryFilterSelect"
+          onChange={categoryFilterOnChange}
+        >
+          <option key="expense" value="expense">
+            Expenses
+          </option>
+          <option key="savings" value="savings">
+            Savings
+          </option>
+          <option key="investment" value="investment">
+            Investments
+          </option>
+          <option key="income" value="income">
+            Income
+          </option>
+        </select>
         <div className="categories">
           {currentCategories &&
             currentCategories
-              .filter((x) => x.type === "expense")
+              .filter((x) => x.type === categoryFilter)
               .map((x) => (
                 <CateogryLineItem
                   key={x._id}
                   category={x}
                   data={data.filter((y) => y.category._id === x._id)}
                   edit={openForm}
+                  expandAll={expandAll}
                 />
               ))}
         </div>

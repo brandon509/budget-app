@@ -86,7 +86,6 @@ export default function AddEditPopout({ lineItem, close }) {
     }
 
     dispatch(updateAmount(userData))
-    //close()
     resetState()
   }
 
@@ -97,7 +96,6 @@ export default function AddEditPopout({ lineItem, close }) {
     handleChange: onChange,
     validation: true,
     errorMessage: null,
-    className: "ln-item-input",
     inputValue: description,
   }
 
@@ -108,7 +106,6 @@ export default function AddEditPopout({ lineItem, close }) {
     handleChange: onChange,
     validation: true,
     errorMessage: null,
-    className: "ln-item-input",
     inputValue: amount,
   }
 
@@ -119,7 +116,6 @@ export default function AddEditPopout({ lineItem, close }) {
     handleChange: onChange,
     validation: true,
     errorMessage: null,
-    className: "ln-item-input",
     inputValue: amount * split || amount,
   }
 
@@ -130,7 +126,6 @@ export default function AddEditPopout({ lineItem, close }) {
     handleChange: onChange,
     validation: true,
     errorMessage: null,
-    className: "ln-item-input",
     inputValue: dateIncurred,
   }
 
