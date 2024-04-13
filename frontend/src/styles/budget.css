@@ -118,6 +118,41 @@
   background: none;
   font-size: 12px;
   padding: 1px 2px;
-  margin-bottom: 30px;
-  margin-left: 5px;
+  /* margin-bottom: 30px; */
+  /* margin-left: 5px; */
+}
+
+.collapse-filter-section {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 22px;
+  margin-left: 10px;
+}
+
+.clear-filters {
+  height: 23px;
+  width: 23px;
+  border: 1px solid #366a21;
+  background: none;
+  color: black;
+}
+
+.cat-btn {
+  flex-direction: row;
+  display: inline;
+  font-size: 12px;
+  width: auto;
+}
+
+.cat-btn-unselected {
+  height: 23px;
+  border: 1px solid #366a21;
+  padding: 0px 6px;
+  background: none;
+  color: black;
+}
+
+.cat-btn-selected {
+  height: 25px;
+  padding: 0px 8px;
 }

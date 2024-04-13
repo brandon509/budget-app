@@ -49,7 +49,7 @@ export default function () {
   const [isInvest, setIsInvest] = useState(false)
   const [item, setItem] = useState(undefined)
   const [expandAll, setExpandAll] = useState(false)
-  const [categoryFilter, setCategoryFilter] = useState("expense")
+  const [categoryFilter, setCategoryFilter] = useState("all")
 
   const { isError, isLoading, message, data } = useSelector(
     (state) => state.post
@@ -143,8 +143,8 @@ export default function () {
     setExpandAll((prev) => !prev)
   }
 
-  const categoryFilterOnChange = (e) => {
-    setCategoryFilter(e.target.value)
+  const categoryFilterOnClick = (e) => {
+    setCategoryFilter(e.target.name)
   }
 
   return (
@@ -210,33 +210,73 @@ export default function () {
             ))}
           </select>
         </form>
-        <button onClick={expandAllOnClick} className="expand-collapse">
-          {expandAll ? "- Collapse All" : "+ Expand All"}
-        </button>
-        <select
-          name="categoryFilter"
-          defaultValue="expense"
-          className="categoryFilterSelect"
-          onChange={categoryFilterOnChange}
-        >
-          <option key="expense" value="expense">
+        <div className="collapse-filter-section">
+          {/* <button onClick={expandAllOnClick} className="expand-collapse">
+            {expandAll ? "- Collapse All" : "+ Expand All"}
+          </button> */}
+          <button
+            onClick={categoryFilterOnClick}
+            className="btn clear-filters"
+            name="all"
+          >
+            x
+          </button>
+          <button
+            name="expense"
+            onClick={categoryFilterOnClick}
+            className={
+              categoryFilter === "expense"
+                ? "btn cat-btn cat-btn-selected"
+                : categoryFilter === "all"
+                ? "btn cat-btn cat-btn-unselected"
+                : "hidden"
+            }
+          >
             Expenses
-          </option>
-          <option key="savings" value="savings">
+          </button>
+          <button
+            name="savings"
+            onClick={categoryFilterOnClick}
+            className={
+              categoryFilter === "savings"
+                ? "btn cat-btn cat-btn-selected"
+                : categoryFilter === "all"
+                ? "btn cat-btn cat-btn-unselected"
+                : "hidden"
+            }
+          >
             Savings
-          </option>
-          <option key="investment" value="investment">
+          </button>
+          <button
+            name="investment"
+            onClick={categoryFilterOnClick}
+            className={
+              categoryFilter === "investment"
+                ? "btn cat-btn cat-btn-selected"
+                : categoryFilter === "all"
+                ? "btn cat-btn cat-btn-unselected"
+                : "hidden"
+            }
+          >
             Investments
-          </option>
-          <option key="income" value="income">
+          </button>
+          <button
+            name="income"
+            onClick={categoryFilterOnClick}
+            className={
+              categoryFilter === "income"
+                ? "btn cat-btn cat-btn-selected"
+                : categoryFilter === "all"
+                ? "btn cat-btn cat-btn-unselected"
+                : "hidden"
+            }
+          >
             Income
-          </option>
-        </select>
+          </button>
+        </div>
         <div className="categories">
-          {currentCategories &&
-            currentCategories
-              .filter((x) => x.type === categoryFilter)
-              .map((x) => (
+          {currentCategories && categoryFilter === "all"
+            ? currentCategories.map((x) => (
                 <CateogryLineItem
                   key={x._id}
                   category={x}
@@ -244,7 +284,18 @@ export default function () {
                   edit={openForm}
                   expandAll={expandAll}
                 />
-              ))}
+              ))
+            : currentCategories
+                .filter((x) => x.type === categoryFilter)
+                .map((x) => (
+                  <CateogryLineItem
+                    key={x._id}
+                    category={x}
+                    data={data.filter((y) => y.category._id === x._id)}
+                    edit={openForm}
+                    expandAll={expandAll}
+                  />
+                ))}
         </div>
       </div>
     </div>

@@ -21,7 +21,6 @@ export default function CateogryLineItem({ category, data, edit, expandAll }) {
 
   const onClickVisable = () => {
     setIsVisable((prev) => !prev)
-    console.log("click")
   }
 
   let percent =
