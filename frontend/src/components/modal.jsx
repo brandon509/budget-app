@@ -59,19 +59,6 @@ export default function Modal({ close }) {
     }))
   }
 
-  // const decimalValidation = (num) => {
-  //   const stringNum = String(num)
-
-  //   if (stringNum.replaceAll(".", "") != stringNum) {
-  //     const split = stringNum.split(".")
-  //     if (split[1].length > 2) {
-  //       const newNum = stringNum.slice(0, split[0].length + 3)
-  //       return newNum
-  //     }
-  //   }
-  //   return stringNum
-  // }
-
   const splitValidation = (num) => {
     if (num > 1 || num < 0) return ""
     if (String(num).length > 4) return String(num).slice(0, 4)
@@ -83,7 +70,7 @@ export default function Modal({ close }) {
     let value = +e.target.value || e.target.value
 
     if (e.target.name === "split") {
-      value = splitValidation(value)
+      value = splitValidation(value / 100)
     }
 
     if (e.target.name === "budget") {
@@ -154,7 +141,7 @@ export default function Modal({ close }) {
     handleChange: onChange,
     validation: true,
     errorMessage: null,
-    inputValue: split,
+    inputValue: split * 100 || "",
   }
 
   const categoryBudget = {

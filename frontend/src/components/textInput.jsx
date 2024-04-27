@@ -11,6 +11,7 @@ export default function TextInput({
   inputValue,
   validation,
   errorMessage,
+  id,
 }) {
   const [labelVisable, setLabelVisable] = useState(false)
   const [passValidation, setPassValidation] = useState(true)
@@ -45,6 +46,7 @@ export default function TextInput({
         placeholder={!labelVisable ? label : undefined}
         name={name}
         className={!passValidation ? `input enabledInputError` : `input`}
+        id={id}
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={handleChange}

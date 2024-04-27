@@ -1,66 +1,70 @@
 import { useSelector } from "react-redux"
+import { currencyFormatter } from "../scripts/currencyFormatter"
+import { useState } from "react"
+import TextInput from "./textInput"
 
 export default function () {
   const { data } = useSelector((state) => state.post)
   const { currentCategories } = useSelector((state) => state.category)
+  const { investments } = useSelector((state) => state.investment)
 
-  let summaryObj = {}
-  data.forEach((x) => {
-    if (!summaryObj[x.category.name]) {
-      summaryObj[x.category.name] = 0
-    }
+  const [price, setPrice] = useState({})
 
-    summaryObj[x.category.name] += x.adjAmount
-  })
-
-  let summaryArray = []
-
-  for (const x in summaryObj) {
-    summaryArray.push({ category: x, amount: summaryObj[x] })
+  const onChange = (e) => {
+    setPrice((prevState) => ({
+      ...prevState,
+      [e.target.id]: +e.target.value,
+    }))
   }
 
-  for (let i = 0; i < summaryArray.length; i++) {
-    const test = currentCategories.filter(
-      (x) => x.name == summaryArray[i].category
-    )
-    summaryArray[i].type = test[0].type
+  const priceInfo = {
+    label: "Price",
+    type: "number",
+    name: "price",
+    handleChange: onChange,
+    validation: true,
+    errorMessage: null,
   }
-
-  const totalSavings = summaryArray.filter((x) => x.type === "savings")
-  const totalExpenses = summaryArray
-    .filter((x) => x.type === "expense")
-    .reduce((a, b) => a + b.amount, 0)
-  const income = summaryArray
-    .filter((x) => x.type === "income")
-    .reduce((a, b) => a + b.amount, 0)
 
   return (
     <div className="summary">
-      <h3 className="summary-label">Monthly Investments</h3>
-      <table className="summary-table">
-        <tbody>
-          <tr>
-            <td className="income-label">Remaining</td>
-            <td className="income-value">{income - totalExpenses}</td>
-          </tr>
-          {totalSavings &&
-            totalSavings.map((x) => (
-              <tr key={x.category} className="expenses">
-                <td className="expense-label">{x.category}</td>
-                <td className="expense-value">-{x.amount}</td>
-              </tr>
-            ))}
-          <tr className="savings">
-            <td className="savings-label">Monthly Savings</td>
-            <td className="savings-value">
-              $
-              {income -
-                totalExpenses -
-                totalSavings.reduce((a, b) => a + b.amount, 0)}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h3 className="summary-label">Investments</h3>
+      <div className="">
+        {currentCategories
+          .filter((x) => x.type === "investment")
+          .map((y) => (
+            <div key={y._id}>
+              <h4 className="category-name">
+                {y.name}:{" "}
+                {currencyFormatter(
+                  data
+                    .filter((x) => x.category._id === y._id)
+                    .reduce((a, b) => a + b.amount, 0)
+                )}
+              </h4>
+              {investments
+                .filter((z) => z.investmentType._id === y._id)
+                .map((zz) => (
+                  <div key={zz._id} className="investment-content">
+                    <p>{zz.ticker}</p>
+                    <TextInput {...priceInfo} id={zz._id} />
+                    <p className="shares">
+                      {price[zz._id]
+                        ? Math.floor(
+                            (data
+                              .filter((x) => x.category._id === y._id)
+                              .reduce((a, b) => a + b.amount, 0) *
+                              zz.percentage) /
+                              price[zz._id]
+                          )
+                        : 0}{" "}
+                      shares
+                    </p>
+                  </div>
+                ))}
+            </div>
+          ))}
+      </div>
     </div>
   )
 }

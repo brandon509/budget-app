@@ -1,0 +1,23 @@
+.investment-content {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-name {
+  margin-top: 25px;
+}
+
+.shares {
+  width: 90px;
+}
+
+.investment-content .inputParent .inputLabel {
+  border-radius: 4px;
+}
+
+.investment-content .inputParent .input {
+  width: 60px;
+  height: 35px;
+}

@@ -12,6 +12,7 @@ import "./styles/addEditPopout.css"
 import "./styles/select.css"
 import "./styles/header.css"
 import "./styles/summary.css"
+import "./styles/investments.css"
 
 const container = document.getElementById("root")
 const root = createRoot(container)

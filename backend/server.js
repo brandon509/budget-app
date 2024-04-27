@@ -8,6 +8,7 @@ const MongoStore = require("connect-mongo");
 const mainRoutes = require("./routes/main");
 const categoryRoutes = require("./routes/category");
 const amountRoutes = require("./routes/amount");
+const investmentRoutes = require("./routes/investment");
 const cors = require("cors");
 
 const dotenv = require("dotenv").config();
@@ -42,6 +43,7 @@ app.use(passport.session());
 app.use("/", mainRoutes);
 app.use("/category", categoryRoutes);
 app.use("/amount", amountRoutes);
+app.use("/investment", investmentRoutes);
 
 app.listen(process.env.PORT, () => {
 	console.log(`Server is running on port ${process.env.PORT}`);

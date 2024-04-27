@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { getAmounts } from "../features/posts/postSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { getCategories } from "../features/categories/categorySlice"
+import { getInvestments } from "../features/investments/investmentSlice"
 import CateogryLineItem from "../components/categoryLineItem"
 import AddEditPopout from "../components/addEditPopout"
 import Button from "../components/button"
@@ -9,14 +10,10 @@ import Summary from "../components/summary"
 import Savings from "../components/savings"
 import Investments from "../components/investments"
 
-//Fix label when selected for line item
-//If you enter the wrong savings or income there isnt a way to see them?
-
 //Feature requests
-//expand/collapse all
 //Initals in corner instad of hamburger
 //Tool tips on some inputs
-//filter by category type
+//In cat modal lock "Category" tilte when scrolling
 
 export default function () {
   const currentDate = new Date()
@@ -66,6 +63,7 @@ export default function () {
 
     dispatch(getAmounts(timePeriod))
     dispatch(getCategories(timePeriod))
+    dispatch(getInvestments())
   }, [dispatch])
 
   const onChangeDate = (e) => {
@@ -211,67 +209,69 @@ export default function () {
           </select>
         </form>
         <div className="collapse-filter-section">
-          {/* <button onClick={expandAllOnClick} className="expand-collapse">
-            {expandAll ? "- Collapse All" : "+ Expand All"}
-          </button> */}
-          <button
-            onClick={categoryFilterOnClick}
-            className="btn clear-filters"
-            name="all"
-          >
-            x
-          </button>
-          <button
-            name="expense"
-            onClick={categoryFilterOnClick}
-            className={
-              categoryFilter === "expense"
-                ? "btn cat-btn cat-btn-selected"
-                : categoryFilter === "all"
-                ? "btn cat-btn cat-btn-unselected"
-                : "hidden"
-            }
-          >
-            Expenses
-          </button>
-          <button
-            name="savings"
-            onClick={categoryFilterOnClick}
-            className={
-              categoryFilter === "savings"
-                ? "btn cat-btn cat-btn-selected"
-                : categoryFilter === "all"
-                ? "btn cat-btn cat-btn-unselected"
-                : "hidden"
-            }
-          >
-            Savings
-          </button>
-          <button
-            name="investment"
-            onClick={categoryFilterOnClick}
-            className={
-              categoryFilter === "investment"
-                ? "btn cat-btn cat-btn-selected"
-                : categoryFilter === "all"
-                ? "btn cat-btn cat-btn-unselected"
-                : "hidden"
-            }
-          >
-            Investments
-          </button>
-          <button
-            name="income"
-            onClick={categoryFilterOnClick}
-            className={
-              categoryFilter === "income"
-                ? "btn cat-btn cat-btn-selected"
-                : categoryFilter === "all"
-                ? "btn cat-btn cat-btn-unselected"
-                : "hidden"
-            }
-          >
-            Income
+          <div className="filter-section">
+            <button
+              onClick={categoryFilterOnClick}
+              className="btn clear-filters"
+              name="all"
+            >
+              x
+            </button>
+            <button
+              name="expense"
+              onClick={categoryFilterOnClick}
+              className={
+                categoryFilter === "expense"
+                  ? "btn cat-btn cat-btn-selected"
+                  : categoryFilter === "all"
+                  ? "btn cat-btn cat-btn-unselected"
+                  : "hidden"
+              }
+            >
+              Expenses
+            </button>
+            <button
+              name="savings"
+              onClick={categoryFilterOnClick}
+              className={
+                categoryFilter === "savings"
+                  ? "btn cat-btn cat-btn-selected"
+                  : categoryFilter === "all"
+                  ? "btn cat-btn cat-btn-unselected"
+                  : "hidden"
+              }
+            >
+              Savings
+            </button>
+            <button
+              name="investment"
+              onClick={categoryFilterOnClick}
+              className={
+                categoryFilter === "investment"
+                  ? "btn cat-btn cat-btn-selected"
+                  : categoryFilter === "all"
+                  ? "btn cat-btn cat-btn-unselected"
+                  : "hidden"
+              }
+            >
+              Investments
+            </button>
+            <button
+              name="income"
+              onClick={categoryFilterOnClick}
+              className={
+                categoryFilter === "income"
+                  ? "btn cat-btn cat-btn-selected"
+                  : categoryFilter === "all"
+                  ? "btn cat-btn cat-btn-unselected"
+                  : "hidden"
+              }
+            >
+              Income
+            </button>
+          </div>
+          <button onClick={expandAllOnClick} className="expand-collapse">
+            {expandAll ? "- Collapse" : "+ Expand"}
           </button>
         </div>
         <div className="categories">

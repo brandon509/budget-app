@@ -8,8 +8,10 @@ import {
   faPowerOff,
   faUser,
   faFolder,
+  faDollarSign,
 } from "@fortawesome/free-solid-svg-icons"
 import Modal from "../components/modal"
+import MaintainInvestments from "../components/maintainInvestments"
 
 export default function Header() {
   const location = useLocation()
@@ -19,6 +21,7 @@ export default function Header() {
 
   const [isVisable, setIsVisable] = useState(false)
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
+  const [isInvestmentsOpen, setIsInvestmentsOpen] = useState(false)
 
   useEffect(() => {
     if (isSuccess && !user && !message) {
@@ -58,6 +61,15 @@ export default function Header() {
     setIsCategoriesOpen(false)
   }
 
+  const onClickInvestmentsOpen = () => {
+    setIsInvestmentsOpen(true)
+    setIsVisable(false)
+  }
+
+  const onClickInvestmentsClose = () => {
+    setIsInvestmentsOpen(false)
+  }
+
   return (
     <div className="header">
       {location.pathname != "/" && (
@@ -93,6 +105,13 @@ export default function Header() {
                   Categories
                 </li>
                 <li
+                  className="hamburger-list-item"
+                  onClick={onClickInvestmentsOpen}
+                >
+                  <FontAwesomeIcon className="icon" icon={faDollarSign} />
+                  Investments
+                </li>
+                <li
                   className="hamburger-list-item last-item"
                   onClick={onClickLogout}
                 >
@@ -103,6 +122,9 @@ export default function Header() {
             </div>
           )}
           {isCategoriesOpen && <Modal close={onClickCategoriesClose} />}
+          {isInvestmentsOpen && (
+            <MaintainInvestments close={onClickInvestmentsClose} />
+          )}
 
           {location.pathname.includes("/account/verify") && (
             <button className="btn header-btn" onClick={onClickLogin}>

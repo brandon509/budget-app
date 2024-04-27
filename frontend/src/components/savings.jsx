@@ -27,7 +27,9 @@ export default function () {
     summaryArray[i].type = test[0].type
   }
 
-  const totalSavings = summaryArray.filter((x) => x.type === "savings")
+  const totalSavings = summaryArray.filter(
+    (x) => x.type === "savings" || x.type === "investment"
+  )
   const totalExpenses = summaryArray
     .filter((x) => x.type === "expense")
     .reduce((a, b) => a + b.amount, 0)
@@ -41,7 +43,7 @@ export default function () {
       <table className="summary-table">
         <tbody>
           <tr>
-            <td className="income-label">Remaining</td>
+            <td className="income-label">Availible</td>
             <td className="income-value">
               {currencyFormatter(income - totalExpenses)}
             </td>
@@ -56,7 +58,7 @@ export default function () {
               </tr>
             ))}
           <tr className="savings">
-            <td className="savings-label">Monthly Savings</td>
+            <td className="savings-label">Remaining</td>
             <td className="savings-value">
               {currencyFormatter(
                 income -

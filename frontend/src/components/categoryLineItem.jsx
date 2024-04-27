@@ -36,7 +36,7 @@ export default function CateogryLineItem({ category, data, edit, expandAll }) {
           className="progress-bar"
           style={{
             background: `linear-gradient(to right, ${
-              percent < 100 ? "#366a21" : "#ca4139"
+              percent <= 100 ? "#366a21" : "#ca4139"
             } ${percent}%, rgb(235, 235, 235) ${percent}%)`,
           }}
         >

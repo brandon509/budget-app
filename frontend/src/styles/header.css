@@ -47,7 +47,8 @@
 }
 
 .hamburger-container {
-  height: 121.2px;
+  /* height: 121.2px; */
+  height: 161.6px;
   width: 150px;
   position: absolute;
   right: 10px;
