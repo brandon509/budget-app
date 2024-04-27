@@ -9,7 +9,7 @@ import {
 } from "../features/investments/investmentSlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import CateogryInput from "./categoryInput"
+import DropdownInput from "./dropdownInput"
 
 export default function MaintainInvestments({ close }) {
   const [editInvestment, setEditInvestment] = useState(undefined)
@@ -156,7 +156,7 @@ export default function MaintainInvestments({ close }) {
               {!editInvestment ? <h3>New Ticker</h3> : <h3>Update Ticker</h3>}
               <TextInput {...investmentTicker} />
               <TextInput {...investmentPercentage} />
-              <CateogryInput
+              <DropdownInput
                 name="investmentType"
                 state={investmentType}
                 onChange={onChange}

@@ -2,10 +2,10 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { newAmount, updateAmount } from "../features/posts/postSlice"
 import TextInput from "./textInput"
-import CateogryInput from "./categoryInput"
+import DropdownInput from "./dropdownInput"
 import { decimalVal } from "../scripts/validation"
 
-export default function AddEditPopout({ lineItem, close }) {
+export default function LinesForm({ lineItem, close }) {
   const [split, setSplit] = useState(0)
   const [formData, setFormData] = useState({
     description: "",
@@ -133,7 +133,7 @@ export default function AddEditPopout({ lineItem, close }) {
     <div>
       <form className="popout-form">
         <TextInput {...descriptionInput} />
-        <CateogryInput
+        <DropdownInput
           name="category"
           state={category}
           onChange={onChange}

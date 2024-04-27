@@ -1,4 +1,4 @@
-export default function CateogryInput({ name, state, onChange, options }) {
+export default function DropdownInput({ name, state, onChange, options }) {
   return (
     <div className="inputParent">
       <h5 className={state ? "inputLabel" : "hidden"}>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getCategories } from "../features/categories/categorySlice"
 import { getInvestments } from "../features/investments/investmentSlice"
 import CateogryLineItem from "../components/categoryLineItem"
-import AddEditPopout from "../components/addEditPopout"
+import LinesForm from "../components/linesForm"
 import Button from "../components/button"
 import Summary from "../components/summary"
 import Savings from "../components/savings"
@@ -171,7 +171,7 @@ export default function () {
       </div>
       {isVisable && (
         <div className="popout">
-          {isForm && <AddEditPopout close={openForm} lineItem={item} />}
+          {isForm && <LinesForm close={openForm} lineItem={item} />}
           {isSummary && <Summary />}
           {isSavings && <Savings />}
           {isInvest && <Investments />}

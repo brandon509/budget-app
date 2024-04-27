@@ -10,7 +10,7 @@ import {
   faFolder,
   faDollarSign,
 } from "@fortawesome/free-solid-svg-icons"
-import Modal from "../components/modal"
+import MaintainCategories from "../components/maintainCategories"
 import MaintainInvestments from "../components/maintainInvestments"
 
 export default function Header() {
@@ -121,7 +121,9 @@ export default function Header() {
               </ul>
             </div>
           )}
-          {isCategoriesOpen && <Modal close={onClickCategoriesClose} />}
+          {isCategoriesOpen && (
+            <MaintainCategories close={onClickCategoriesClose} />
+          )}
           {isInvestmentsOpen && (
             <MaintainInvestments close={onClickInvestmentsClose} />
           )}

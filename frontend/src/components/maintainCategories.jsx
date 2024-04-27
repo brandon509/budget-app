@@ -9,10 +9,10 @@ import {
 } from "../features/categories/categorySlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import CateogryInput from "./categoryInput"
+import DropdownInput from "./dropdownInput"
 import { decimalVal } from "../scripts/validation"
 
-export default function Modal({ close }) {
+export default function MaintainCategories({ close }) {
   const [editCategory, setEditCategory] = useState(undefined)
   const [categoryFormData, setCategoryFormData] = useState({
     name: "",
@@ -188,7 +188,7 @@ export default function Modal({ close }) {
             <form className="category-form">
               {!editCategory ? <h3>New Category</h3> : <h3>Update Category</h3>}
               <TextInput {...categoryName} />
-              <CateogryInput
+              <DropdownInput
                 name="type"
                 state={type}
                 onChange={onChange}
