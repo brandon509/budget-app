@@ -4,7 +4,27 @@
   font-family: "Josefin Sans";
 }
 
-.login {
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #1a1c18;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* .login {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -26,18 +46,18 @@
   padding: 3%;
   background: rgb(38, 37, 41);
   color: white;
-}
+} */
 
 button {
   border: none;
   cursor: pointer;
 }
 
-.login-window {
+/* .login-window {
   background: rgb(38, 37, 41);
   color: white;
   border-radius: 2%;
-  /* padding: 3%; */
+  padding: 3%;
   height: 700px;
   width: 500px;
   display: flex;
@@ -177,7 +197,7 @@ p.switch {
 
 .error-email {
   margin-top: 120px;
-}
+} */
 
 .email-verify {
   display: flex;
@@ -215,7 +235,7 @@ p.switch {
   margin-top: -6px;
 }
 
-.home-btn {
+/* .home-btn {
   margin-left: 1.5%;
   margin-top: 1%;
   padding: 0.5%;
@@ -231,85 +251,12 @@ p.switch {
   cursor: not-allowed;
 }
 
-.input {
-  border: 1px solid #73796e;
-  border-radius: 4px;
-  color: #1a1c18;
-  height: 56px;
-  width: 220px;
-  padding: 0px 16px;
-  font-size: 16px;
-  line-height: 24px;
-  caret-color: #366a21;
-}
-
-::placeholder {
-  color: #43483f;
-}
-
-.input:focus {
-  outline: none;
-  box-shadow: 0 0 0 1px #366a21;
-  color: #1a1c18;
-}
-
-.input:hover {
-  cursor: pointer;
-}
-
-.support {
-  margin-top: 4px;
-  color: #43483f;
-  padding: 0px 16px;
-  font-size: 12px;
-  line-height: 16px;
-  position: absolute;
-}
-
-.inputLabel {
-  position: absolute;
-  top: -26px;
-  left: 10px;
-  font-size: 12px;
-  background: white;
-  padding: 0px 4px;
-  color: #366a21;
-}
-
-.inputParent {
-  position: relative;
-  /* margin-left: 20px; */
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #1a1c18;
-}
-
 .errorIcon {
   font-size: 24px;
   position: absolute;
   left: 220px;
-  /* top: 12px; */
   top: 17px;
-}
-
-.inputError {
-  color: #ba1a1a;
-}
-
-.enabledInputError {
-  border: #ba1a1a solid 1px;
-}
-
-.enabledInputError:focus {
-  outline: none;
-  box-shadow: 0 0 0 1px #ba1a1a;
-  caret-color: #ba1a1a;
-}
+} */
 
 .title {
   font-weight: 600;
@@ -327,7 +274,7 @@ input:-webkit-autofill:active {
   gap: 28px;
 }
 
-.logInForm {
+.log-in-form {
   margin-left: 120px;
 }
 
@@ -337,7 +284,7 @@ input:-webkit-autofill:active {
   margin-left: 93px;
 }
 
-.homePageLayout {
+.home-page-layout {
   display: flex;
 }
 
@@ -367,7 +314,7 @@ input:-webkit-autofill:active {
   );
 }
 
-.formBottom {
+.form-bottom {
   margin-top: -10px;
 }
 
@@ -383,20 +330,20 @@ input:-webkit-autofill:active {
   font-weight: 600;
 }
 
-.signUpPageLayout {
+.sign-up-page-layout {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.totalForm {
+.total-form {
   border: black solid 1px;
   border-radius: 4px;
   padding: 25px 50px;
   margin-top: 20px;
 }
 
-.signUpTitle {
+.sign-up-title {
   text-align: center;
   font-size: 30px;
 }
@@ -412,18 +359,18 @@ input:-webkit-autofill:active {
   line-height: 24px;
 }
 
-.signupError {
+.signup-error {
   margin-left: 0px;
 }
 
-.resetPasswordInstructions {
+.reset-password-instructions {
   width: 254px;
   font-size: 14px;
   margin-bottom: 40px;
   text-align: center;
 }
 
-.messageWrap {
+.message-wrap {
   width: 254px;
   margin-bottom: 20px;
   background: #6b999a;
@@ -437,16 +384,4 @@ input:-webkit-autofill:active {
 
 .email-verify-error {
   font-size: 18px;
-}
-
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
 }

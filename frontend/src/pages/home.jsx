@@ -90,11 +90,15 @@ export default function Home() {
   }
 
   return (
-    <div className="homePageLayout">
+    <div className="home-page-layout">
       <div>
         <h1 className="title">CENT</h1>
         {error && <p className="error">{error}</p>}
-        <form onSubmit={onSubmit} noValidate={true} className="form logInForm">
+        <form
+          onSubmit={onSubmit}
+          noValidate={true}
+          className="form log-in-form"
+        >
           <TextInput {...emailInput} />
           <TextInput {...passwordInput} />
           <button
@@ -104,10 +108,10 @@ export default function Home() {
           >
             Log in
           </button>
-          <p className="formBottom link" onClick={onClickForgot}>
+          <p className="form-bottom link" onClick={onClickForgot}>
             Forgot password?
           </p>
-          <p className="formBottom">
+          <p className="form-bottom">
             Don't have an account?{" "}
             <span className="link" onClick={onClickSignup}>
               Sign up

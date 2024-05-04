@@ -13,7 +13,8 @@ import Investments from "../components/investments"
 //Feature requests
 //Initals in corner instad of hamburger
 //Tool tips on some inputs
-//In cat modal lock "Category" tilte when scrolling
+
+//Bugs
 
 export default function () {
   const currentDate = new Date()

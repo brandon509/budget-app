@@ -111,10 +111,10 @@ export default function Signup() {
   }
 
   return (
-    <div className="signUpPageLayout">
-      <div className="totalForm">
-        <h2 className="signUpTitle">Sign up for Cent</h2>
-        {error && <p className="error signupError">{error}</p>}
+    <div className="sign-up-page-layout">
+      <div className="total-form">
+        <h2 className="sign-up-title">Sign up for Cent</h2>
+        {error && <p className="error signup-error">{error}</p>}
         <form onSubmit={onSubmit} noValidate={true} className="form">
           <TextInput {...nameInput} />
           <TextInput {...emailInput} />
@@ -132,7 +132,7 @@ export default function Signup() {
           >
             Sign up
           </button>
-          <p className="formBottom">
+          <p className="form-bottom">
             Already have an account?{" "}
             <span className="link" onClick={onClick}>
               Log in

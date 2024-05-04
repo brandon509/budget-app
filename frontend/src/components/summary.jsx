@@ -33,26 +33,24 @@ export default function () {
     .reduce((a, b) => a + b.amount, 0)
 
   return (
-    <div className="summary">
-      <h3 className="summary-label">Monthly Summary</h3>
-      <table className="summary-table">
+    <div className="side-panel">
+      <h3 className="side-panel-label">Monthly Summary</h3>
+      <table className="side-panel-table">
         <tbody>
           <tr>
-            <td className="income-label">Income</td>
-            <td className="income-value">{currencyFormatter(income)}</td>
+            <td className="label">Income</td>
+            <td className="value">{currencyFormatter(income)}</td>
           </tr>
           {totalExpenses &&
             totalExpenses.map((x) => (
               <tr key={x.category} className="expenses">
-                <td className="expense-label">{x.category}</td>
-                <td className="expense-value">
-                  {currencyFormatter(-x.amount)}
-                </td>
+                <td className="label">{x.category}</td>
+                <td className="value">{currencyFormatter(-x.amount)}</td>
               </tr>
             ))}
           <tr className="savings">
-            <td className="savings-label">Monthly Savings</td>
-            <td className="savings-value">
+            <td className="label savings-label">Monthly Savings</td>
+            <td className=" value savings-value">
               {currencyFormatter(
                 income - totalExpenses.reduce((a, b) => a + b.amount, 0)
               )}

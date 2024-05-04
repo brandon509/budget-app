@@ -56,11 +56,11 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="signUpPageLayout">
-      <div className="totalForm">
-        <h2 className="signUpTitle">Reset password</h2>
+    <div className="sign-up-page-layout">
+      <div className="total-form">
+        <h2 className="sign-up-title">Reset password</h2>
         {!successMessage && (
-          <p className="resetPasswordInstructions">
+          <p className="reset-password-instructions">
             To reset your password, enter your email below. If an account
             associated with that email exists an email will be sent with
             instructions to reset your password.
@@ -68,7 +68,7 @@ export default function ForgotPassword() {
         )}
         {successMessage && (
           <div>
-            <p className="messageWrap">{successMessage}</p>
+            <p className="message-wrap">{successMessage}</p>
             <button className="btn" onClick={onClick}>
               Home
             </button>

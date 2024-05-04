@@ -160,17 +160,15 @@ export default function MaintainCategories({ close }) {
       <div className="modal">
         <div className="modal-content">
           <div className="left">
-            <h4 className="category-header">Category</h4>
-            <ul className="category-list">
+            <h4 className="label-header">Category</h4>
+            <ul className="item-list">
               {activeCategories &&
                 activeCategories.map((x, i) => (
                   <li
                     key={x._id}
                     id={x._id}
                     className={
-                      x._id === editCategory
-                        ? "category-list-item edit"
-                        : "category-list-item"
+                      x._id === editCategory ? "list-item edit" : "list-item"
                     }
                     onClick={onClickCategory}
                   >
@@ -178,14 +176,14 @@ export default function MaintainCategories({ close }) {
                   </li>
                 ))}
             </ul>
-            <div className="new-category-container">
-              <p className="new-category" onClick={resetState}>
+            <div className="new-item-container">
+              <p className="new-item" onClick={resetState}>
                 <FontAwesomeIcon icon={faPlus} /> new category
               </p>
             </div>
           </div>
           <div className="right">
-            <form className="category-form">
+            <form className="item-form">
               {!editCategory ? <h3>New Category</h3> : <h3>Update Category</h3>}
               <TextInput {...categoryName} />
               <DropdownInput
@@ -201,10 +199,10 @@ export default function MaintainCategories({ close }) {
               />
               <TextInput {...categorySplit} />
               <TextInput {...categoryBudget} />
-              <div className="category-buttons-group">
+              <div className="buttons-group">
                 <button
                   type="button"
-                  className="btn category-button"
+                  className="btn item-button"
                   onClick={editCategory ? onSubmitUpdate : onSubmit}
                 >
                   {editCategory ? "Update" : "Create"}
@@ -212,7 +210,7 @@ export default function MaintainCategories({ close }) {
                 {editCategory && (
                   <button
                     type="button"
-                    className="btn category-button"
+                    className="btn item-button"
                     onClick={onSubmitDelete}
                   >
                     Delete

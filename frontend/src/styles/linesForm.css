@@ -31,8 +31,7 @@
   width: 255px;
 }
 
-.popout-form .inputParent .inputLabel {
-  /* background: linear-gradient(to bottom, #a1b09600 44%, white 44%, white 100%); */
+.popout-form .input-parent .input-label {
   border-radius: 4px;
 }
 

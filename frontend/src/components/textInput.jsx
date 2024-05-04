@@ -33,10 +33,12 @@ export default function TextInput({
   }
 
   return (
-    <div className="inputParent">
+    <div className="input-parent">
       {(labelVisable || inputValue) && (
         <h5
-          className={!passValidation ? "inputLabel inputError" : "inputLabel"}
+          className={
+            !passValidation ? "input-label input-error" : "input-label"
+          }
         >
           {label}
         </h5>
@@ -45,7 +47,7 @@ export default function TextInput({
         type={type}
         placeholder={!labelVisable ? label : undefined}
         name={name}
-        className={!passValidation ? `input enabledInputError` : `input`}
+        className={!passValidation ? `input enabled-input-error` : `input`}
         id={id}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -56,10 +58,10 @@ export default function TextInput({
       {!passValidation && (
         <FontAwesomeIcon
           icon={faCircleExclamation}
-          className="errorIcon inputError"
+          className="error-icon input-error"
         />
       )}
-      <p className={!passValidation ? "support inputError" : "support"}>
+      <p className={!passValidation ? "support input-error" : "support"}>
         {!passValidation ? errorMessage : supporting}
       </p>
     </div>

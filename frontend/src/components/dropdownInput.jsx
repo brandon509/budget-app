@@ -1,7 +1,7 @@
 export default function DropdownInput({ name, state, onChange, options }) {
   return (
-    <div className="inputParent">
-      <h5 className={state ? "inputLabel" : "hidden"}>
+    <div className="input-parent">
+      <h5 className={state ? "input-label" : "hidden"}>
         {name[0].toUpperCase() + name.slice(1)}
       </h5>
       <select

@@ -138,16 +138,13 @@ module.exports = {
 	resetPasswordRequest: async (req, res) => {
 		try {
 			const user = await User.findOne({ email: req.body.email });
-
 			if (!user) {
 				return res.status(400).json("User not found");
 			}
-
 			const { id, name, lastLoginDate, email } = user;
 			const timeStamp = btoa(Date.now());
 			const ident = btoa(id);
 			const toHash = id + email + lastLoginDate.toISOString();
-
 			bcrypt.genSalt(10, (err, salt) => {
 				if (err) {
 					return err;
@@ -157,7 +154,6 @@ module.exports = {
 						return err;
 					}
 					const url = `http://localhost:5173/account/password/reset/${ident}/${timeStamp}/${hash.replaceAll("/", "slash").replaceAll(".", "period")}`;
-
 					sendEmail(
 						email,
 						"Reset password instructions",
@@ -167,7 +163,6 @@ module.exports = {
 					);
 				});
 			});
-
 			res.status(200).json("Please check your email for password reset instructions");
 		} catch (error) {
 			console.log(error);
@@ -209,7 +204,8 @@ module.exports = {
 		}
 	},
 	updateProfile: async (req, res) => {
-		const user = await User.findByIdAndUpdate(req.user.id, { name: req.body.name, email: req.body.email });
-		res.status(200).json("Profile updated");
+		await User.findByIdAndUpdate(req.user.id, { name: req.body.name, email: req.body.email });
+		const user = await User.findById(req.user.id);
+		res.status(200).json({ id: user._id, name: user.name, email: user.email });
 	},
 };

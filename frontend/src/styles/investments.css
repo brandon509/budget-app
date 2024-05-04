@@ -5,7 +5,7 @@
   justify-content: center;
 }
 
-.category-name {
+.investment-category-name {
   margin-top: 25px;
 }
 
@@ -13,11 +13,19 @@
   width: 90px;
 }
 
-.investment-content .inputParent .inputLabel {
+.investment-content .input-parent .input-label {
   border-radius: 4px;
 }
 
-.investment-content .inputParent .input {
+.investment-content .input-parent .input {
   width: 60px;
   height: 35px;
+}
+
+.ticker {
+  width: 60px;
+}
+
+.investment-table {
+  margin-left: 30px;
 }

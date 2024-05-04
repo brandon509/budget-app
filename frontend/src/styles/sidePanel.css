@@ -1,29 +1,25 @@
-.summary {
+.side-panel {
   padding: 28px 15px 40px 0px;
 }
 
-.summary-label {
+.side-panel-label {
   text-align: center;
   margin-bottom: 30px;
 }
 
-.summary-table {
+.side-panel-table {
   display: flex;
   justify-content: center;
   border-collapse: collapse;
 }
 
-.income-label,
-.expense-label,
-.savings-label {
-  padding: 2px 0px 2px 0px;
+.label {
+  padding: 4px 0px 4px 0px;
   width: 204px;
 }
 
-.income-value,
-.expense-value,
-.savings-value {
-  padding: 2px 0px 2px 0px;
+.value {
+  padding: 4px 0px 4px 0px;
   text-align: end;
   width: 50px;
 }

@@ -80,10 +80,10 @@ export default function passwordReset() {
   }
 
   return (
-    <div className="signUpPageLayout">
-      <div className="totalForm">
-        <h2 className="signUpTitle">Reset password</h2>
-        {error && <p className="error signupError">{error}</p>}
+    <div className="sign-up-page-layout">
+      <div className="total-form">
+        <h2 className="sign-up-title">Reset password</h2>
+        {error && <p className="error signup-error">{error}</p>}
         <form onSubmit={onSubmit} noValidate={true} className="form">
           <TextInput {...passwordInput} />
           <TextInput {...confirmPasswordInput} />

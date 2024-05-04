@@ -91,10 +91,10 @@ export default function Login() {
   }
 
   return (
-    <div className="signUpPageLayout">
-      <div className="totalForm">
-        <h2 className="signUpTitle">Log in to Cent</h2>
-        {error && <p className="error signupError">{error}</p>}
+    <div className="sign-up-page-layout">
+      <div className="total-form">
+        <h2 className="sign-up-title">Log in to Cent</h2>
+        {error && <p className="error signup-error">{error}</p>}
         <form onSubmit={onSubmit} noValidate={true} className="form">
           <TextInput {...emailInput} />
           <TextInput {...passwordInput} />
@@ -105,10 +105,10 @@ export default function Login() {
           >
             Log in
           </button>
-          <p className="formBottom link" onClick={onClickForgot}>
+          <p className="form-bottom link" onClick={onClickForgot}>
             Forgot password?
           </p>
-          <p className="formBottom">
+          <p className="form-bottom">
             Don't have an account?{" "}
             <span className="link" onClick={onClick}>
               Sign up

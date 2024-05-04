@@ -127,17 +127,15 @@ export default function MaintainInvestments({ close }) {
       <div className="modal">
         <div className="modal-content">
           <div className="left">
-            <h4 className="category-header">Investments</h4>
-            <ul className="category-list">
+            <h4 className="label-header">Investments</h4>
+            <ul className="item-list">
               {investments &&
                 investments.map((x) => (
                   <li
                     key={x._id}
                     id={x._id}
                     className={
-                      x._id === editInvestment
-                        ? "category-list-item edit"
-                        : "category-list-item"
+                      x._id === editInvestment ? "list-item edit" : "list-item"
                     }
                     onClick={onClickInvestment}
                   >
@@ -145,14 +143,14 @@ export default function MaintainInvestments({ close }) {
                   </li>
                 ))}
             </ul>
-            <div className="new-category-container">
-              <p className="new-category" onClick={resetState}>
+            <div className="new-item-container">
+              <p className="new-item" onClick={resetState}>
                 <FontAwesomeIcon icon={faPlus} /> new ticker
               </p>
             </div>
           </div>
           <div className="right">
-            <form className="category-form">
+            <form className="item-form">
               {!editInvestment ? <h3>New Ticker</h3> : <h3>Update Ticker</h3>}
               <TextInput {...investmentTicker} />
               <TextInput {...investmentPercentage} />
@@ -164,10 +162,10 @@ export default function MaintainInvestments({ close }) {
                   (x) => x.type === "investment"
                 )}
               />
-              <div className="category-buttons-group">
+              <div className="buttons-group">
                 <button
                   type="button"
-                  className="btn category-button"
+                  className="btn item-button"
                   onClick={editInvestment ? onSubmitUpdate : onSubmit}
                 >
                   {editInvestment ? "Update" : "Create"}
@@ -175,7 +173,7 @@ export default function MaintainInvestments({ close }) {
                 {editInvestment && (
                   <button
                     type="button"
-                    className="btn category-button"
+                    className="btn item-button"
                     onClick={onSubmitDelete}
                   >
                     Delete

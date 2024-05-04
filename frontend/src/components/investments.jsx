@@ -27,14 +27,14 @@ export default function () {
   }
 
   return (
-    <div className="summary">
-      <h3 className="summary-label">Investments</h3>
-      <div className="">
+    <div className="side-panel">
+      <h3 className="side-panel-label">Investments</h3>
+      <div className="investment-table">
         {currentCategories
           .filter((x) => x.type === "investment")
           .map((y) => (
             <div key={y._id}>
-              <h4 className="category-name">
+              <h4 className="investment-category-name">
                 {y.name}:{" "}
                 {currencyFormatter(
                   data
@@ -46,7 +46,7 @@ export default function () {
                 .filter((z) => z.investmentType._id === y._id)
                 .map((zz) => (
                   <div key={zz._id} className="investment-content">
-                    <p>{zz.ticker}</p>
+                    <p className="ticker">{zz.ticker}</p>
                     <TextInput {...priceInfo} id={zz._id} />
                     <p className="shares">
                       {price[zz._id]

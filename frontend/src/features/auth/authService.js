@@ -56,6 +56,20 @@ const resetPassword = async ({ password, ident, timeStamp, hash }) => {
   return response.data
 }
 
+const updateProfile = async (profile) => {
+  const response = await axios.put(
+    `http://localhost:8000/updateProfile`,
+    profile,
+    { withCredentials: true }
+  )
+
+  if (response.data) {
+    localStorage.setItem("user", JSON.stringify(response.data))
+  }
+
+  return response.data
+}
+
 const authService = {
   login,
   signup,
@@ -63,6 +77,7 @@ const authService = {
   verifyEmail,
   resetPasswordRequest,
   resetPassword,
+  updateProfile,
 }
 
 export default authService
