@@ -70,6 +70,16 @@ const updateProfile = async (profile) => {
   return response.data
 }
 
+const changePassword = async (password) => {
+  const response = await axios.put(
+    `http://localhost:8000/changePassword`,
+    password,
+    { withCredentials: true }
+  )
+
+  return response.data
+}
+
 const authService = {
   login,
   signup,
@@ -78,6 +88,7 @@ const authService = {
   resetPasswordRequest,
   resetPassword,
   updateProfile,
+  changePassword,
 }
 
 export default authService

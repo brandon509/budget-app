@@ -122,7 +122,7 @@ export default function Signup() {
           <TextInput {...confirmPasswordInput} />
           <button
             type="submit"
-            className="btn"
+            className="btn signup-mobile"
             disabled={
               !nameValidation ||
               !emailValidation ||

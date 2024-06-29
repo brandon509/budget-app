@@ -5,6 +5,7 @@ const user = JSON.parse(localStorage.getItem("user"))
 
 const initialState = {
   user: user ? user : null,
+  mobile: window.innerWidth <= 395,
   isError: false,
   isSuccess: false,
   isLogin: false,
@@ -122,6 +123,23 @@ export const updateProfile = createAsyncThunk(
   }
 )
 
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+  async (password, thunkAPI) => {
+    try {
+      return await authService.changePassword(password)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -225,6 +243,18 @@ export const authSlice = createSlice({
         state.user = action.payload
       })
       .addCase(updateProfile.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(changePassword.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+      })
+      .addCase(changePassword.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -83,3 +83,37 @@
 .last-item {
   border-bottom: none;
 }
+
+.mobile {
+  display: none;
+}
+
+@media (max-width: 395px) {
+  .hamburger-container {
+    display: none;
+  }
+
+  .hamburger {
+    border-radius: 0px;
+  }
+
+  .hamburger:hover {
+    background: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+  .non-mobile {
+    display: none;
+  }
+
+  .hamburger-list-item {
+    border-bottom: none;
+  }
+
+  .hamburger-list-item:hover {
+    color: black;
+  }
+}

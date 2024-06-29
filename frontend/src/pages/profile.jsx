@@ -7,7 +7,7 @@ import {
 } from "../scripts/validation"
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { updateProfile } from "../features/auth/authSlice"
+import { updateProfile, changePassword } from "../features/auth/authSlice"
 
 export default function () {
   const { user } = useSelector((state) => state.auth)
@@ -18,10 +18,11 @@ export default function () {
     name: user ? user.name : "",
     email: user ? user.email : "",
     password: "",
-    confirmPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
   })
 
-  const { name, email, password, confirmPassword } = formData
+  const { name, email, password, newPassword, confirmNewPassword } = formData
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -32,6 +33,20 @@ export default function () {
 
   const onSubmitProfile = async (e) => {
     e.preventDefault()
+
+    if (
+      emptyInputVal(password) &&
+      passwordVal(newPassword) &&
+      confirmPasswordVal(newPassword, confirmNewPassword)
+    ) {
+      const userPassword = {
+        password,
+        newPassword,
+        confirmNewPassword,
+      }
+
+      dispatch(changePassword(userPassword))
+    }
 
     const userData = {
       name,
@@ -67,31 +82,51 @@ export default function () {
     name: "password",
     handleChange: onChange,
     inputValue: password,
-    validation: passwordVal(password),
+    validation: true,
     errorMessage: "Input is not valid",
   }
 
-  const confirmPasswordInput = {
-    label: "Confirm Password",
+  const newPasswordInput = {
+    label: "New Password",
     type: "password",
-    name: "confirmPassword",
+    name: "newPassword",
     handleChange: onChange,
-    inputValue: confirmPassword,
-    validation: confirmPasswordVal(password, confirmPassword),
+    inputValue: newPassword,
+    validation: !newPassword ? true : passwordVal(newPassword),
+    errorMessage: "Input is not valid",
+  }
+
+  const confirmNewPasswordInput = {
+    label: "Confirm New Password",
+    type: "password",
+    name: "confirmNewPassword",
+    handleChange: onChange,
+    inputValue: confirmNewPassword,
+    validation: confirmPasswordVal(newPassword, confirmNewPassword),
     errorMessage: "Passwords do not match",
   }
 
   return (
     <div className="main-body">
-      <div className="category-lines test">
+      <div className="main-section profile-section">
+        <h2 className="profile-update-title">Update Profile</h2>
         <form className="form">
-          <TextInput {...nameInput} />
-          <TextInput {...emailInput} />
+          <div>
+            <TextInput {...nameInput} />
+            <TextInput {...newPasswordInput} />
+            <button
+              onClick={onSubmitProfile}
+              className="profile-update-btn btn"
+            >
+              Update Profile
+            </button>
+          </div>
+          <div>
+            <TextInput {...emailInput} />
+            <TextInput {...confirmNewPasswordInput} />
+          </div>
           <TextInput {...passwordInput} />
-          <TextInput {...passwordInput} />
-          <TextInput {...confirmPasswordInput} />
         </form>
-        <button onClick={onSubmitProfile}>Click me</button>
       </div>
     </div>
   )

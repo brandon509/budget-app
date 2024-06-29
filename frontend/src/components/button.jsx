@@ -7,6 +7,7 @@ import {
   faLayerGroup,
   faPiggyBank,
   faMoneyBillTrendUp,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons"
 
 export default function Button({ id, click, item, className }) {
@@ -18,6 +19,7 @@ export default function Button({ id, click, item, className }) {
     group: faLayerGroup,
     savings: faPiggyBank,
     invest: faMoneyBillTrendUp,
+    back: faArrowLeft,
   }
 
   return (

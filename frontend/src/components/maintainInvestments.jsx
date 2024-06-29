@@ -126,6 +126,11 @@ export default function MaintainInvestments({ close }) {
     <div>
       <div className="modal">
         <div className="modal-content">
+          <Button
+            click={closeModal}
+            item="back"
+            className="back-btn close-btn"
+          />
           <div className="left">
             <h4 className="label-header">Investments</h4>
             <ul className="item-list">

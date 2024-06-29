@@ -91,7 +91,7 @@ export default function Home() {
 
   return (
     <div className="home-page-layout">
-      <div>
+      <div className="home-page-main">
         <h1 className="title">CENT</h1>
         {error && <p className="error">{error}</p>}
         <form

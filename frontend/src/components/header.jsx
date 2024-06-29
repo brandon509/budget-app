@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { logout, reset } from "../features/auth/authSlice"
-import { useEffect, useState } from "react"
+import { useEffect, useState, createContext } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faBars,
@@ -10,11 +10,12 @@ import {
   faFolder,
   faDollarSign,
   faFlag,
+  faX,
 } from "@fortawesome/free-solid-svg-icons"
 import MaintainCategories from "../components/maintainCategories"
 import MaintainInvestments from "../components/maintainInvestments"
 
-export default function Header() {
+export default function Header({ onClickNav, isUserOptions }) {
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -96,12 +97,19 @@ export default function Header() {
             </h1>
 
             {user && (
-              <FontAwesomeIcon
-                className="hamburger"
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-                icon={faBars}
-              />
+              <div>
+                <FontAwesomeIcon
+                  className="hamburger non-mobile"
+                  onMouseEnter={onMouseEnter}
+                  onMouseLeave={onMouseLeave}
+                  icon={faBars}
+                />
+                <FontAwesomeIcon
+                  className="hamburger mobile"
+                  onClick={() => onClickNav()}
+                  icon={isUserOptions ? faX : faBars}
+                />
+              </div>
             )}
             {isVisable && (
               <div

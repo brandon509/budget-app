@@ -2,6 +2,7 @@
 
 * {
   font-family: "Josefin Sans";
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 input:-webkit-autofill,
@@ -384,4 +385,66 @@ p.switch {
 
 .email-verify-error {
   font-size: 18px;
+}
+
+@media (max-width: 395px) {
+  .triangle {
+    display: none;
+  }
+
+  .line {
+    display: none;
+  }
+
+  .log-in-form,
+  .title,
+  .error {
+    margin-left: 0px;
+  }
+
+  .home-page-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home-page-layout {
+    display: block;
+  }
+
+  .total-form {
+    border: none;
+  }
+
+  .select,
+  .input {
+    background: white;
+  }
+
+  select {
+    -webkit-appearance: initial;
+    -moz-appearance: initial;
+    appearance: initial;
+
+    padding-left: 10px;
+  }
+
+  input[type="date"] {
+    width: 235px;
+  }
+
+  input[type="date"]:empty:after {
+    color: #aaa;
+    content: attr(placeholder);
+    text-align: left;
+  }
+
+  input::-webkit-date-and-time-value {
+    text-align: left;
+    padding-left: 12px;
+  }
+
+  .signup-mobile {
+    width: 100px;
+  }
 }

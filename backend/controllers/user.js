@@ -108,32 +108,30 @@ module.exports = {
 		}
 	},
 	changePassword: async (req, res, next) => {
-		if (!validator.isLength(req.body.newPassword, { min: 8 })) return res.status(400).json({ msg: "Your new password must be at least 8 characters" });
-		if (req.body.newPassword !== req.body.confirmNewPassword) return res.status(400).json({ msg: "Passwords do not match" });
+		try {
+			if (!validator.isLength(req.body.newPassword, { min: 8 })) return res.status(400).json({ msg: "Your new password must be at least 8 characters" });
+			if (req.body.newPassword !== req.body.confirmNewPassword) return res.status(400).json({ msg: "Passwords do not match" });
 
-		const user = await User.findById(req.user.id);
+			const user = await User.findById(req.user.id);
 
-		bcrypt.compare(req.body.password, user.password, (err, result) => {
-			if (result) {
-				bcrypt.genSalt(10, async (err, salt) => {
-					bcrypt.hash(req.body.newPassword, salt, async (err, hash) => {
-						await User.findByIdAndUpdate(req.user.id, { password: hash });
-
-						sendEmail(
-							user.email,
-							"Your password has been updated",
-							`<p>Hi ${
-								user.name.split(" ")[0]
-							}, <br><br> Your password was just updated. If this was not you please reach out otherwise you may ignore this message. <br><br> Happy budgeting! <br><br> Thanks, <br> B</p>`
-						);
-
-						res.status(200).json("Your password has been updated");
-					});
-				});
-			} else {
-				return res.status(400).json("Your current password does not match what you have entered");
-			}
-		});
+			bcrypt.compare(req.body.password, user.password, async (err, result) => {
+				if (result) {
+					await User.findOneAndUpdate({ _id: req.user.id }, { password: req.body.newPassword });
+					sendEmail(
+						user.email,
+						"Your password has been updated",
+						`<p>Hi ${
+							user.name.split(" ")[0]
+						}, <br><br> Your password was just updated. If this was not you please reach out otherwise you may ignore this message. <br><br> Happy budgeting! <br><br> Thanks, <br> B</p>`
+					);
+				} else {
+					return res.status(400).json("Your current password does not match what you have entered");
+				}
+			});
+		} catch (error) {
+			console.log(error);
+			return res.status(400);
+		}
 	},
 	resetPasswordRequest: async (req, res) => {
 		try {
@@ -159,7 +157,7 @@ module.exports = {
 						"Reset password instructions",
 						`<p>Hi ${
 							name.split(" ")[0]
-						} , <br><br> Someone has requested a link to change your passowrd. If this was you, it can be changed using the link below. <br><br> ${url} <br><br> If you didn't request it, please ignore this email.</p>`
+						} , <br><br> Someone has requested a link to change your password. If this was you, it can be changed using the link below. <br><br> ${url} <br><br> If you didn't request it, please ignore this email.</p>`
 					);
 				});
 			});
@@ -169,6 +167,7 @@ module.exports = {
 		}
 	},
 	resetPassword: async (req, res, next) => {
+		console.log(req.body.password);
 		try {
 			const urlTime = atob(req.params.time);
 			const currentTime = Date.now();
