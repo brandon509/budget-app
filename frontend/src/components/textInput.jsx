@@ -12,6 +12,8 @@ export default function TextInput({
   validation,
   errorMessage,
   id,
+  inputMode,
+  readonly,
 }) {
   const [labelVisable, setLabelVisable] = useState(false)
   const [passValidation, setPassValidation] = useState(true)
@@ -54,6 +56,8 @@ export default function TextInput({
         onChange={handleChange}
         value={inputValue}
         autoComplete="off"
+        inputMode={inputMode || null}
+        readOnly={readonly || null}
       ></input>
       {!passValidation && (
         <FontAwesomeIcon

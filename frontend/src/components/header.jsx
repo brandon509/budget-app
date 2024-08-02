@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { logout, reset } from "../features/auth/authSlice"
-import { useEffect, useState, createContext } from "react"
+import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faBars,
@@ -15,11 +15,13 @@ import {
 import MaintainCategories from "../components/maintainCategories"
 import MaintainInvestments from "../components/maintainInvestments"
 
-export default function Header({ onClickNav, isUserOptions }) {
+export default function Header() {
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { user, isSuccess, message } = useSelector((state) => state.auth)
+  const { user, isSuccess, message, mobile } = useSelector(
+    (state) => state.auth
+  )
 
   const [isVisable, setIsVisable] = useState(false)
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
@@ -59,22 +61,28 @@ export default function Header({ onClickNav, isUserOptions }) {
     setIsVisable(false)
   }
 
-  const onClickCategoriesOpen = () => {
-    setIsCategoriesOpen(true)
+  const menu = () => {
+    setIsVisable(!isVisable)
+  }
+
+  const onClickCategories = () => {
+    if (mobile) {
+      navigate(`/${user.id}/categories`)
+    } else {
+      setIsCategoriesOpen(!isCategoriesOpen)
+    }
+
     setIsVisable(false)
   }
 
-  const onClickCategoriesClose = () => {
-    setIsCategoriesOpen(false)
-  }
+  const onClickInvestments = () => {
+    if (mobile) {
+      navigate(`/${user.id}/investments`)
+    } else {
+      setIsInvestmentsOpen(!isInvestmentsOpen)
+    }
 
-  const onClickInvestmentsOpen = () => {
-    setIsInvestmentsOpen(true)
     setIsVisable(false)
-  }
-
-  const onClickInvestmentsClose = () => {
-    setIsInvestmentsOpen(false)
   }
 
   const onClickProfile = () => {
@@ -99,53 +107,59 @@ export default function Header({ onClickNav, isUserOptions }) {
             {user && (
               <div>
                 <FontAwesomeIcon
-                  className="hamburger non-mobile"
-                  onMouseEnter={onMouseEnter}
-                  onMouseLeave={onMouseLeave}
+                  className="hamburger"
+                  onMouseEnter={!mobile ? onMouseEnter : null}
+                  onMouseLeave={!mobile ? onMouseLeave : null}
+                  onClick={mobile ? menu : null}
                   icon={faBars}
-                />
-                <FontAwesomeIcon
-                  className="hamburger mobile"
-                  onClick={() => onClickNav()}
-                  icon={isUserOptions ? faX : faBars}
                 />
               </div>
             )}
             {isVisable && (
               <div
                 className="hamburger-container"
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
+                onMouseEnter={!mobile ? onMouseEnter : null}
+                onMouseLeave={!mobile ? onMouseLeave : null}
               >
                 <ul className="hamburger-list">
-                  <li
-                    className="hamburger-list-item"
-                    onClick={
-                      location.pathname.includes("budget")
-                        ? onClickProfile
-                        : onClickBudget
-                    }
-                  >
-                    <FontAwesomeIcon
-                      className="icon"
-                      icon={
-                        location.pathname.includes("budget") ? faUser : faFlag
+                  {!mobile ? (
+                    <li
+                      className="hamburger-list-item"
+                      onClick={
+                        location.pathname.includes("budget")
+                          ? onClickProfile
+                          : onClickBudget
                       }
-                    />
-                    {location.pathname.includes("budget")
-                      ? "View Profile"
-                      : "View Budget"}
-                  </li>
+                    >
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={
+                          location.pathname.includes("budget") ? faUser : faFlag
+                        }
+                      />
+                      {location.pathname.includes("budget")
+                        ? "View Profile"
+                        : "View Budget"}
+                    </li>
+                  ) : (
+                    <li
+                      className="hamburger-list-item"
+                      onClick={onClickProfile}
+                    >
+                      <FontAwesomeIcon className="icon" icon={faUser} />
+                      View Profile
+                    </li>
+                  )}
                   <li
                     className="hamburger-list-item"
-                    onClick={onClickCategoriesOpen}
+                    onClick={onClickCategories}
                   >
                     <FontAwesomeIcon className="icon" icon={faFolder} />
                     Categories
                   </li>
                   <li
                     className="hamburger-list-item"
-                    onClick={onClickInvestmentsOpen}
+                    onClick={onClickInvestments}
                   >
                     <FontAwesomeIcon className="icon" icon={faDollarSign} />
                     Investments
@@ -161,10 +175,10 @@ export default function Header({ onClickNav, isUserOptions }) {
               </div>
             )}
             {isCategoriesOpen && (
-              <MaintainCategories close={onClickCategoriesClose} />
+              <MaintainCategories close={onClickCategories} />
             )}
             {isInvestmentsOpen && (
-              <MaintainInvestments close={onClickInvestmentsClose} />
+              <MaintainInvestments close={onClickInvestments} />
             )}
 
             {location.pathname.includes("/account/verify") && (

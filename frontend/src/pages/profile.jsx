@@ -111,22 +111,15 @@ export default function () {
       <div className="main-section profile-section">
         <h2 className="profile-update-title">Update Profile</h2>
         <form className="form">
-          <div>
-            <TextInput {...nameInput} />
-            <TextInput {...newPasswordInput} />
-            <button
-              onClick={onSubmitProfile}
-              className="profile-update-btn btn"
-            >
-              Update Profile
-            </button>
-          </div>
-          <div>
-            <TextInput {...emailInput} />
-            <TextInput {...confirmNewPasswordInput} />
-          </div>
+          <TextInput {...nameInput} />
+          <TextInput {...emailInput} />
           <TextInput {...passwordInput} />
+          <TextInput {...newPasswordInput} />
+          <TextInput {...confirmNewPasswordInput} />
         </form>
+        <button onClick={onSubmitProfile} className="profile-update-btn btn">
+          Update Profile
+        </button>
       </div>
     </div>
   )

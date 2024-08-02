@@ -3,8 +3,6 @@
 }
 
 .profile-section .form {
-  flex-direction: row;
-  justify-content: center;
   margin-top: 50px;
 }
 
@@ -24,12 +22,27 @@
   font-weight: 400;
 }
 
+.form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
 @media (max-width: 395px) {
   .profile-section .form {
     flex-direction: column;
+    margin-top: 10px;
+    gap: 0px;
   }
 
   .profile-section {
-    width: calc(100vw - 80px);
+    margin-left: 0px;
+  }
+
+  .profile-update-btn {
+    margin-left: calc((100vw - 284px) / 2);
+    width: 254px;
+    margin-bottom: 20px;
   }
 }

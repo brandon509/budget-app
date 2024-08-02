@@ -75,7 +75,7 @@ export default function CateogryLineItem({ category, data, edit, expandAll }) {
                         id={x._id}
                         item="edit"
                         className="edit-btn"
-                        click={() => edit(x)}
+                        click={() => edit("form", x)}
                       />
                     </div>
                   </td>

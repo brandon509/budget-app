@@ -155,14 +155,9 @@ export default function MaintainCategories({ close }) {
   }
 
   return (
-    <div>
+    <div className="main-body">
       <div className="modal">
         <div className="modal-content">
-          <Button
-            click={closeModal}
-            item="back"
-            className="back-btn close-btn"
-          />
           <div className="left">
             <h4 className="label-header">Category</h4>
             <ul className="item-list">

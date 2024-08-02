@@ -107,6 +107,7 @@ export default function LinesForm({ lineItem, close }) {
     validation: true,
     errorMessage: null,
     inputValue: amount,
+    inputMode: "decimal",
   }
 
   const adjAmountInput = {
@@ -117,6 +118,7 @@ export default function LinesForm({ lineItem, close }) {
     validation: true,
     errorMessage: null,
     inputValue: amount * split || amount,
+    readonly: "readonly",
   }
 
   const dateIncurredInput = {

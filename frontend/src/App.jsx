@@ -8,20 +8,15 @@ import Login from "./pages/login"
 import ForgotPassword from "./pages/forgotPassword"
 import PasswordReset from "./pages/resetPassword"
 import Budget from "./pages/budget"
-import { useState } from "react"
+import MaintainCategories from "./components/maintainCategories"
+import MaintainInvestments from "./components/maintainInvestments"
 
 function App() {
-  const [isUserOptions, setIsUserOptions] = useState(false)
-
-  let onClickNav = () => {
-    setIsUserOptions(!isUserOptions)
-  }
-
   return (
     <>
       <Router>
         <div>
-          <Header onClickNav={onClickNav} isUserOptions={isUserOptions} />
+          <Header />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/account/signup" element={<Signup />} />
@@ -36,12 +31,9 @@ function App() {
             />
             <Route path="/account/verify/:id" element={<EmailVerify />} />
             <Route path="/:id/profile" element={<Profile />} />
-            <Route
-              path="/:id/budget"
-              element={
-                <Budget isUserOptions={isUserOptions} onClickNav={onClickNav} />
-              }
-            />
+            <Route path="/:id/investments" element={<MaintainInvestments />} />
+            <Route path="/:id/categories" element={<MaintainCategories />} />
+            <Route path="/:id/budget" element={<Budget />} />
           </Routes>
         </div>
       </Router>

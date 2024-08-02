@@ -88,8 +88,16 @@
   display: none;
 }
 
+.testingg {
+  height: calc(100vh - 100px);
+  width: calc(100vw - 100px);
+  left: 10px;
+  position: fixed;
+  background: white;
+}
+
 @media (max-width: 395px) {
-  .hamburger-container {
+  /* .hamburger-container {
     display: none;
   }
 
@@ -115,5 +123,9 @@
 
   .hamburger-list-item:hover {
     color: black;
+  } */
+
+  .hamburger:hover {
+    background: none;
   }
 }
