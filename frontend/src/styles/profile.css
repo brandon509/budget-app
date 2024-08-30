@@ -2,17 +2,18 @@
   margin-left: 54px;
 }
 
-.profile-section .form {
+.profile-section .profile-form {
   margin-top: 50px;
 }
 
-.profile-section .form .input-parent {
+.profile-section .profile-form .input-parent {
   margin-top: 30px;
 }
 
 .profile-update-btn {
   width: 125px;
   margin-top: 20px;
+  margin-left: 30px;
 }
 
 .profile-update-title {
@@ -22,15 +23,18 @@
   font-weight: 400;
 }
 
-.form {
+.profile-form {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-content: center;
+  gap: 10px;
+  width: auto;
+  margin-left: 30px;
 }
 
 @media (max-width: 395px) {
-  .profile-section .form {
+  .profile-section .profile-form {
     flex-direction: column;
     margin-top: 10px;
     gap: 0px;

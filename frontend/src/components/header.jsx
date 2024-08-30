@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { logout, reset } from "../features/auth/authSlice"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faBars,
@@ -10,7 +10,6 @@ import {
   faFolder,
   faDollarSign,
   faFlag,
-  faX,
 } from "@fortawesome/free-solid-svg-icons"
 import MaintainCategories from "../components/maintainCategories"
 import MaintainInvestments from "../components/maintainInvestments"
@@ -26,12 +25,14 @@ export default function Header() {
   const [isVisable, setIsVisable] = useState(false)
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
   const [isInvestmentsOpen, setIsInvestmentsOpen] = useState(false)
+  //const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
     if (isSuccess && !user && !message) {
       navigate("/")
       dispatch(reset())
     }
+    document.querySelector("html").style.overflow = "auto"
   }, [isSuccess, navigate, dispatch])
 
   const onClickHome = () => {
@@ -62,7 +63,15 @@ export default function Header() {
   }
 
   const menu = () => {
+    if (!isVisable) {
+      document.querySelector("html").style.overflow = "hidden"
+    } else {
+      document.querySelector("html").style.overflow = "auto"
+    }
+
     setIsVisable(!isVisable)
+    //setIsMounted(!isMounted)
+    toggleOpen(!isOpen)
   }
 
   const onClickCategories = () => {
@@ -122,43 +131,45 @@ export default function Header() {
                 onMouseLeave={!mobile ? onMouseLeave : null}
               >
                 <ul className="hamburger-list">
-                  {!mobile ? (
-                    <li
-                      className="hamburger-list-item"
-                      onClick={
-                        location.pathname.includes("budget")
-                          ? onClickProfile
-                          : onClickBudget
-                      }
-                    >
-                      <FontAwesomeIcon
-                        className="icon"
-                        icon={
-                          location.pathname.includes("budget") ? faUser : faFlag
-                        }
-                      />
-                      {location.pathname.includes("budget")
-                        ? "View Profile"
-                        : "View Budget"}
-                    </li>
-                  ) : (
-                    <li
-                      className="hamburger-list-item"
-                      onClick={onClickProfile}
-                    >
-                      <FontAwesomeIcon className="icon" icon={faUser} />
-                      View Profile
-                    </li>
-                  )}
                   <li
-                    className="hamburger-list-item"
+                    className={
+                      location.pathname.includes("profile")
+                        ? "hamburger-list-item selected"
+                        : "hamburger-list-item"
+                    }
+                    onClick={onClickProfile}
+                  >
+                    <FontAwesomeIcon className="icon" icon={faUser} />
+                    Profile
+                  </li>
+                  <li
+                    className={
+                      location.pathname.includes("budget")
+                        ? "hamburger-list-item selected"
+                        : "hamburger-list-item"
+                    }
+                    onClick={onClickBudget}
+                  >
+                    <FontAwesomeIcon className="icon" icon={faFlag} />
+                    Budget
+                  </li>
+                  <li
+                    className={
+                      location.pathname.includes("categories")
+                        ? "hamburger-list-item selected"
+                        : "hamburger-list-item"
+                    }
                     onClick={onClickCategories}
                   >
                     <FontAwesomeIcon className="icon" icon={faFolder} />
                     Categories
                   </li>
                   <li
-                    className="hamburger-list-item"
+                    className={
+                      location.pathname.includes("investments")
+                        ? "hamburger-list-item selected"
+                        : "hamburger-list-item"
+                    }
                     onClick={onClickInvestments}
                   >
                     <FontAwesomeIcon className="icon" icon={faDollarSign} />

@@ -433,7 +433,7 @@ p.switch {
     width: 235px;
   }
 
-  input[type="date"]:empty:after {
+  input[type="date"]:empty::after {
     color: #aaa;
     content: attr(placeholder);
     text-align: left;

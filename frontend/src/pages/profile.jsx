@@ -110,7 +110,7 @@ export default function () {
     <div className="main-body">
       <div className="main-section profile-section">
         <h2 className="profile-update-title">Update Profile</h2>
-        <form className="form">
+        <form className="profile-form">
           <TextInput {...nameInput} />
           <TextInput {...emailInput} />
           <TextInput {...passwordInput} />
