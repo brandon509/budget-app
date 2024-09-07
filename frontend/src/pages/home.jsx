@@ -33,9 +33,6 @@ export default function Home() {
       navigate(`/${user.id}/budget`)
     }
 
-    // if(isSuccess){
-    //     navigate(`/${user.id}`)
-    // }
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 

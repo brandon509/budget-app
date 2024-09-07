@@ -2,42 +2,37 @@
   margin-left: 54px;
 }
 
-.profile-section .profile-form {
-  margin-top: 50px;
-}
-
-.profile-section .profile-form .input-parent {
-  margin-top: 30px;
-}
-
 .profile-update-btn {
   width: 125px;
-  margin-top: 20px;
-  margin-left: 30px;
+  grid-area: footer;
 }
 
 .profile-update-title {
-  display: flex;
-  justify-content: center;
   font-size: 35px;
   font-weight: 400;
+  grid-area: header;
+  justify-self: center;
 }
 
 .profile-form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: center;
-  gap: 10px;
-  width: auto;
-  margin-left: 30px;
+  margin-top: 50px;
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "main1 main2"
+    "main3 main4"
+    "main5 ."
+    "footer .";
+  gap: 20px 10px;
+  justify-content: center;
 }
 
 @media (max-width: 395px) {
   .profile-section .profile-form {
+    display: flex;
     flex-direction: column;
+    align-items: center;
     margin-top: 10px;
-    gap: 0px;
   }
 
   .profile-section {
@@ -45,8 +40,6 @@
   }
 
   .profile-update-btn {
-    margin-left: calc((100vw - 284px) / 2);
     width: 254px;
-    margin-bottom: 20px;
   }
 }

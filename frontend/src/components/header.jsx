@@ -25,7 +25,6 @@ export default function Header() {
   const [isVisable, setIsVisable] = useState(false)
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
   const [isInvestmentsOpen, setIsInvestmentsOpen] = useState(false)
-  //const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
     if (isSuccess && !user && !message) {
@@ -70,7 +69,6 @@ export default function Header() {
     }
 
     setIsVisable(!isVisable)
-    //setIsMounted(!isMounted)
     toggleOpen(!isOpen)
   }
 

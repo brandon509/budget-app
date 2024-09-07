@@ -109,17 +109,17 @@ export default function () {
   return (
     <div className="main-body">
       <div className="main-section profile-section">
-        <h2 className="profile-update-title">Update Profile</h2>
         <form className="profile-form">
+          <h2 className="profile-update-title">Update Profile</h2>
           <TextInput {...nameInput} />
           <TextInput {...emailInput} />
           <TextInput {...passwordInput} />
           <TextInput {...newPasswordInput} />
           <TextInput {...confirmNewPasswordInput} />
+          <button onClick={onSubmitProfile} className="profile-update-btn btn">
+            Update Profile
+          </button>
         </form>
-        <button onClick={onSubmitProfile} className="profile-update-btn btn">
-          Update Profile
-        </button>
       </div>
     </div>
   )

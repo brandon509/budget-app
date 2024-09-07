@@ -10,30 +10,6 @@ import Summary from "../components/summary"
 import Savings from "../components/savings"
 import Investments from "../components/investments"
 
-//Feature requests
-//Initals in corner instad of hamburger
-//Tool tips on some inputs
-//Change color of item when reseting password
-//Add animation when filtering
-
-//Bugs
-//Validation fail on text input icon no space under input
-
-//Mobile
-//**Sign up button on multiple lines on sign up page
-//**On budget tab, make so the whole page doesnt scroll (make it shorter)
-//**Fix edit
-//**Fix cancel when editing
-//**Drop downs and dates have grey background
-//Date picker has no place holder
-//**Remove hamburger background on click
-//Add hanburger click animation
-//**Fix layout on cat and investments page
-//**Fix log out issue where budget isnt there when logging back in
-//Fix how hamburger works
-//**can type in adj amount
-//**amounts, can type other things
-
 export default function () {
   const currentDate = new Date()
   const monthOptions = [
